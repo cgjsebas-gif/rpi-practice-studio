@@ -63,3 +63,8 @@ References: [Google token model](https://developers.google.com/identity/oauth2/w
 
 ### Blackboard calendar subscriptions
 Subscribe to the private Blackboard iCal feed in Google Calendar with public sharing off. Copy its Calendar ID from Google settings into Orbitarium’s Assignments & calendar panel. The calendar ID is saved only in your browser. Never commit a private feed or calendar data. Fetch a date range, search titles/course details, and use “I finished this → planet” for completed work. Calendar dates do not prove submission; Google controls feed refresh delays. All calendar entries are searchable, including classes and office hours, so nonstandard assignment names are not silently excluded.
+
+### Assignments and appearance
+Assignments shares the local Orbitarium store. Existing planets migrate into completed assignments. Manual assignments and imported calendar entries persist alongside planets. Marking an assignment incomplete removes its active planet while preserving its design for restoration; repeat calendar imports preserve this local status. These controls never modify Blackboard submissions or Google events. List/search/status and month-calendar views share the same records. Backups include assignments and planets. New planets choose among 12 deterministic themes independently of class; existing selected themes are preserved. Planet dialogs show 200px pixel artwork. Light, dark and system appearance also apply to Orbitarium and its canvas.
+
+Run `node assignments.test.cjs` for assignment completion, repeat-sync, dates, search and variety checks.
