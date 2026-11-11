@@ -1,74 +1,58 @@
-# RPI Practice Studio + Orbitarium
+# RPI Practice Studio
 
-Static, dependency-free study app for GitHub Pages. Serve the repository root using any static web server. In GitHub Settings → Pages, publish `main` → `/ (root)`.
+A static, local-first study app for Calculus I, Physics I and Organic Chemistry I, published with GitHub Pages. Open `index.html` through a local web server or static host. No build step or framework is required.
 
-## Components
+## Study workflow
 
-- `orbit-core.js`: pure completion normalization, deterministic ID-based pixel sprites, themes and fictional bios.
-- `orbitarium.js`: accessible dialog forms, searchable galaxy, canvas orbital animation, local persistence and import/export.
-- `orbit-calendar.js`: Google Identity Services read-only Calendar adapter, paginated event fetching, in-memory access token.
-- `orbitarium.css`: scoped retro presentation, pixel headings and reduced-motion support.
-- `app.js`: adds the Orbitarium navigation route and mounts the view. Existing guided practice stays intact.
+- Guided practice records your response first, then offers separate clarification, hint, setup, calculation guidance, and explicitly requested worked solutions.
+- Timed exams default to 30 minutes when no duration is provided. Submitting locks an answer and defers grading; expiry finalizes once, including after refresh. Replacing an active exam preserves submitted attempts. Symbolic/open-ended work uses a labeled self-assessment rubric.
+- Shortcuts outside text fields/dialogs: Enter checks or continues, H requests a guided hint, R flags, Escape leaves while retaining the session, and 1–4 select choices when a question has options. Numeric and open-ended questions do not have fabricated multiple-choice options.
+- All, Unseen, Flagged and Needs Review filters use assessed history. Latest incorrect answers are due immediately; correct answers return after three days, or one day for self-assessed work. This is a simple study schedule, not a validated adaptive mastery model.
+- Coverage bars count latest correct answers out of authored questions, with self-assessed counts labeled.
 
-No build or paid backend is required. `node orbitarium.test.cjs` runs pure model tests. `node practice.test.cjs` checks the original study bank and grading.
+## Routes and persistence
 
-## State strategy
+`#/course/calculus-1/learn?topic=limits`, `#/course/physics-1/practice?question=q10`, `#/assignments`, `#/orbitarium`, `#/progress` and `#/settings` support deep linking. Course slugs are defined in `router.js`. Browser history does not replace completed session summaries.
 
-`rpi-orbitarium-v1` in localStorage stores `{version, planets, config}`. Manual and imported records share one normalized array. Stable keys combine source, calendar and source event ID; repeated imports update rather than duplicate a planet. The Google Calendar ID is part of the key. Manual IDs use `crypto.randomUUID()`. Deterministic artwork and lore survive reloads. No calendar tokens or client secrets are saved. All imported values are escaped before UI rendering.
+`storage.js` is the only localStorage boundary. A version-3 envelope stores practice, Orbitarium and appearance domains together. Legacy keys remain untouched. Corrupt or future envelopes block writes and retain the raw original for recovery; storage denial falls back to memory with a visible warning. Domain validation remains in the study and backup models. Data is browser-local, not account or device synced.
 
-The visible sector is capped at 24 worlds with a searchable paginated grid. Canvas animation runs at approximately 30 fps; navigation cancels the detached view, pause is available, and reduced-motion preferences default to paused. Search covers assignment titles, topics and generated planet names. Keyboard-accessible cards provide an alternative to canvas clicking.
+Use **Backup & restore** to export all domains. Imports are validated and previewed before replacement. Legacy progress v1/v2 and Orbitarium v1 are accepted. Restore writes a previous-state recovery snapshot before committing the replacement; failed persistence does not report success. Export a backup before changing devices. Google access tokens are never stored or included.
 
-Progress is local to the current browser and origin, not cloud-synced across devices. Backup the study app and Orbitarium separately. Concurrent edits in multiple browser tabs are not coordinated. An absent/cancelled calendar event does not erase a previously saved achievement; this is an achievement ledger, not a calendar mirror.
+## Orbitarium and calendars
 
-## Google Calendar setup
+Only Google Calendar titles beginning with `[ASSIGNMENT]` or `[DEADLINE]` (case-insensitive) enter the assignment log. Tags are eligibility markers, not proof of completion. Untagged imported records are archived locally and removed from the active assignment/planet lists. Untagged Blackboard assignments are excluded too. Manual entries remain eligible.
 
-The ChatGPT calendar connector is not available inside a standalone GitHub website. A separate OAuth web client is required:
+Calendar access is read-only and requires Google consent. Blackboard subscriptions refresh on Google's schedule. The website cannot read academic-deadline chats automatically; completion logs can be imported manually.
 
-1. Create/select a Google Cloud project, enable Google Calendar API, configure the OAuth consent screen, and add your Google account as a test user if the app is in testing.
-2. Create a Web application OAuth client. Add `https://cgjsebas-gif.github.io` as an authorized JavaScript origin (not the repository path). For local testing add `http://127.0.0.1:4173` separately.
-3. Paste the **client ID** into Orbitarium → Calendar uplink → First-time Google setup. Never paste or commit a client secret.
-4. Choose calendar ID and date range; click Connect & fetch assignments and consent to read-only calendar events access.
+`review-missions.js` turns due/missed objectives into local daily quests with stable IDs. These appear in Assignments, link to targeted practice, and do not write Google events. A successful session covering all quest questions, or an explicit manual completion, creates one planet. Marking incomplete removes its active planet while preserving its design. Repeated synchronization does not duplicate quests/planets.
 
-The adapter requests `calendar.events.readonly`. Explicit `[DONE]` / `✅` title prefixes or `extendedProperties.private.orbitariumCompleted = 'true'` create planets. `status: confirmed`, past end times, accepted invitations and ordinary prose saying “completed” do not. Other likely assignments appear as candidates; the user must click “I finished this.” Google Calendar events do not provide a universal assignment-completion field. Completion time stays unknown unless supplied; due dates are never substituted.
+Twelve seeded planet themes have deterministic lore. Sector centers can vary automatically or be set to black hole, binary stars, nebula core, pulsar, or amber star. Appearance follows Light/Dark/System, including live system changes.
 
-Sync is user-triggered while the app is open. It follows all pages within the chosen window and fails visibly on expired tokens, API errors or oversized requests. It does not edit Calendar or run a background server. Live OAuth requires the owner’s Google Cloud setup and consent; the code alone cannot provision it.
+## Source organization
 
-## Study calendar and academic-deadline chat integration
+- `index.html`: loading shell, recovery notice, ordered script dependencies.
+- `storage.js`: versioned persistence, legacy migration, atomic replacement.
+- `router.js`: URL serialization and validation.
+- `backup.js`: full-state validation, preview, export/restore dialog.
+- `engine.js`: grading, session validation, exam locking/finalization, coverage and review rules.
+- `app.js`: study controller, views and keyboard integration.
+- `scope.js`: authored objective mapping and opaque archived identifiers.
+- `review-missions.js`: deterministic daily review quest generation.
+- `orbit-core.js`: stable completion records and pixel planet generation.
+- `orbit-calendar.js`: read-only Calendar adapter plus local review records.
+- `orbitarium.js`: assignment/calendar/galaxy views and completion synchronization.
+- `diagrams.js`, `style.css`, `orbitarium.css`: responsive theme-aware visuals.
 
-For an existing JavaScript calendar, call:
+Content remains in `questions.js` and `content.js` (164 original questions, 33 hubs). Course-specific exam boundaries are not verified; content is not represented as an instructor's actual exam.
 
-```js
-Orbitarium.ingest([{id:'stable-assignment-id', title:'Related rates HW', topic:'Calculus I', completed:true, completedAt:'2026-11-10', theme:'cyber'}], 'study-calendar');
-// Or dispatch the shared completion event:
-window.dispatchEvent(new CustomEvent('study:completed', {detail:{id:'stable-assignment-id',title:'Related rates HW',topic:'Calculus I',completed:true}}));
+## Verification
+
+From this folder, run:
+
+```sh
+for test in *.test.cjs; do node "$test" || exit 1; done
 ```
 
-For chat records, export a JSON log and import it via Orbitarium. The website cannot read private ChatGPT/Codex conversations automatically. Ask the academic-deadline chat for this shape, using stable IDs and only explicit completion evidence:
+Tests cover grading, legacy data, route parsing, controller boot, exam replacement/history, locked responses/expiry, storage corruption/denial, restore validation, theme safety, tagged imports, assignment reversal, planet identity and daily review rules. Browser QA additionally covers desktop/375px layout, guided and exam flows, backup restore, modal focus, light/dark appearances and console errors.
 
-```json
-{"version":1,"assignments":[{"id":"stable-assignment-id","source":"academic-deadlines","title":"Related rates HW","topic":"Calculus I","completed":true,"completedAt":null}]}
-```
-
-Do not infer completion from a deadline passing, a dropped task, or a skipped assignment. Unknown completion dates are null. Do not place private JSON logs in this public repository. If calendar and chat refer to the same item, use the same source/calendar/ID or import it through only one source; different source IDs are intentionally not deduplicated by fuzzy title matching.
-
-## Moving from the former site
-
-In the old site, use Progress & notes → Export. In this GitHub site, import that practice backup on the same page. Browser storage cannot transfer automatically across domains. Previous course problem IDs are retained for migration. Private course-document URLs have been removed from the public source; original questions and public supplemental references remain.
-
-## Verification and limits
-
-Model checks cover explicit completion recognition, cancelled events, stable IDs, duplicate sync, topic themes, deterministic lore, invalid records, SVG safety and 10,000-record merges. Browser checks exercise manual creation, persistence, dialogs, search, themes and grid view. Numerical study checks are retained. Live Google OAuth cannot be verified until the owner configures a client and grants access. Fictional bios are template-generated, not factual scientific descriptions or AI service calls.
-
-References: [Google token model](https://developers.google.com/identity/oauth2/web/guides/use-token-model), [GitHub Pages setup](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site).
-
-### Blackboard calendar subscriptions
-Subscribe to the private Blackboard iCal feed in Google Calendar with public sharing off. Copy its Calendar ID from Google settings into Orbitarium’s Assignments & calendar panel. The calendar ID is saved only in your browser. Never commit a private feed or calendar data. Fetch a date range, search titles/course details, and use “I finished this → planet” for completed work. Calendar dates do not prove submission; Google controls feed refresh delays. All calendar entries are searchable, including classes and office hours, so nonstandard assignment names are not silently excluded.
-
-### Assignments and appearance
-Assignments shares the local Orbitarium store. Existing planets migrate into completed assignments. Manual assignments and imported calendar entries persist alongside planets. Marking an assignment incomplete removes its active planet while preserving its design for restoration; repeat calendar imports preserve this local status. These controls never modify Blackboard submissions or Google events. List/search/status and month-calendar views share the same records. Backups include assignments and planets. New planets choose among 12 deterministic themes independently of class; existing selected themes are preserved. Planet dialogs show 200px pixel artwork. Light, dark and system appearance also apply to Orbitarium and its canvas.
-
-Run `node assignments.test.cjs` for assignment completion, repeat-sync, dates, search and variety checks.
-
-### Tagged calendar imports and galaxy centers
-Calendar imports now require titles to start with [ASSIGNMENT] or [DEADLINE] (case-insensitive, no leading whitespace). Untagged calendar records are removed from active assignments and planets; a local excludedCalendar archive in backups preserves prior records. Manual assignments and chat completions are unaffected. Renaming a fetched event to remove its tag also removes its active imported record on the next sync. Tags are eligibility only, never proof of completion. Blackboard subscription titles cannot be edited here: untagged Blackboard feed entries are intentionally excluded.
-Galaxy centers can vary by sector or be selected: black hole, binary stars, nebula core, pulsar or amber star. Selection persists locally.
+Source formatting uses Prettier 3.9.10. Runtime has no npm dependencies. Google Fonts is optional; system and monospace fallbacks remain available.
