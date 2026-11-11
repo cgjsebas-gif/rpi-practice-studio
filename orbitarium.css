@@ -480,3 +480,16 @@
     padding: 20px;
   }
 }
+
+/* Late completion has a moon plus a readable label; color is supplementary. */
+.orbitarium .moon-label, .orbitarium .moon-legend { font-size: 12px; line-height: 1.6; }
+.orbitarium .planet--late { position: relative; }
+.orbitarium .planet-card.planet--late { border-style: dashed; }
+.orbitarium .planet-profile.planet--late::after {
+  content: ""; width: 18px; height: 18px; background: #dfb28b;
+  box-shadow: inset 6px 4px #9b6255, 3px 3px #553c4a;
+  position: absolute; left: calc(50% + 82px); top: 32px;
+  clip-path: polygon(25% 0,75% 0,75% 15%,100% 15%,100% 75%,75% 75%,75% 100%,25% 100%,25% 85%,0 85%,0 25%,25% 25%);
+}
+
+.orbitarium .planet-card.planet--late::after { content: "◒"; color: #b36d38; position:absolute; top:8px; right:8px; font-size:18px; }

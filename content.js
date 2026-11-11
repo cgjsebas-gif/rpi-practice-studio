@@ -1571,3 +1571,8 @@ const sources={
   }
 };
 const gaps=[{"course":"All courses","area":"Instructor alignment","status":"General practice","detail":"Standard first-course concepts; exact instructor exam boundaries are not verified. Some topics have four to six questions. Open-ended answers use self-assessment."}];
+
+/* University-style extension: keep topic practice and coverage in sync. */
+for (const h of hubs) for (const p of bank) {
+  if (p.id.startsWith("v3-") && p.hub === h.id && !h.problems.includes(p.id)) h.problems.push(p.id);
+}

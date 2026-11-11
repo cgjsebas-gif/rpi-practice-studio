@@ -22,6 +22,7 @@ const StudyEngine = (() => {
     "m/s^2": { d: "acceleration", f: 1 },
     "cm/s^2": { d: "acceleration", f: 0.01 },
     N: { d: "force", f: 1 },
+    "N/m": { d: "spring-stiffness", f: 1 },
     kN: { d: "force", f: 1000 },
     J: { d: "energy", f: 1 },
     kJ: { d: "energy", f: 1000 },

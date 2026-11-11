@@ -27,6 +27,7 @@ window.Orbitarium = (() => {
       },
     },
     query = "",
+    timingFilter = "all",
     page = 0,
     mode = "solar",
     paused = matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -96,13 +97,31 @@ window.Orbitarium = (() => {
   // Recover existing achievements as completed assignments without changing their worlds.
   for (const p of data.planets)
     if (!data.assignments.some((a) => a.key === p.key))
-      data.assignments.push({ ...p, due: "", completed: true, planet: p });
+      data.assignments.push({ ...p, due: p.dueAt || "", completed: true, planet: p });
   let assignmentMode = "list",
     assignmentQuery = "",
     assignmentFilter = "all",
     month = new Date().getMonth(),
     year = new Date().getFullYear();
+  function reconcileTiming() {
+    data.planets = data.planets.map(p => {
+      const a = data.assignments.find(a => a.key === p.key);
+      return C.normalize({...p, dueAt:a?.due || a?.dueAt || p.dueAt}, p.source, p.calendar);
+    }).filter(Boolean);
+    data.assignments.forEach(a => {
+      const p = data.planets.find(p => p.key === a.key);
+      if (p) { a.planet = p; a.completedAt = p.completedAt; a.dueAt = p.dueAt; }
+      a.isLateSubmission = !!a.completed && C.timing({...a, completedAt:a.planet?.completedAt || a.completedAt}).status === "late";
+    });
+  }
+  reconcileTiming();
+  function timingLabel(p) {
+    const t = C.timing(p);
+    return t.status === "late" ? "Satellite captured: Submitted past due date" + (t.hours == null ? " (exact hours unknown)" : ` (+${t.hours < 0.1 ? "<0.1" : t.hours.toFixed(1)} hrs late)`)
+      : t.status === "on-time" ? "On-time completion" : "Submission timing unknown";
+  }
   const save = () => {
+    reconcileTiming();
     if (blocked)
       throw Error("Recover your saved galaxy before making changes.");
     try {
@@ -192,11 +211,11 @@ window.Orbitarium = (() => {
       )
       .join(
         "",
-      )}</select></label><div id="orbit-results"></div><p class="orbit-foot">A permanent record of effort. Fictional worlds, real accomplishments.<br>Calendar sync is read-only. A past due date or “confirmed” event is never proof of completion.</p><dialog id="orbit-dialog" class="orbitarium orbit-dialog" aria-labelledby="orbit-dialog-title"></dialog></section>`;
+      )}</select></label><label>Submission timing<select onchange="Orbitarium.timingFilter(this.value)">${[["all","All worlds"],["on-time","On-time"],["late","Late (Moon)"],["unknown","Timing unknown"]].map(([v,l])=>`<option value="${v}" ${timingFilter===v ? "selected" : ""}>${l}</option>`).join("")}</select></label><p class="moon-legend">◌ Moon = completed after the due date. Missing dates stay unknown. All-day deadlines end at midnight Eastern.</p><div id="orbit-results"></div><p class="orbit-foot">A permanent record of effort. Fictional worlds, real accomplishments.<br>Calendar sync is read-only. A past due date or “confirmed” event is never proof of completion.</p><dialog id="orbit-dialog" class="orbitarium orbit-dialog" aria-labelledby="orbit-dialog-title"></dialog></section>`;
   }
   function list() {
     return data.planets.filter((p) =>
-      [p.title, p.topic, C.world(p).name]
+      (timingFilter === "all" || C.timing(p).status === timingFilter) && [p.title, p.topic, C.world(p).name]
         .join(" ")
         .toLowerCase()
         .includes(query.toLowerCase()),
@@ -209,7 +228,7 @@ window.Orbitarium = (() => {
     const all = list();
     page = Math.min(page, Math.max(0, Math.ceil(all.length / 24) - 1));
     const ps = all.slice(page * 24, (page + 1) * 24);
-    el.innerHTML = `<div class="orbit-sector"><button onclick="Orbitarium.page(-1)" ${page === 0 ? "disabled" : ""}>← Sector</button><span>SECTOR ${page + 1} / ${Math.max(1, Math.ceil(all.length / 24))} · ${all.length} matching worlds</span><button onclick="Orbitarium.page(1)" ${(page + 1) * 24 >= all.length ? "disabled" : ""}>Sector →</button></div>${mode === "solar" ? '<div class="orbit-space"><canvas id="orbit-canvas" width="1000" height="620" aria-label="Animated solar system. Use the planet buttons below to explore."></canvas><div class="space-caption">' + e(centers[centerType()].toUpperCase()) + "<br><small>A COSMOS BUILT BY YOU</small></div></div>" : ""}${!ps.length && query ? '<div class="orbit-empty"><strong>NO WORLDS FOUND</strong><p>Try another assignment or course name.</p></div>' : !ps.length ? '<div class="orbit-empty"><strong>UNCHARTED SPACE</strong><p>Finish something, then forge your first planet.<br>No sample achievements are counted as yours.</p><button onclick="Orbitarium.addForm()">＋ Log a completed assignment</button></div>' : ""}<div class="planet-grid ${mode === "solar" ? "compact" : ""}">${ps.map((p, i) => `<button class="planet-card" onclick="Orbitarium.open(${page * 24 + i})">${C.sprite(p)}<span><b>${e(C.world(p).name)}</b><small>${e(p.title)}</small><em>${e(C.themes[p.theme].name)} / ${e(p.topic)}</em></span></button>`).join("")}</div>`;
+    el.innerHTML = `<div class="orbit-sector"><button onclick="Orbitarium.page(-1)" ${page === 0 ? "disabled" : ""}>← Sector</button><span>SECTOR ${page + 1} / ${Math.max(1, Math.ceil(all.length / 24))} · ${all.length} matching worlds</span><button onclick="Orbitarium.page(1)" ${(page + 1) * 24 >= all.length ? "disabled" : ""}>Sector →</button></div>${mode === "solar" ? '<div class="orbit-space"><canvas id="orbit-canvas" width="1000" height="620" aria-label="Animated solar system. Use the planet buttons below to explore."></canvas><div class="space-caption">' + e(centers[centerType()].toUpperCase()) + "<br><small>A COSMOS BUILT BY YOU</small></div></div>" : ""}${!ps.length && (query || timingFilter !== "all") ? '<div class="orbit-empty"><strong>NO WORLDS FOUND</strong><p>Try another assignment, course name or timing filter.</p></div>' : !ps.length ? '<div class="orbit-empty"><strong>UNCHARTED SPACE</strong><p>Finish something, then forge your first planet.<br>No sample achievements are counted as yours.</p><button onclick="Orbitarium.addForm()">＋ Log a completed assignment</button></div>' : ""}<div class="planet-grid ${mode === "solar" ? "compact" : ""}">${ps.map((p, i) => `<button class="planet-card ${p.isLateSubmission ? "planet--late" : ""}" title="${e(timingLabel(p))}" onclick="Orbitarium.open(${page * 24 + i})">${C.sprite(p)}<span><b>${e(C.world(p).name)}</b><small>${e(p.title)}</small><em>${e(C.themes[p.theme].name)} / ${e(p.topic)}</em><small class="moon-label">${e(timingLabel(p))}</small></span></button>`).join("")}</div>`;
     if (mode === "solar") animate(ps);
   }
   function animate(ps) {
@@ -259,9 +278,17 @@ window.Orbitarium = (() => {
         ctx.imageSmoothingEnabled = false;
         if (sprites[i].complete && sprites[i].naturalWidth)
           ctx.drawImage(sprites[i], x - 16, y - 16, 32, 32);
+        if (p.isLateSubmission) {
+          ctx.save();
+          ctx.strokeStyle = light ? "#98623d88" : "#e5ac7288";
+          ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI*2); ctx.stroke();
+          const phase = t * 7 + C.hash(p.key), mx = Math.round(x + Math.cos(phase)*25), my = Math.round(y + Math.sin(phase)*25);
+          ctx.fillStyle = "#dfb28b"; ctx.fillRect(mx-3,my-5,6,10); ctx.fillRect(mx-5,my-3,10,6);
+          ctx.fillStyle = "#9b6255"; ctx.fillRect(mx-2,my-2,3,3); ctx.fillRect(mx+2,my+1,2,2); ctx.restore();
+        }
         ctx.font = "12px monospace";
         ctx.fillStyle = light ? "#263c5c" : "#d6ecff";
-        ctx.fillText(C.world(p).name, x + 20, y + 4);
+        ctx.fillText(C.world(p).name, x + 35, y + 4);
         positions[i] = { x, y };
       });
       if (!paused) frame = requestAnimationFrame(draw);
@@ -275,6 +302,11 @@ window.Orbitarium = (() => {
       };
     });
     frame = requestAnimationFrame(draw);
+    canvas.onmousemove = (ev) => {
+      const r = canvas.getBoundingClientRect(), x = (ev.clientX-r.left)*1000/r.width, y = (ev.clientY-r.top)*620/r.height;
+      const i = positions.findIndex(p => p && Math.hypot(p.x-x,p.y-y)<32);
+      canvas.title = i < 0 ? "" : ps[i].title + " — " + timingLabel(ps[i]);
+    };
     canvas.onclick = (ev) => {
       const r = canvas.getBoundingClientRect(),
         x = ((ev.clientX - r.left) * 1000) / r.width,
@@ -295,7 +327,7 @@ window.Orbitarium = (() => {
   function addForm() {
     modal(
       "FORGE A NEW WORLD",
-      `<form id="planet-form"><label>Completed assignment<input name="title" required maxlength="180" placeholder="e.g. Related rates problem set"></label><label>Course or topic<input name="topic" required maxlength="120" placeholder="Calculus I"></label><label>Completion date<input name="completedAt" type="date" required max="${new Date().toLocaleDateString("en-CA")}" value="${new Date().toLocaleDateString("en-CA")}"></label><label>Planet theme<select name="theme"><option value="auto">Automatic from topic</option>${options()}</select></label><label>Captain’s log<textarea name="notes" maxlength="2000" placeholder="What did you learn?"></textarea></label><label class="check"><input type="checkbox" required> I completed this assignment.</label><button type="submit">✦ Generate planet</button><p id="orbit-form-status" role="status"></p></form>`,
+      `<form id="planet-form"><label>Completed assignment<input name="title" required maxlength="180" placeholder="e.g. Related rates problem set"></label><label>Course or topic<input name="topic" required maxlength="120" placeholder="Calculus I"></label><label>Completion date<input name="completedAt" type="date" required max="${new Date().toLocaleDateString("en-CA")}" value="${new Date().toLocaleDateString("en-CA")}"></label><label>Due date (optional)<input name="due" type="date"></label><label>Planet theme<select name="theme"><option value="auto">Automatic from topic</option>${options()}</select></label><label>Captain’s log<textarea name="notes" maxlength="2000" placeholder="What did you learn?"></textarea></label><label class="check"><input type="checkbox" required> I completed this assignment.</label><button type="submit">✦ Generate planet</button><p id="orbit-form-status" role="status"></p></form>`,
     );
     document.getElementById("planet-form").onsubmit = (ev) => {
       ev.preventDefault();
@@ -323,7 +355,7 @@ window.Orbitarium = (() => {
     const w = C.world(p);
     modal(
       w.name,
-      `<div class="planet-profile">${C.sprite(p)}<span>${e(C.themes[p.theme].name)} WORLD</span></div><h3>${e(p.title)}</h3><p>${e(p.topic)}</p><p>Completed: ${e(p.completedAt?.slice(0, 10) || "Date not recorded")}<br>Source: ${e(p.source)}</p><h3>PLANET BIO / FICTIONAL LORE</h3><p>${e(w.bio)}</p><p>${e(p.notes)}</p><label>Change world theme<select id="planet-theme">${options()}</select></label><button id="save-theme">Save theme</button>`,
+      `<div class="planet-profile ${p.isLateSubmission ? "planet--late" : ""}">${C.sprite(p)}<span>${e(C.themes[p.theme].name)} WORLD</span></div><h3>${e(p.title)}</h3><p>${e(p.topic)}</p><p>Completed: ${e(p.completedAt?.slice(0, 10) || "Date not recorded")}<br>Due: ${e(dueLabel(p.dueAt))}<br>Source: ${e(p.source)}</p><p class="moon-label">${e(timingLabel(p))}</p><h3>PLANET BIO / FICTIONAL LORE</h3><p>${e(w.bio)}</p><p>${e(p.notes)}</p><label>Change world theme<select id="planet-theme">${options()}</select></label><button id="save-theme">Save theme</button>`,
     );
     document.getElementById("planet-theme").value = p.theme;
     document.getElementById("save-theme").onclick = () => {
@@ -783,6 +815,7 @@ window.Orbitarium = (() => {
     completeMissions,
     startMission,
     setCenter,
+    timingFilter: (v) => { timingFilter = ["all","on-time","late","unknown"].includes(v) ? v : "all"; page = 0; results(); },
     assignmentsView,
     assignmentMount: assignmentResults,
     assignmentForm,

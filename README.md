@@ -43,7 +43,7 @@ Twelve seeded planet themes have deterministic lore. Sector centers can vary aut
 - `orbitarium.js`: assignment/calendar/galaxy views and completion synchronization.
 - `diagrams.js`, `style.css`, `orbitarium.css`: responsive theme-aware visuals.
 
-Content remains in `questions.js` and `content.js` (164 original questions, 33 hubs). Course-specific exam boundaries are not verified; content is not represented as an instructor's actual exam.
+Content remains in `questions.js` and `content.js` (200 original questions, 33 hubs). Course-specific exam boundaries are not verified; content is not represented as an instructor's actual exam.
 
 ## Verification
 
@@ -56,3 +56,9 @@ for test in *.test.cjs; do node "$test" || exit 1; done
 Tests cover grading, legacy data, route parsing, controller boot, exam replacement/history, locked responses/expiry, storage corruption/denial, restore validation, theme safety, tagged imports, assignment reversal, planet identity and daily review rules. Browser QA additionally covers desktop/375px layout, guided and exam flows, backup restore, modal focus, light/dark appearances and console errors.
 
 Source formatting uses Prettier 3.9.10. Runtime has no npm dependencies. Google Fonts is optional; system and monospace fallbacks remain available.
+
+## Late-completion moons and extended bank
+
+Planets derive `isLateSubmission` from `completedAt` (or `submittedAt`) and `dueAt`/`dueDate`/`due`. Saved assignment deadlines are reconciled into legacy planets. Missing or invalid dates stay unknown; date-only deadlines mean end-of-day Eastern, and exact hours are shown only when both timestamps include a time. Completion is user-reported and is not proof of a Blackboard submission. Marking incomplete removes the active planet and its moon; restoring completion keeps its recorded timestamp and appearance. Galaxy filters distinguish all, on-time, late, and unknown timing. Canvas moons respect the existing pause/reduced-motion controls.
+
+The bank now contains 200 problems, including 36 new university-style questions. See [curriculum sources and validation](CURRICULUM-SOURCES.md).

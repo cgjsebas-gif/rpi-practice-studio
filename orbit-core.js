@@ -119,6 +119,22 @@
         /^\s*(\[DONE\]|✅)/i.test(e.summary || ""))
     );
   }
+  // Date-only deadlines mean the end of that calendar day in the course timezone.
+  // Date-only completion cannot prove lateness within the same day.
+  function timing(p) {
+    const due = p.dueAt || p.dueDate || p.due || p.start?.dateTime || p.start?.date;
+    const submitted = p.submittedAt || p.completedAt;
+    if (!due || !submitted || !Number.isFinite(Date.parse(due)) || !Number.isFinite(Date.parse(submitted)))
+      return {status: "unknown", hours: null};
+    const dateOnly = v => /^\d{4}-\d{2}-\d{2}$/.test(v);
+    const day = v => dateOnly(v) ? v : new Intl.DateTimeFormat("en-CA", {timeZone:"America/New_York", year:"numeric", month:"2-digit", day:"2-digit"}).format(new Date(v));
+    if (dateOnly(due) || dateOnly(submitted)) {
+      const d = day(due), c = day(submitted);
+      return {status: c > d ? "late" : c < d || dateOnly(due) ? "on-time" : "unknown", hours:null};
+    }
+    const delta = Date.parse(submitted) - Date.parse(due);
+    return {status:delta > 0 ? "late" : "on-time", hours: Math.max(0, delta / 3600000)};
+  }
   function normalize(e, source = "manual", calendar = "primary") {
     if (
       !e ||
@@ -138,10 +154,10 @@
       120,
     );
     const key = String(e.key || JSON.stringify([source, calendar, id]));
-    const date =
-      e.completedAt && Number.isFinite(Date.parse(e.completedAt))
-        ? e.completedAt
-        : null;
+    const submitted = e.submittedAt || e.completedAt;
+    const date = submitted && Number.isFinite(Date.parse(submitted)) ? submitted : null;
+    const rawDue = e.dueAt || e.dueDate || e.due || e.start?.dateTime || e.start?.date;
+    const dueAt = rawDue && Number.isFinite(Date.parse(rawDue)) ? rawDue : null;
     return {
       key,
       id,
@@ -151,6 +167,8 @@
       calendar,
       completed: true,
       completedAt: date,
+      dueAt,
+      isLateSubmission: timing({dueAt, completedAt: date}).status === "late",
       theme: Object.hasOwn(themes, e.theme)
         ? e.theme
         : Object.keys(themes)[hash(key) % Object.keys(themes).length],
@@ -207,6 +225,7 @@
     eligible,
     completed,
     normalize,
+    timing,
     world,
     merge,
     sprite,
