@@ -36,6 +36,7 @@ window.StudioBackup = (() => {
         return {
           ...p,
           completed: a.completed,
+          datesEdited: !!a.datesEdited,
           due,
           questionIds: Array.isArray(a.questionIds)
             ? a.questionIds.filter((id) => bank.some((p) => p.id === id))
@@ -54,6 +55,7 @@ window.StudioBackup = (() => {
         (p) => !assignments.some((a) => a.key === p.key && !a.completed),
       ),
       assignments,
+      lectures: Array.isArray(raw.lectures) ? raw.lectures.filter(l => l && typeof l.reflection === "string" && l.reflection.trim().length >= 100).map(l=>({id:String(l.id),title:String(l.title).slice(0,180),date:String(l.date),reflection:l.reflection.slice(0,4000)})) : [],
       excludedCalendar: Array.isArray(raw.excludedCalendar)
         ? raw.excludedCalendar
         : [],

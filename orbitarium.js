@@ -35,10 +35,12 @@ window.Orbitarium = (() => {
     blocked = false,
     frame = 0,
     candidates = [];
+  let lectures = [];
   let removedCalendar = 0;
   try {
     const s = JSON.parse(StudioStorage.getItem(key) || "null");
     if (s) {
+      lectures = Array.isArray(s.lectures) ? s.lectures.filter(l => l && typeof l.reflection === "string" && l.reflection.trim().length >= 100) : [];
       if (s.version !== 1 || !Array.isArray(s.planets)) throw Error();
       const excluded = [
         ...s.planets,
@@ -115,17 +117,19 @@ window.Orbitarium = (() => {
     });
   }
   reconcileTiming();
+  data.lectures = lectures;
   function timingLabel(p) {
     const t = C.timing(p);
     return t.status === "late" ? "Satellite captured: Submitted past due date" + (t.hours == null ? " (exact hours unknown)" : ` (+${t.hours < 0.1 ? "<0.1" : t.hours.toFixed(1)} hrs late)`)
       : t.status === "on-time" ? "On-time completion" : "Submission timing unknown";
   }
   const save = () => {
+    data.lectures = lectures;
     reconcileTiming();
     if (blocked)
       throw Error("Recover your saved galaxy before making changes.");
     try {
-      StudioStorage.setItem(key, JSON.stringify(data));
+      StudioStorage.setItem(key, JSON.stringify({...data, lectures}));
     } catch {
       throw Error(
         "Storage is full or unavailable. Export your galaxy before leaving.",
@@ -169,6 +173,9 @@ window.Orbitarium = (() => {
   }
   function drawCenter(ctx, t) {
     const type = centerType();
+    ctx.save(); ctx.translate(500,310);
+    if(type !== "binary") ctx.rotate(t * (type === "pulsar" ? 2.5 : .45));
+    const pulse=1+.07*Math.sin(t*5); ctx.scale(pulse,pulse); ctx.translate(-500,-310);
     for (let y = -64; y <= 64; y += 4)
       for (let x = -80; x <= 80; x += 4) {
         const d = Math.hypot(x, y),
@@ -200,9 +207,10 @@ window.Orbitarium = (() => {
           ctx.fillRect(500 + x, 310 + y, 4, 4);
         }
       }
+    ctx.restore();
   }
   function view() {
-    return `<section class="orbitarium"><header class="orbit-head"><span class="orbit-kicker">MISSION CONTROL / YOUR COMPLETION COSMOS</span><h1 id="main-heading" tabindex="-1">ORBITARIUM<span class="blink">_</span></h1><p>Every finished assignment becomes a world worth exploring.</p><div class="orbit-actions"><button onclick="Orbitarium.addForm()">＋ Forge a planet</button><button onclick="Orbitarium.syncForm()">↻ Assignments & calendar</button><button onclick="Orbitarium.importForm()">⇧ Import completions</button><button onclick="Orbitarium.exportData()">⇩ Backup galaxy</button></div></header><div class="orbit-hud"><b>${data.planets.length} WORLDS DISCOVERED</b><span>LOCAL LOG · PRIVATE ON THIS DEVICE</span></div><p id="orbit-status" role="status">${e(message)}</p><div class="orbit-tools"><label>Search galaxy<input id="orbit-search" type="search" value="${e(query)}" oninput="Orbitarium.search(this.value)" placeholder="Assignment, course, planet…"></label><button onclick="Orbitarium.mode()">${mode === "solar" ? "▦ Galaxy grid" : "◎ Solar system"}</button><button onclick="Orbitarium.pause()">${paused ? "▶ Resume orbits" : "Ⅱ Pause orbits"}</button></div><label>Galaxy center<select onchange="Orbitarium.setCenter(this.value)">${Object.entries(
+    return `<section class="orbitarium"><header class="orbit-head"><span class="orbit-kicker">MISSION CONTROL / YOUR COMPLETION COSMOS</span><h1 id="main-heading" tabindex="-1">ORBITARIUM<span class="blink">_</span></h1><p>Every finished assignment becomes a world worth exploring.</p><div class="orbit-actions"><button onclick="Orbitarium.addForm()">＋ Forge a planet</button><button onclick="Orbitarium.lectureForm()">＋ Lecture attended</button><button onclick="Orbitarium.syncForm()">↻ Assignments & calendar</button><button onclick="Orbitarium.importForm()">⇧ Import completions</button><button onclick="Orbitarium.exportData()">⇩ Backup galaxy</button></div></header><div class="orbit-hud"><b>${data.planets.length} WORLDS DISCOVERED</b><span>LOCAL LOG · PRIVATE ON THIS DEVICE</span></div><p id="orbit-status" role="status">${e(message)}</p><div class="orbit-tools"><label>Search galaxy<input id="orbit-search" type="search" value="${e(query)}" oninput="Orbitarium.search(this.value)" placeholder="Assignment, course, planet…"></label><button onclick="Orbitarium.mode()">${mode === "solar" ? "▦ Galaxy grid" : "◎ Solar system"}</button><button onclick="Orbitarium.pause()">${paused ? "▶ Resume orbits" : "Ⅱ Pause orbits"}</button></div><label>Galaxy center<select onchange="Orbitarium.setCenter(this.value)">${Object.entries(
       centers,
     )
       .map(
@@ -266,6 +274,13 @@ window.Orbitarium = (() => {
         ctx.ellipse(500, 310, 85 + r * 84, 40 + r * 49, 0, 0, Math.PI * 2);
         ctx.stroke();
       }
+      lectures.slice(-100).forEach((l,i) => {
+        const seed=C.hash(l.id), x=((seed%1000+t*(20+seed%25))%1040)-20, y=((seed>>>10)%620+t*(8+seed%9))%620;
+        ctx.save(); ctx.translate(x,y); ctx.fillStyle=["#bfa58c","#f3d17c","#91b9dc","#c3a7dd"][seed%4];
+        if(seed%2) { ctx.fillRect(-1,-6,2,12); ctx.fillRect(-6,-1,12,2); ctx.fillRect(-2,-2,4,4); }
+        else { ctx.rotate(seed+t); ctx.fillRect(-5,-3,10,6); ctx.fillRect(-3,-5,6,10); ctx.fillStyle="#635d70";ctx.fillRect(0,-2,3,3); }
+        ctx.restore();
+      });
       drawCenter(ctx, t);
       ps.forEach((p, i) => {
         let ring = Math.floor(i / 6) + 1,
@@ -349,13 +364,30 @@ window.Orbitarium = (() => {
       }
     };
   }
+  function editDates(i) {
+    const a=data.assignments[i]; if(!a)return;
+    const local=v=>{if(!v)return ""; if(v.length===10)return v+"T23:59";const d=new Date(v);return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);};
+    modal("EDIT ASSIGNMENT DATES",`<form id="date-form"><p>Times use your device timezone. These edits stay in this app and survive calendar refreshes. A submission date records your reported submission.</p><label>Due date and time<input name="due" type="datetime-local" value="${e(local(a.due || a.dueAt))}"></label><label>Submission date and time<input name="submitted" type="datetime-local" value="${e(local(a.planet?.completedAt || a.completedAt))}"></label><button>Save dates</button><p id="date-error" role="status"></p></form>`);
+    document.getElementById("date-form").onsubmit=ev=>{ev.preventDefault();try{
+      const f=new FormData(ev.target), due=f.get("due"), submitted=f.get("submitted");
+      const dueAt=due?new Date(due).toISOString():null, completedAt=submitted?new Date(submitted).toISOString():null;
+      a.due=dueAt || "";a.dueAt=dueAt;a.completedAt=completedAt;a.datesEdited=true;
+      if(a.planet)a.planet={...a.planet,dueAt,completedAt};
+      data.planets=data.planets.map(p=>p.key===a.key?{...p,dueAt,completedAt}:p);
+      save();document.getElementById("orbit-dialog").close();render();
+    }catch(err){document.getElementById("date-error").textContent=err.message;}};
+  }
+  function lectureForm() {
+    modal("LECTURE ATTENDED",`<form id="lecture-form"><label>Course / lecture title<input name="title" required maxlength="180"></label><label>Date attended<input name="date" type="date" required></label><label>What was taught and what you learned (100 characters minimum)<textarea name="reflection" required minlength="100" maxlength="4000"></textarea></label><label class="check"><input type="checkbox" required>I actually attended this lecture.</label><button>Add to my sky</button><p id="lecture-error" role="status"></p></form><h3>Your lecture log</h3>${lectures.slice(-20).reverse().map(l=>`<details><summary>${e(l.date)} · ${e(l.title)}</summary><p>${e(l.reflection)}</p></details>`).join("")}`);
+    document.getElementById("lecture-form").onsubmit=ev=>{ev.preventDefault();const f=Object.fromEntries(new FormData(ev.target));if(f.reflection.trim().length<100){document.getElementById("lecture-error").textContent="Please write at least 100 characters, excluding surrounding spaces.";return;}lectures.push({...f,reflection:f.reflection.trim(),id:crypto.randomUUID()});save();document.getElementById("orbit-dialog").close();render();};
+  }
   function open(i) {
     const p = list()[i];
     if (!p) return;
     const w = C.world(p);
     modal(
       w.name,
-      `<div class="planet-profile ${p.isLateSubmission ? "planet--late" : ""}">${C.sprite(p)}<span>${e(C.themes[p.theme].name)} WORLD</span></div><h3>${e(p.title)}</h3><p>${e(p.topic)}</p><p>Completed: ${e(p.completedAt?.slice(0, 10) || "Date not recorded")}<br>Due: ${e(dueLabel(p.dueAt))}<br>Source: ${e(p.source)}</p><p class="moon-label">${e(timingLabel(p))}</p><h3>PLANET BIO / FICTIONAL LORE</h3><p>${e(w.bio)}</p><p>${e(p.notes)}</p><label>Change world theme<select id="planet-theme">${options()}</select></label><button id="save-theme">Save theme</button>`,
+      `<div class="planet-profile ${p.isLateSubmission ? "planet--late" : ""}">${C.sprite(p)}<span>${e(C.themes[p.theme].name)} WORLD</span></div><h3>${e(p.title)}</h3><p>${e(p.topic)}</p><p>Completed: ${e(p.completedAt?.slice(0, 10) || "Date not recorded")}<br>Due: ${e(dueLabel(p.dueAt))}<br>Source: ${e(p.source)}</p><p class="moon-label">${e(timingLabel(p))}</p><button onclick="Orbitarium.editDates(${data.assignments.findIndex(a => a.key === p.key)})">Edit due / submission dates</button><h3>PLANET BIO / FICTIONAL LORE</h3><p>${e(w.bio)}</p><p>${e(p.notes)}</p><label>Change world theme<select id="planet-theme">${options()}</select></label><button id="save-theme">Save theme</button>`,
     );
     document.getElementById("planet-theme").value = p.theme;
     document.getElementById("save-theme").onclick = () => {
@@ -506,7 +538,8 @@ window.Orbitarium = (() => {
           const old = data.assignments.find((a) => a.key === p.key);
           const a = {
             ...p,
-            due: ev.start?.dateTime || ev.start?.date || "",
+            due: old?.datesEdited ? old.due : ev.start?.dateTime || ev.start?.date || "",
+            datesEdited: !!old?.datesEdited,
             completed: old ? old.completed : C.completed(ev),
             planet: old?.planet || p,
           };
@@ -640,7 +673,7 @@ window.Orbitarium = (() => {
   }
   function assignmentCard(a) {
     const i = data.assignments.indexOf(a);
-    return `<article class="assignment-card ${a.completed ? "is-complete" : ""}"><h3>${e(a.title)}</h3><p>${e(a.topic)}<br><time>${e(dueLabel(a.due))}</time></p>${a.source === "review" && a.questionIds?.length ? `<button onclick="Orbitarium.startMission(${i})">Practice this quest →</button>` : ""}<button onclick="Orbitarium.toggleAssignment(${i})">${a.completed ? "✓ Complete · Mark incomplete" : "○ Incomplete · Mark complete"}</button></article>`;
+    return `<article class="assignment-card ${a.completed ? "is-complete" : ""}"><h3>${e(a.title)}</h3><p>${e(a.topic)}<br><time>${e(dueLabel(a.due))}</time></p>${a.source === "review" && a.questionIds?.length ? `<button onclick="Orbitarium.startMission(${i})">Practice this quest →</button>` : ""}<button onclick="Orbitarium.editDates(${i})">Edit dates</button><button onclick="Orbitarium.toggleAssignment(${i})">${a.completed ? "✓ Complete · Mark incomplete" : "○ Incomplete · Mark complete"}</button></article>`;
   }
   function assignmentResults() {
     const el = document.getElementById("assignment-results");
@@ -681,7 +714,7 @@ window.Orbitarium = (() => {
   function toggleAssignment(i) {
     const a = data.assignments[i];
     if (!a) return;
-    const prev = JSON.parse(JSON.stringify(data));
+    const prev = JSON.parse(JSON.stringify({...data, lectures}));
     try {
       a.completed = !a.completed;
       if (a.completed) {
@@ -715,7 +748,7 @@ window.Orbitarium = (() => {
     );
     document.getElementById("assignment-form").onsubmit = (ev) => {
       ev.preventDefault();
-      const previous = JSON.parse(JSON.stringify(data));
+      const previous = JSON.parse(JSON.stringify({...data, lectures}));
       try {
         const raw = Object.fromEntries(new FormData(ev.target)),
           p = C.normalize({
@@ -815,6 +848,7 @@ window.Orbitarium = (() => {
     completeMissions,
     startMission,
     setCenter,
+    editDates, lectureForm,
     timingFilter: (v) => { timingFilter = ["all","on-time","late","unknown"].includes(v) ? v : "all"; page = 0; results(); },
     assignmentsView,
     assignmentMount: assignmentResults,
