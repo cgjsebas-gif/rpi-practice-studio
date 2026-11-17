@@ -6,6 +6,7 @@ window.StudioStorage = (() => {
     "rpi-studio-v2",
     "rpi-studio-theme",
     "rpi-orbitarium-v1",
+    "rpi-study-rewards-v1",
   ];
   let envelope = { version: 3, domains: {} },
     blocked = false,

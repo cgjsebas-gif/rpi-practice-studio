@@ -43,7 +43,7 @@ Twelve seeded planet themes have deterministic lore. Sector centers can vary aut
 - `orbitarium.js`: assignment/calendar/galaxy views and completion synchronization.
 - `diagrams.js`, `style.css`, `orbitarium.css`: responsive theme-aware visuals.
 
-Content remains in `questions.js` and `content.js` (200 original questions, 33 hubs). Course-specific exam boundaries are not verified; content is not represented as an instructor's actual exam.
+Content remains in `questions.js` and `content.js` (260 original questions, 33 hubs). Course-specific exam boundaries are not verified; content is not represented as an instructor's actual exam.
 
 ## Verification
 
@@ -61,4 +61,17 @@ Source formatting uses Prettier 3.9.10. Runtime has no npm dependencies. Google 
 
 Planets derive `isLateSubmission` from `completedAt` (or `submittedAt`) and `dueAt`/`dueDate`/`due`. Saved assignment deadlines are reconciled into legacy planets. Missing or invalid dates stay unknown; date-only deadlines mean end-of-day Eastern, and exact hours are shown only when both timestamps include a time. Completion is user-reported and is not proof of a Blackboard submission. Marking incomplete removes the active planet and its moon; restoring completion keeps its recorded timestamp and appearance. Galaxy filters distinguish all, on-time, late, and unknown timing. Canvas moons respect the existing pause/reduced-motion controls.
 
-The bank now contains 200 problems, including 36 new university-style questions. See [curriculum sources and validation](CURRICULUM-SOURCES.md).
+The bank now contains 260 problems, including the earlier 36-question extension and 60 new four-option problems (20 per course). See [curriculum sources and validation](CURRICULUM-SOURCES.md).
+
+
+## Consistency release (consistency10)
+
+Five distinct valid answers or one newly completed assignment/review mission qualify a local day. Exam answers earn activity when locked, without revealing correctness; invalid numeric entries earn no activity. Each distinct question per day earns 10 XP and each newly completed mission earns 30 XP. Completion toggles and due/submission-date edits cannot duplicate or backdate rewards. Existing records are not retroactively assigned invented activity dates.
+
+Seven consecutive qualifying days earn a shield (maximum two). A shield preserves a streak over one isolated missed day without crediting that day as activity. Milestones at 3, 7, 14 and 30 qualifying streak days grant one-time bonuses of 25, 75, 150 and 400 XP. The 30-day/12-week heatmap and navigation goal update on reward events, local date changes and tab visibility changes. The versioned reward-event domain is included in full backups.
+
+The redemption queue replays saved assessed attempts and clears a missed or guessed question after two distinct consecutive correct attempts. Rechecking a corrected response cannot count as a separate recovery attempt. Confidence tags remain editable and survive refresh and exam finalization. A guessed correct answer generates review work without being marked incorrect.
+
+Quick reference / scratchpad opens scoped formulas and definitions during guided practice and exams. It excludes worked solutions, preserves your draft, and keeps the exam timer running. Timed simulation is explicitly reference-enabled. Boot recovery handles rejected promises and cancels its initial timeout after a successful mount.
+
+See QUESTION-EXPANSION.md for content provenance. All additions are original first-course practice; exact instructor boundaries remain unverified. Tests are dependency-free Node scripts in this folder.

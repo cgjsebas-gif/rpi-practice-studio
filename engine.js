@@ -214,8 +214,12 @@ const StudyEngine = (() => {
           typeof a.answer === "string" &&
           typeof a.correct === "boolean",
       )
-      .map((a) => ({
+      .map((a, i) => ({
         ...a,
+        attemptId: str(a.attemptId, 300) || `legacy:${a.id}:${a.at}:${i}`,
+        confidence: ["Guessed", "Unsure", "Confident"].includes(a.confidence)
+          ? a.confidence
+          : "",
         status: ["correct", "incorrect", "self"].includes(a.status)
           ? a.status
           : a.correct
@@ -241,6 +245,7 @@ const StudyEngine = (() => {
           answer: str(d.answer),
           work: str(d.work),
           units: str(d.units, 30),
+          scratchpad: str(d.scratchpad),
         };
     for (const [id, n] of Object.entries(raw.notes || {}))
       if (hs.has(id)) s.notes[id] = str(n);
@@ -325,10 +330,18 @@ const StudyEngine = (() => {
         )
           s.session.responses[i] = {
             status: a.status,
+            submittedAt: Number.isFinite(Date.parse(a.submittedAt))
+              ? a.submittedAt
+              : null,
             answer: str(a.answer),
             work: str(a.work),
             units: str(a.units, 30),
             selfAssessed: !!a.selfAssessed,
+            confidence: ["Guessed", "Unsure", "Confident"].includes(
+              a.confidence,
+            )
+              ? a.confidence
+              : "",
             hints: Array.isArray(a.hints)
               ? a.hints.filter((x) => typeof x === "string")
               : [],
@@ -359,6 +372,7 @@ const StudyEngine = (() => {
       return false;
     session.responses[index] = {
       status: "submitted",
+      submittedAt: new Date(now).toISOString(),
       answer: String(draft.answer).slice(0, 20000),
       work: String(draft.work || "").slice(0, 20000),
       units: String(draft.units || "").slice(0, 30),
@@ -380,6 +394,8 @@ const StudyEngine = (() => {
         result.status === "invalid" ? "incorrect" : result.status;
       attempts.push({
         id,
+        attemptId: `session:${session.started}:${id}`,
+        confidence: response.confidence || "",
         answer: response.answer,
         work: response.work,
         units: response.units,
@@ -408,15 +424,37 @@ const StudyEngine = (() => {
       self: rows.filter((a) => a.selfAssessed).length,
     };
   }
+  function redemption(attempts) {
+    const rows = new Map(),
+      seen = new Set();
+    attempts.forEach((a, i) => {
+      if (!["correct", "incorrect"].includes(a.status)) return;
+      const key = a.attemptId || `legacy:${a.id}:${a.at}:${i}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      const r = rows.get(a.id) || { pending: false, wins: 0 };
+      if (!a.correct || a.failedAttempt || a.confidence === "Guessed") {
+        r.pending = true;
+        r.wins = 0;
+      } else if (r.pending) {
+        r.wins++;
+        if (r.wins >= 2) r.pending = false;
+      }
+      rows.set(a.id, r);
+    });
+    return [...rows].filter(([, r]) => r.pending).map(([id]) => id);
+  }
   function needsReview(attempts, ids) {
     return latest(attempts, ids)
       .filter((a) => !a.correct)
       .map((a) => a.id);
   }
   function reviewDue(attempts, ids, now = Date.now()) {
+    const pending = new Set(redemption(attempts));
     return latest(attempts, ids)
       .filter(
         (a) =>
+          pending.has(a.id) ||
           !a.correct ||
           (Number.isFinite(Date.parse(a.at)) &&
             now - Date.parse(a.at) >= (a.selfAssessed ? 1 : 3) * 86400000),
@@ -436,6 +474,7 @@ const StudyEngine = (() => {
     finishExam,
     mastery,
     needsReview,
+    redemption,
     reviewDue,
   };
 })();

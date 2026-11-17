@@ -210,7 +210,7 @@ window.Orbitarium = (() => {
     ctx.restore();
   }
   function view() {
-    return `<section class="orbitarium"><header class="orbit-head"><span class="orbit-kicker">MISSION CONTROL / YOUR COMPLETION COSMOS</span><h1 id="main-heading" tabindex="-1">ORBITARIUM<span class="blink">_</span></h1><p>Every finished assignment becomes a world worth exploring.</p><div class="orbit-actions"><button onclick="Orbitarium.addForm()">＋ Forge a planet</button><button onclick="Orbitarium.lectureForm()">＋ Lecture attended</button><button onclick="Orbitarium.syncForm()">↻ Assignments & calendar</button><button onclick="Orbitarium.importForm()">⇧ Import completions</button><button onclick="Orbitarium.exportData()">⇩ Backup galaxy</button></div></header><div class="orbit-hud"><b>${data.planets.length} WORLDS DISCOVERED</b><span>LOCAL LOG · PRIVATE ON THIS DEVICE</span></div><p id="orbit-status" role="status">${e(message)}</p><div class="orbit-tools"><label>Search galaxy<input id="orbit-search" type="search" value="${e(query)}" oninput="Orbitarium.search(this.value)" placeholder="Assignment, course, planet…"></label><button onclick="Orbitarium.mode()">${mode === "solar" ? "▦ Galaxy grid" : "◎ Solar system"}</button><button onclick="Orbitarium.pause()">${paused ? "▶ Resume orbits" : "Ⅱ Pause orbits"}</button></div><label>Galaxy center<select onchange="Orbitarium.setCenter(this.value)">${Object.entries(
+    return `<section class="orbitarium"><header class="orbit-head"><span class="orbit-kicker">MISSION CONTROL / YOUR COMPLETION COSMOS</span><h1 id="main-heading" tabindex="-1">ORBITARIUM<span class="blink">_</span></h1><p>Every finished assignment becomes a world worth exploring.</p><div class="orbit-actions"><button onclick="Orbitarium.addForm()">＋ Forge a planet</button><button onclick="Orbitarium.lectureForm()">＋ Lecture attended</button><button onclick="Orbitarium.syncForm()">↻ Assignments & calendar</button><button onclick="Orbitarium.importForm()">⇧ Import completions</button><button onclick="Orbitarium.exportData()">⇩ Backup galaxy</button></div></header>${window.StudyConsistency?.card() || ""}<div class="orbit-hud"><b>${data.planets.length} WORLDS DISCOVERED</b><span>LOCAL LOG · PRIVATE ON THIS DEVICE</span></div><p id="orbit-status" role="status">${e(message)}</p><div class="orbit-tools"><label>Search galaxy<input id="orbit-search" type="search" value="${e(query)}" oninput="Orbitarium.search(this.value)" placeholder="Assignment, course, planet…"></label><button onclick="Orbitarium.mode()">${mode === "solar" ? "▦ Galaxy grid" : "◎ Solar system"}</button><button onclick="Orbitarium.pause()">${paused ? "▶ Resume orbits" : "Ⅱ Pause orbits"}</button></div><label>Galaxy center<select onchange="Orbitarium.setCenter(this.value)">${Object.entries(
       centers,
     )
       .map(
@@ -356,6 +356,7 @@ window.Orbitarium = (() => {
         data.planets = C.merge(data.planets, [p]);
         data.assignments.push({ ...p, due: "", planet: p });
         save();
+        window.StudyConsistency?.record("mission",p.key);
         document.getElementById("orbit-dialog").close();
         message = "A new world has joined your galaxy.";
         render();
@@ -626,6 +627,7 @@ window.Orbitarium = (() => {
         });
       data.planets = C.merge(data.planets, [p]);
       save();
+      window.StudyConsistency?.record("mission",p.key);
       button.disabled = true;
       button.textContent = "Planet saved";
       results();
@@ -734,6 +736,7 @@ window.Orbitarium = (() => {
         data.planets = data.planets.filter((p) => p.key !== a.key);
       }
       save();
+      if(a.completed) window.StudyConsistency?.record("mission",a.key);
       assignmentResults();
       results();
     } catch (err) {
@@ -765,6 +768,7 @@ window.Orbitarium = (() => {
         });
         if (raw.completed) data.planets = C.merge(data.planets, [p]);
         save();
+        if(raw.completed) window.StudyConsistency?.record("mission",p.key);
         document.getElementById("orbit-dialog").close();
         assignmentResults();
       } catch (err) {
@@ -777,8 +781,12 @@ window.Orbitarium = (() => {
 
   function syncMissions(items) {
     if (blocked) return;
-    let changed = false;
-    for (const item of OrbitCalendar.reviewEvents(items)) {
+    const incoming=OrbitCalendar.reviewEvents(items);
+    const keys=new Set(incoming.map(item=>C.normalize({...item,completed:true},"review","daily-review")?.key));
+    const before=data.assignments.length;
+    data.assignments=data.assignments.filter(a=>a.source!=="review" || a.completed || keys.has(a.key));
+    let changed = before!==data.assignments.length;
+    for (const item of incoming) {
       const p = C.normalize(
         { ...item, completed: true },
         "review",
@@ -798,9 +806,10 @@ window.Orbitarium = (() => {
   }
   function completeMissions(session) {
     if (blocked || !session.completed) return;
+    const newlyCompleted=[];
     let changed = false;
     const correct = new Set(
-      session.ids.filter((id, i) => session.responses[i]?.status === "correct"),
+      session.ids.filter((id, i) => session.responses[i]?.status === "correct" && session.responses[i]?.confidence !== "Guessed"),
     );
     for (const a of data.assignments) {
       if (
@@ -811,6 +820,7 @@ window.Orbitarium = (() => {
       )
         continue;
       a.completed = true;
+      newlyCompleted.push(a.key);
       a.planet = C.normalize(
         { ...a, completed: true, completedAt: new Date().toISOString() },
         "review",
@@ -819,7 +829,7 @@ window.Orbitarium = (() => {
       data.planets = C.merge(data.planets, [a.planet]);
       changed = true;
     }
-    if (changed) save();
+    if (changed) {save();newlyCompleted.forEach(key=>window.StudyConsistency?.record("mission",key));}
   }
   function startMission(index) {
     const a = data.assignments[index];

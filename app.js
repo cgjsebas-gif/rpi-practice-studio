@@ -182,7 +182,9 @@ function bootStudio() {
     )
       return;
     if (isExam()) {
-      state.attempts.push(...E.finishExam(state.session, bank));
+      const graded = E.finishExam(state.session, bank);
+      state.attempts.push(...graded);
+
       updateMissions(true);
     }
     state.session = {
@@ -236,7 +238,8 @@ function bootStudio() {
   function finish() {
     if (!state.session || state.session.completed) return;
     if (isExam()) {
-      state.attempts.push(...E.finishExam(state.session, bank));
+      const graded = E.finishExam(state.session, bank);
+      state.attempts.push(...graded);
     } else {
       state.session.completed = true;
       state.session.finished = Date.now();
@@ -279,7 +282,18 @@ function bootStudio() {
         finish();
         return;
       }
-      if (E.submitExam(state.session, state.session.index, draft())) {
+      const entered = draft(),
+        question = current();
+      const validForActivity =
+        E.grade(question, entered.answer, entered.units ?? question.units)
+          .status !== "invalid";
+      if (E.submitExam(state.session, state.session.index, entered)) {
+        if (validForActivity)
+          window.StudyConsistency?.record(
+            "problem",
+            `session:${state.session.started}:${question.id}`,
+            question.id,
+          );
         feedback = {
           status: "submitted",
           message:
@@ -299,6 +313,9 @@ function bootStudio() {
     }
     let a = {
       id: p.id,
+      attemptId: `session:${state.session?.started || "single"}:${p.id}`,
+      confidence:
+        state.session?.responses[state.session.index]?.confidence || "",
       answer: d.answer,
       work: d.work,
       units: d.units,
@@ -307,8 +324,20 @@ function bootStudio() {
       at: new Date().toISOString(),
       sessionStarted: state.session?.started,
     };
-    state.attempts.push(a);
-    lastAttempt = state.attempts.length - 1;
+    const existing = state.attempts.findIndex(
+      (x) => x.attemptId === a.attemptId,
+    );
+    if (existing >= 0) {
+      a.failedAttempt =
+        state.attempts[existing].failedAttempt ||
+        state.attempts[existing].status === "incorrect";
+      state.attempts[existing] = a;
+      lastAttempt = existing;
+    } else {
+      state.attempts.push(a);
+      lastAttempt = state.attempts.length - 1;
+    }
+    window.StudyConsistency?.record("problem", a.attemptId, p.id);
     if (state.session) {
       let s = state.session;
       s.responses[s.index] = {
@@ -358,6 +387,57 @@ function bootStudio() {
       .filter((x) => x.wrong)
       .sort((a, b) => b.wrong - a.wrong);
   }
+  function redemptionButton() {
+    const ids = E.redemption(state.attempts).filter((id) =>
+      problemIds.includes(id),
+    );
+    return `<button onclick="practiceRedemption()" ${ids.length ? "" : "disabled"}>Practice missed questions (${ids.length})</button>`;
+  }
+  function practiceRedemption() {
+    const ids = E.redemption(state.attempts).filter((id) =>
+      problemIds.includes(id),
+    );
+    if (ids.length) start(ids, "Redemption queue");
+  }
+  function confidenceControls() {
+    const r = state.session?.responses[state.session.index];
+    if (!r || r.status === "skipped") return "";
+    return `<div class="confidence-controls" role="group" aria-label="Confidence in this response"><span>How certain were you?</span>${["Guessed", "Unsure", "Confident"].map((v) => `<button type="button" aria-pressed="${r.confidence === v}" onclick="setConfidence('${v}')">${v}</button>`).join("")}<small>Guessed answers stay in review, even when correct.</small></div>`;
+  }
+  function setConfidence(value) {
+    if (!["Guessed", "Unsure", "Confident"].includes(value)) return;
+    const s = state.session,
+      r = s?.responses[s.index];
+    if (!r) return;
+    r.confidence = value;
+    const a = [...state.attempts]
+      .reverse()
+      .find((a) => a.id === s.ids[s.index] && a.sessionStarted === s.started);
+    if (a) a.confidence = value;
+    if (!isExam()) updateMissions();
+    persist();
+    render();
+  }
+  function openQuickReference() {
+    const p = current(),
+      h = hub(p.hub),
+      previous = document.activeElement,
+      d = document.createElement("dialog");
+    d.className = "reference-drawer";
+    d.setAttribute("aria-labelledby", "quick-reference-heading");
+    d.innerHTML = `<div class="dialog-top"><h2 id="quick-reference-heading">Quick reference / scratchpad</h2><button aria-label="Close quick reference">×</button></div><h3>${esc(h.title)}</h3><div class="equation">${esc(h.equation)}</div><p>${esc(h.variables)}</p><p>${esc(h.assumptions)}</p><ul>${h.terms.map((t) => `<li>${esc(t)}</li>`).join("")}</ul><label for="quick-scratch">Private scratchpad for this problem</label><textarea id="quick-scratch" rows="9" maxlength="20000">${esc(draft().scratchpad || "")}</textarea><p class="small">Saved locally. Closing this panel keeps your answer and session intact. Exam time continues while open.</p>`;
+    document.body.append(d);
+    d.querySelector("button").onclick = () => d.close();
+    d.querySelector("textarea").oninput = (e) => {
+      state.drafts[p.id] = { ...draft(), scratchpad: e.target.value };
+      persist();
+    };
+    d.addEventListener("close", () => {
+      d.remove();
+      previous?.focus();
+    });
+    d.showModal();
+  }
   function missedIds() {
     return E.reviewDue(state.attempts, problemIds);
   }
@@ -393,6 +473,7 @@ function bootStudio() {
   function render() {
     try {
       renderView();
+      if (window.__bootTimer) clearTimeout(window.__bootTimer);
     } catch (error) {
       studioFailure(error);
     }
@@ -414,7 +495,7 @@ function bootStudio() {
       ["orbitarium", "✦", "Orbitarium"],
     ];
     $("app").innerHTML =
-      `<a class="skip" href="#content">Skip to content</a><div class="shell"><aside class="sidebar"><a class="brand" href="#" onclick="go('home');return false"><span class="logo">∴</span><span>Practice Studio<small>RPI · LEARN WITH INTENTION</small></span></a><nav aria-label="Main navigation">${navs.map(([p, i, t]) => `<button class="nav-item ${active === p || (p === "learn" && active === "hub") ? "active" : ""}" ${active === p ? 'aria-current="page"' : ""} onclick="go('${p}')"><span aria-hidden="true">${i}</span>${t}${p === "mistakes" && missedIds().length ? `<b>${missedIds().length}</b>` : ""}</button>`).join("")}</nav><div class="side-note"><strong>Guidance first, always.</strong><p>Your answer comes before the model solution. Choose how much help to reveal.</p></div><label class="theme-label" for="theme">Appearance</label><select id="theme" onchange="theme(this.value)">${["system", "light", "dark"].map((t) => `<option value="${t}" ${state.theme === t ? "selected" : ""}>${t[0].toUpperCase() + t.slice(1)}</option>`).join("")}</select><button onclick="openBackup()">Backup & restore</button><small id="storage-status">${esc(storageMessage || StudioStorage.status() || "Local save · not synced")}</small></aside><main id="content"><div class="topbar"><span>PRACTICE STUDIO · ORBITARIUM EDITION</span><form class="search" onsubmit="event.preventDefault();searchQuery=this.elements.search.value;go('search')"><label class="sr-only" for="global-search">Search topics, equations and problems</label><input id="global-search" name="search" type="search" placeholder="Search topics, equations, problems…" value="${esc(searchQuery)}"><button aria-label="Search">↗</button></form></div>${storageMessage ? `<div class="alert">${esc(storageMessage)}</div>` : ""}${r.page === "notfound" ? empty("This study link is unavailable.", "Choose a course or return to the dashboard.", "Dashboard", "go('home')") : r.page === "assignments" ? Orbitarium.assignmentsView() : r.page === "orbitarium" ? Orbitarium.view() : r.page === "home" ? home() : r.page === "learn" ? learn() : r.page === "hub" ? hubPage(r.id) : r.page === "library" ? library() : r.page === "practice" ? practice() : r.page === "builder" ? builder() : r.page === "summary" ? summary() : r.page === "mistakes" ? mistakePage() : r.page === "bookmarks" ? bookmarks() : r.page === "reference" ? reference() : ["progress", "settings"].includes(r.page) ? progress() : r.page === "coverage" ? coverage() : searchPage()}<footer><span>Independent learning aid · ${bank.length} original practice problems · ${hubs.length} hubs</span><span>Progress stored in this browser. Export a backup in Progress.</span></footer></main></div>`;
+      `<a class="skip" href="#content">Skip to content</a><div class="shell"><aside class="sidebar"><a class="brand" href="#" onclick="go('home');return false"><span class="logo">∴</span><span>Practice Studio<small>RPI · LEARN WITH INTENTION</small></span></a><nav aria-label="Main navigation">${navs.map(([p, i, t]) => `<button class="nav-item ${active === p || (p === "learn" && active === "hub") ? "active" : ""}" ${active === p ? 'aria-current="page"' : ""} onclick="go('${p}')"><span aria-hidden="true">${i}</span>${t}${p === "mistakes" && missedIds().length ? `<b>${missedIds().length}</b>` : ""}</button>`).join("")}</nav><div class="side-note"><strong>Guidance first, always.</strong><p>Your answer comes before the model solution. Choose how much help to reveal.</p></div><label class="theme-label" for="theme">Appearance</label><select id="theme" onchange="theme(this.value)">${["system", "light", "dark"].map((t) => `<option value="${t}" ${state.theme === t ? "selected" : ""}>${t[0].toUpperCase() + t.slice(1)}</option>`).join("")}</select><button onclick="openBackup()">Backup & restore</button><small id="storage-status">${esc(storageMessage || StudioStorage.status() || "Local save · not synced")}</small></aside><main id="content"><div class="topbar">${window.StudyConsistency?.pill() || ""}<span>PRACTICE STUDIO · ORBITARIUM EDITION</span><form class="search" onsubmit="event.preventDefault();searchQuery=this.elements.search.value;go('search')"><label class="sr-only" for="global-search">Search topics, equations and problems</label><input id="global-search" name="search" type="search" placeholder="Search topics, equations, problems…" value="${esc(searchQuery)}"><button aria-label="Search">↗</button></form></div>${storageMessage ? `<div class="alert">${esc(storageMessage)}</div>` : ""}${r.page === "notfound" ? empty("This study link is unavailable.", "Choose a course or return to the dashboard.", "Dashboard", "go('home')") : r.page === "assignments" ? Orbitarium.assignmentsView() : r.page === "orbitarium" ? Orbitarium.view() : r.page === "home" ? home() : r.page === "learn" ? learn() : r.page === "hub" ? hubPage(r.id) : r.page === "library" ? library() : r.page === "practice" ? practice() : r.page === "builder" ? builder() : r.page === "summary" ? summary() : r.page === "mistakes" ? mistakePage() : r.page === "bookmarks" ? bookmarks() : r.page === "reference" ? reference() : ["progress", "settings"].includes(r.page) ? progress() : r.page === "coverage" ? coverage() : searchPage()}<footer><span>Independent learning aid · ${bank.length} original practice problems · ${hubs.length} hubs</span><span>Progress stored in this browser. Export a backup in Progress.</span></footer></main></div>`;
     tick();
     if (r.page === "orbitarium") Orbitarium.mount();
     if (r.page === "assignments") Orbitarium.assignmentMount();
@@ -540,7 +621,7 @@ function bootStudio() {
       h = hub(p.hub),
       attempted = state.attempts.some((a) => a.id === p.id),
       units = p.units;
-    return `<div class="breadcrumbs"><button onclick="go('library')">Practice library</button><span>/ ${esc(p.subject)} / ${esc(h.title)}</span></div><div class="session-strip"><span>${esc(s?.mode || "Guided practice")} · ${s ? `${s.index + 1} / ${s.ids.length}` : "1 / 1"}</span><span id="timer" role="timer" aria-label="Time remaining"></span><button onclick="finish()">Finish & review</button><button onclick="go('library')">Save & leave <kbd>Esc</kbd></button></div><p class="shortcut-note">Outside text fields: <kbd>Enter</kbd> check / continue · <kbd>H</kbd> hint · <kbd>R</kbd> flag · <kbd>Esc</kbd> leave · 1–4 select choices when available</p><div class="practice-layout"><article class="panel question"><div class="question-top"><span class="badge">${esc(p.difficulty)} · ${esc(p.type)} · ~${p.minutes} min</span><button aria-pressed="${state.saved.includes(p.id)}" onclick="toggle('saved','${p.id}')">${state.saved.includes(p.id) ? "★ Saved" : "☆ Save"}</button></div><h1 id="main-heading" tabindex="-1">${esc(p.title)}</h1><p class="prompt">${esc(p.prompt)}</p>${safeVisual(p)}<details><summary>Learning objective, prerequisites & source</summary><p><strong>Objective:</strong> ${esc(p.objective)}</p><p><strong>Prerequisites:</strong> ${esc(h.prereqs.map((x) => hub(x)?.title).join(", ") || "Basic algebra or careful reading")}</p><p><strong>Subtopic:</strong> ${esc(p.subtopic)}</p><p class="small">${esc(p.source)}</p></details><form onsubmit="checkAnswer(event)"><fieldset class="answer-fields" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}><label for="work">${p.subject === "Physics I" ? "Organized working" : "Your reasoning / scratch work"}</label><textarea id="work" class="working" rows="4" placeholder="Given → assumptions → principle → symbolic setup → calculation → check" oninput="setDraft('work',this.value)">${esc(d.work)}</textarea>${p.subject === "Physics I" ? `<details class="workcheck"><summary>Physics organization check</summary>${["Define the system and given quantities with units", "Draw relevant forces / axes or a system boundary", "State the principle and symbolic equation", "Check dimensions, sign and physical reasonableness"].map((t, i) => `<label class="check"><input type="checkbox" ${workChecks[i] ? "checked" : ""} onchange="workChecks[${i}]=this.checked">${t}</label>`).join("")}<button type="button" onclick="checkWork()">Check organization</button><p id="work-message" role="status">${esc(workMessage)}</p><p class="small muted">A checklist checks your organization, not the correctness of your derivation.</p></details>` : ""}${
+    return `<div class="breadcrumbs"><button onclick="go('library')">Practice library</button><span>/ ${esc(p.subject)} / ${esc(h.title)}</span></div><div class="session-strip"><span>${esc(s?.mode || "Guided practice")} · ${s ? `${s.index + 1} / ${s.ids.length}` : "1 / 1"}</span><span id="timer" role="timer" aria-label="Time remaining"></span><button onclick="openQuickReference()">Quick reference / scratchpad</button><button onclick="finish()">Finish & review</button><button onclick="go('library')">Save & leave <kbd>Esc</kbd></button></div><p class="shortcut-note">Outside text fields: <kbd>Enter</kbd> check / continue · <kbd>H</kbd> hint · <kbd>R</kbd> flag · <kbd>Esc</kbd> leave · 1–4 select choices when available</p><div class="practice-layout"><article class="panel question"><div class="question-top"><span class="badge">${esc(p.difficulty)} · ${esc(p.type)} · ~${p.minutes} min</span><button aria-pressed="${state.saved.includes(p.id)}" onclick="toggle('saved','${p.id}')">${state.saved.includes(p.id) ? "★ Saved" : "☆ Save"}</button></div><h1 id="main-heading" tabindex="-1">${esc(p.title)}</h1><p class="prompt">${esc(p.prompt)}</p>${safeVisual(p)}<details><summary>Learning objective, prerequisites & source</summary><p><strong>Objective:</strong> ${esc(p.objective)}</p><p><strong>Prerequisites:</strong> ${esc(h.prereqs.map((x) => hub(x)?.title).join(", ") || "Basic algebra or careful reading")}</p><p><strong>Subtopic:</strong> ${esc(p.subtopic)}</p><p class="small">${esc(p.source)}</p></details><form onsubmit="checkAnswer(event)"><fieldset class="answer-fields" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}><label for="work">${p.subject === "Physics I" ? "Organized working" : "Your reasoning / scratch work"}</label><textarea id="work" class="working" rows="4" placeholder="Given → assumptions → principle → symbolic setup → calculation → check" oninput="setDraft('work',this.value)">${esc(d.work)}</textarea>${p.subject === "Physics I" ? `<details class="workcheck"><summary>Physics organization check</summary>${["Define the system and given quantities with units", "Draw relevant forces / axes or a system boundary", "State the principle and symbolic equation", "Check dimensions, sign and physical reasonableness"].map((t, i) => `<label class="check"><input type="checkbox" ${workChecks[i] ? "checked" : ""} onchange="workChecks[${i}]=this.checked">${t}</label>`).join("")}<button type="button" onclick="checkWork()">Check organization</button><p id="work-message" role="status">${esc(workMessage)}</p><p class="small muted">A checklist checks your organization, not the correctness of your derivation.</p></details>` : ""}${
       Array.isArray(p.options)
         ? `<div class="choice-options" role="group" aria-label="Answer choices">${p.options
             .slice(0, 4)
@@ -559,7 +640,7 @@ function bootStudio() {
             .map((u) => `<option value="${u}">`)
             .join("")}</datalist></div>`
         : ""
-    }</div>${p.kind === "number" ? `<p class="small muted">Tolerance: ${100 * (p.relTol ?? 0.005)}% relative or ${p.absTol ?? 1e-8} ${esc(units || "dimensionless")}, whichever is larger. Compatible units are converted; symbolic expressions are not auto-graded.</p>` : ""}</fieldset><div class="actions"><button class="primary" type="submit" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}>${isExam() ? "Lock response" : p.kind === "rubric" ? "Submit for self-check" : "Check my answer"} <kbd>Enter</kbd> →</button><button type="button" onclick="previous()" ${!s || s.index === 0 ? "disabled" : ""}>Previous</button><button type="button" onclick="advance()">${s && s.index === s.ids.length - 1 ? "Finish session" : "Next question"}</button></div></form>${feedback ? `<div class="feedback ${feedback.status}" role="status"><strong>${{ correct: "✓ Correct", incorrect: "↺ Review this", invalid: "Check your entry", self: "Self-assessment", submitted: "Response saved" }[feedback.status]}</strong><p>${esc(feedback.message)}</p>${!isExam() && feedback.status !== "invalid" && lastAttempt !== null ? `<details ${p.kind === "rubric" ? "open" : ""}><summary>Self-assessment rubric</summary><ul>${p.rubric.map((t) => `<li>${esc(t)}</li>`).join("")}</ul><p class="small">Use this for open-ended work or a genuinely equivalent response. Self-assessed results are labeled in progress.</p><div class="actions"><button onclick="assess(true)">Meets the criteria</button><button onclick="assess(false)">Needs more practice</button></div></details>` : ""}</div>` : ""}<div class="question-bottom"><button onclick="toggle('crucial','${p.id}')" aria-pressed="${state.crucial.includes(p.id)}">${state.crucial.includes(p.id) ? "⚑ Crucial for review" : "⚑ Mark crucial"} <kbd>R</kbd></button><button class="text-link" ${isExam() ? "disabled" : ""} onclick="go('hub','${p.hub}')">Open learning hub →</button></div></article><aside><section class="panel help"><h2>${isExam() ? "Exam in progress" : "Help, on your terms."}</h2><p>${isExam() ? "Help and correctness feedback are locked until you finish." : "Each level stays separate. Nothing opens automatically."}</p>${[
+    }</div>${p.kind === "number" ? `<p class="small muted">Tolerance: ${100 * (p.relTol ?? 0.005)}% relative or ${p.absTol ?? 1e-8} ${esc(units || "dimensionless")}, whichever is larger. Compatible units are converted; symbolic expressions are not auto-graded.</p>` : ""}</fieldset><div class="actions"><button class="primary" type="submit" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}>${isExam() ? "Lock response" : p.kind === "rubric" ? "Submit for self-check" : "Check my answer"} <kbd>Enter</kbd> →</button><button type="button" onclick="previous()" ${!s || s.index === 0 ? "disabled" : ""}>Previous</button><button type="button" onclick="advance()">${s && s.index === s.ids.length - 1 ? "Finish session" : "Next question"}</button></div></form>${confidenceControls()}${feedback ? `<div class="feedback ${feedback.status}" role="status"><strong>${{ correct: "✓ Correct", incorrect: "↺ Review this", invalid: "Check your entry", self: "Self-assessment", submitted: "Response saved" }[feedback.status]}</strong><p>${esc(feedback.message)}</p>${!isExam() && feedback.status !== "invalid" && lastAttempt !== null ? `<details ${p.kind === "rubric" ? "open" : ""}><summary>Self-assessment rubric</summary><ul>${p.rubric.map((t) => `<li>${esc(t)}</li>`).join("")}</ul><p class="small">Use this for open-ended work or a genuinely equivalent response. Self-assessed results are labeled in progress.</p><div class="actions"><button onclick="assess(true)">Meets the criteria</button><button onclick="assess(false)">Needs more practice</button></div></details>` : ""}</div>` : ""}<div class="question-bottom"><button onclick="toggle('crucial','${p.id}')" aria-pressed="${state.crucial.includes(p.id)}">${state.crucial.includes(p.id) ? "⚑ Crucial for review" : "⚑ Mark crucial"} <kbd>R</kbd></button><button class="text-link" ${isExam() ? "disabled" : ""} onclick="go('hub','${p.hub}')">Open learning hub →</button></div></article><aside><section class="panel help"><h2>${isExam() ? "Exam in progress" : "Help, on your terms."}</h2><p>${isExam() ? "Worked-answer help and correctness feedback are locked until you finish. The scoped quick reference and scratchpad remain available." : "Each level stays separate. Nothing opens automatically."}</p>${[
       ["clarify", "Clarification", "What is being asked?"],
       ["hint", "Conceptual hint", "Find a direction"],
       ["setup", "Equation & setup", "Start the reasoning"],
@@ -587,7 +668,7 @@ function bootStudio() {
     $("work-message").textContent = workMessage;
   }
   function builder() {
-    return `${heading("MIXED REVIEW & PRACTICE EXAMS", "Build a useful study session.", "Generated practice sessions draw from this library. They do not predict an upcoming exam.")}<form class="panel" onsubmit="buildSession(event)"><div class="filters"><label>Mode<select id="session-mode"><option value="Guided practice">Guided practice · immediate feedback</option><option value="Practice exam">Timed exam · results at the end</option></select></label><label>Difficulty<select id="session-difficulty"><option>All</option><option>Foundation</option><option>Core</option><option>Integration</option></select></label><label>Question count<input id="session-count" type="number" min="1" max="100" value="10" required></label><label>Optional timer (minutes)<input id="session-minutes" type="number" min="0" max="240" value="0" required></label></div><p class="small muted">Guided practice may be untimed. Exams default to 30 minutes when no duration is entered, lock submitted responses, and finish when time expires. Worked solutions stay hidden.</p><fieldset><legend>Select topics</legend><div class="actions"><button type="button" onclick="document.querySelectorAll('[name=session-topic]').forEach(x=>x.checked=true)">Select all</button><button type="button" onclick="document.querySelectorAll('[name=session-topic]').forEach(x=>x.checked=false)">Clear selection</button></div><div class="builder-grid">${courses
+    return `${heading("MIXED REVIEW & PRACTICE EXAMS", "Build a useful study session.", "Generated practice sessions draw from this library. They do not predict an upcoming exam.")}<form class="panel" onsubmit="buildSession(event)"><div class="filters"><label>Mode<select id="session-mode"><option value="Guided practice">Guided practice · immediate feedback</option><option value="Practice exam">Timed exam · results at the end</option></select></label><label>Difficulty<select id="session-difficulty"><option>All</option><option>Foundation</option><option>Core</option><option>Integration</option></select></label><label>Question count<input id="session-count" type="number" min="1" max="100" value="10" required></label><label>Optional timer (minutes)<input id="session-minutes" type="number" min="0" max="240" value="0" required></label></div><p class="small muted">Guided practice may be untimed. Exams allow the scoped quick reference and scratchpad, default to 30 minutes when no duration is entered, lock submitted responses, and finish when time expires. Worked solutions stay hidden.</p><fieldset><legend>Select topics</legend><div class="actions"><button type="button" onclick="document.querySelectorAll('[name=session-topic]').forEach(x=>x.checked=true)">Select all</button><button type="button" onclick="document.querySelectorAll('[name=session-topic]').forEach(x=>x.checked=false)">Clear selection</button></div><div class="builder-grid">${courses
       .map(
         (c) =>
           `<div><h3>${c}</h3>${hubs
@@ -632,7 +713,23 @@ function bootStudio() {
       minutes,
     );
   }
+  let displayedRewardDay = "";
+  function refreshStudyRewards() {
+    if (!window.StudyConsistency) return;
+    const pill = document.querySelector(".streak-pill"),
+      card = document.querySelector(".consistency-card");
+    if (pill) pill.outerHTML = StudyConsistency.pill();
+    if (card) card.outerHTML = StudyConsistency.card();
+    displayedRewardDay = StudyConsistency.localDay();
+  }
+  window.addEventListener("study:rewards", refreshStudyRewards);
+  window.addEventListener("visibilitychange", refreshStudyRewards);
   function tick() {
+    if (
+      window.StudyConsistency &&
+      displayedRewardDay !== StudyConsistency.localDay()
+    )
+      refreshStudyRewards();
     let el = $("timer"),
       s = state.session;
     if (
@@ -883,6 +980,9 @@ function bootStudio() {
       )}<p>This public package contains authored practice and public references, without private course documents, private document links, or retired subject content. Legacy problem IDs preserve supported backup records.</p><h3>Technical care</h3><p>Friction reduces mechanical energy, not total energy. R/S labels do not determine optical-rotation signs. Reaction rate and equilibrium favorability are different questions. Online supplements are learning resources, not evidence of your upcoming exam content.</p></section><section class="panel"><h2>Feature boundaries</h2><p>Numeric grading supports fractions, scientific notation, declared compatible units and displayed tolerances. Short concept labels use accepted synonyms. Open-ended and symbolic work uses a rubric; no drawing recognition or general symbolic algebra is claimed. Study sessions sample a fixed authored library, not an unlimited question generator.</p><p>Self-assessed responses are marked as such. Data is local, with export/import. The app makes no mastery claim and does not forecast an actual exam.</p></section>`;
   }
   Object.assign(window, {
+    practiceRedemption,
+    setConfidence,
+    openQuickReference,
     assessSession,
     chooseOption,
     $,
@@ -1004,7 +1104,7 @@ function bootStudio() {
     );
   }
   function quickFilters() {
-    return `<div class="quick-filters" role="group" aria-label="Question status">${["All", "Unseen", "Flagged", "Needs Review"].map((q) => `<button aria-pressed="${(state.filters.quick || "All") === q}" onclick="state.filters.quick='${q}';persist();render()">${q}</button>`).join("")}</div>`;
+    return `${redemptionButton()}<div class="quick-filters" role="group" aria-label="Question status">${["All", "Unseen", "Flagged", "Needs Review"].map((q) => `<button aria-pressed="${(state.filters.quick || "All") === q}" onclick="state.filters.quick='${q}';persist();render()">${q}</button>`).join("")}</div>`;
   }
   function masteryBar(h) {
     const m = E.mastery(state.attempts, h.problems);
@@ -1012,8 +1112,8 @@ function bootStudio() {
   }
   function updateMissions(completing = false) {
     if (!window.ReviewMissions || !window.Orbitarium) return;
-    Orbitarium.syncMissions(ReviewMissions.generate(state.attempts, bank));
     if (completing && state.session) Orbitarium.completeMissions(state.session);
+    Orbitarium.syncMissions(ReviewMissions.generate(state.attempts, bank));
   }
   window.addEventListener("keydown", (event) => {
     if (

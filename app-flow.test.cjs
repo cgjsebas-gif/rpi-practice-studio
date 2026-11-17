@@ -117,3 +117,31 @@ c.assessSession(0, true);
 assert.equal(c.state.session.responses[0].status, "correct");
 assert.equal(c.state.session.responses[0].selfAssessed, true);
 console.log("PASS completed rubric assessment updates diagnostics");
+// Valid exam locks earn activity on the local submission date, before final scoring.
+const RealDate=Date;let clock=new RealDate(2027,0,1,23,59).getTime();
+c.Date=class extends RealDate{constructor(...a){super(...(a.length?a:[clock]));}static now(){return clock;}};
+c.start(['q1','q2','q3','q6','q7'],'Practice exam',30);
+for(let i=0;i<5;i++){c.state.session.index=i;c.choose(c.state.session.ids[i]);c.setDraft('answer','123');c.checkAnswer({preventDefault(){}});}
+assert.equal(c.StudyConsistency.snapshot().activityHistory['2027-01-01']?.problemsSolved,5,'Locking valid exam entries credits their actual local day');
+assert.equal(c.state.session.responses[0].status,'submitted','No early correctness feedback');
+clock=new RealDate(2027,0,2,0,1).getTime();c.finish();
+assert.equal(c.StudyConsistency.snapshot().activityHistory['2027-01-02'],undefined,'Finishing after midnight does not move or duplicate XP');
+c.start(['q1','q2','q3','q6','q7'],'Practice exam',30);
+for(let i=0;i<5;i++){c.state.session.index=i;c.choose(c.state.session.ids[i]);c.setDraft('answer','garbage');c.checkAnswer({preventDefault(){}});}c.finish();
+assert.equal(c.StudyConsistency.snapshot().activityHistory['2027-01-02'],undefined,'Invalid numeric entries do not qualify');
+const pill={outerHTML:''};c.document.querySelector=selector=>selector==='.streak-pill'?pill:null;
+assert(listeners['study:rewards']?.length,'Reward updates have a live widget listener');
+listeners['study:rewards'].forEach(fn=>fn());assert(pill.outerHTML.includes('Goal pending')||pill.outerHTML.includes('At risk'));
+console.log('PASS exam reward validity, local submission day and live reward widgets');
+// Midnight and tab visibility refresh do not replace the study form or draft.
+assert(listeners.visibilitychange?.length);const draftBefore=JSON.stringify(c.state.drafts);clock=new RealDate(2027,0,3,0,1).getTime();listeners.visibilitychange.forEach(fn=>fn());assert.equal(JSON.stringify(c.state.drafts),draftBefore);assert(pill.outerHTML.includes('Start today'));
+// Exercise the real reference controller through a small DOM boundary.
+const drawerNodes={button:{},textarea:{}},drawerListeners={};let removed=false,shown=false,refocused=false;
+const drawer={innerHTML:'',setAttribute(){},querySelector:s=>drawerNodes[s],addEventListener:(n,f)=>drawerListeners[n]=f,showModal(){shown=true;},close(){drawerListeners.close();},remove(){removed=true;}};
+c.document.createElement=()=>drawer;c.document.body={append(){}};c.document.activeElement={focus(){refocused=true;}};
+c.start(['v4-1'],'Practice exam',30);c.setDraft('answer','A');c.checkAnswer({preventDefault(){}});c.setConfidence('Guessed');
+assert.equal(c.state.session.responses[0].status,'submitted');assert.equal(c.state.session.responses[0].confidence,'Guessed');
+c.openQuickReference();assert(shown);assert(drawer.innerHTML.includes('Private scratchpad'));assert(!drawer.innerHTML.includes('Correct choice:'));
+drawerNodes.textarea.oninput({target:{value:'Check domain first; keep this reasoning.'}});assert.equal(c.state.drafts['v4-1'].scratchpad,'Check domain first; keep this reasoning.');assert.equal(c.state.session.responses[0].answer,'A');drawer.close();assert(removed&&refocused);
+c.finish();assert(c.missedIds().includes('v4-1'),'A guessed correct exam answer stays review-worthy');
+console.log('PASS locked-exam confidence, reference controller, scratchpad and focus restoration');

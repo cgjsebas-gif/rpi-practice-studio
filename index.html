@@ -9,7 +9,7 @@
     />
     <meta name="color-scheme" content="light dark" />
     <title>RPI Practice Studio · Learn, Practice, Review</title>
-    <script src="storage.js?v=lectures9"></script>
+    <script src="storage.js?v=consistency10"></script>
     <script>
       try {
         var t = StudioStorage.getItem("rpi-studio-theme") || "system";
@@ -27,14 +27,14 @@
           : "light";
       }
     </script>
-    <link rel="stylesheet" href="style.css?v=lectures9" />
+    <link rel="stylesheet" href="style.css?v=consistency10" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
     />
-    <link rel="stylesheet" href="orbitarium.css?v=lectures9" />
+    <link rel="stylesheet" href="orbitarium.css?v=consistency10" />
   </head>
   <body>
     <div id="app">
@@ -51,14 +51,16 @@
       </main>
     </div>
     <script>
-      window.addEventListener("error", function () {
+      function showBootRecovery() {
         var el = document.getElementById("boot-recovery");
         if (el) {
           el.hidden = false;
           el.closest("main").setAttribute("aria-busy", "false");
         }
-      });
-      setTimeout(function () {
+      }
+      window.addEventListener("error", showBootRecovery);
+      window.addEventListener("unhandledrejection", showBootRecovery);
+      window.__bootTimer = setTimeout(function () {
         var el = document.getElementById("boot-recovery");
         if (el) el.hidden = false;
       }, 10000);
@@ -67,17 +69,17 @@
       >This study app needs JavaScript to run practice and save local
       progress.</noscript
     >
-    <script src="questions.js?v=lectures9"></script>
-    <script src="content.js?v=lectures9"></script>
-    <script src="scope.js?v=lectures9"></script>
-    <script src="engine.js?v=lectures9"></script>
-    <script src="diagrams.js?v=lectures9"></script>
-    <script src="orbit-core.js?v=lectures9"></script>
-    <script src="orbit-calendar.js?v=lectures9"></script>
-    <script src="review-missions.js?v=lectures9"></script>
-    <script src="orbitarium.js?v=lectures9"></script>
-    <script src="router.js?v=lectures9"></script>
-    <script src="backup.js?v=lectures9"></script>
-    <script src="app.js?v=lectures9"></script>
+    <script src="questions.js?v=consistency10"></script>
+    <script src="content.js?v=consistency10"></script>
+    <script src="scope.js?v=consistency10"></script>
+    <script src="engine.js?v=consistency10"></script>
+    <script src="diagrams.js?v=consistency10"></script>
+    <script src="orbit-core.js?v=consistency10"></script>
+    <script src="orbit-calendar.js?v=consistency10"></script>
+    <script src="review-missions.js?v=consistency10"></script>
+    <script src="orbitarium.js?v=consistency10"></script>
+    <script src="router.js?v=consistency10"></script>
+    <script src="backup.js?v=consistency10"></script>
+    <script src="app.js?v=consistency10"></script>
   </body>
 </html>

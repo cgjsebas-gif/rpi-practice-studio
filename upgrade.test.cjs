@@ -212,7 +212,7 @@ assert.equal(m[0].id, M.generate(bad, q, "2026-11-10")[0].id);
 assert.notEqual(m[0].id, M.generate(bad, q, "2026-11-11")[0].id);
 assert.equal(
   M.generate(
-    [...bad, { id: "a", correct: true, status: "correct" }],
+    [...bad, { id: "a", correct: true, status: "correct" }, { id: "a", correct: true, status: "correct" }],
     q,
     "2026-11-10",
   ).length,
@@ -301,3 +301,8 @@ assert.equal(
   "correct",
   "Legacy assessed attempts gain explicit status",
 );
+bc.StudyConsistency=bc.window.StudyConsistency;
+const rewards={version:1,events:[{id:'mission:one',type:'mission',day:'2026-11-16'}]};
+const together=bc.window.StudioBackup.validate({version:3,domains:{'rpi-study-rewards-v1':JSON.stringify(rewards),'rpi-studio-v2':JSON.stringify(E.defaults())}});
+assert.deepEqual(JSON.parse(together.domains['rpi-study-rewards-v1']),rewards);assert.throws(()=>bc.window.StudioBackup.validate({version:3,domains:{'rpi-study-rewards-v1':'{"version":99,"events":[]}'}}));
+console.log('PASS rewards and progress roundtrip in one validated backup');

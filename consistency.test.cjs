@@ -1,0 +1,13 @@
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');const c={Date,Intl};vm.createContext(c);vm.runInContext(fs.readFileSync(__dirname+'/orbit-core.js','utf8'),c);const S=c.StudyConsistency;assert(S);
+const event=(day,n=0,type='mission')=>({id:day+':'+n,type,day,questionId:'q'+n});
+let events=Array.from({length:5},(_,i)=>event('2026-11-01',i,'problem'));assert.equal(S.derive(events,'2026-11-01').currentStreak,1);assert.equal(S.derive([...events,...events],'2026-11-01').activityHistory['2026-11-01'].xpEarned,50);
+assert.equal(S.derive(events.slice(0,4),'2026-11-01').currentStreak,0);
+events=Array.from({length:7},(_,i)=>event('2026-11-0'+(i+1)));assert.equal(S.derive(events,'2026-11-08').streakShields,1);
+let saved=S.derive(events,'2026-11-09');assert.equal(saved.currentStreak,7);assert.equal(saved.streakShields,0);assert(saved.protectedDates.includes('2026-11-08'));
+assert.equal(S.derive(events,'2026-11-10').currentStreak,0);
+assert.equal(S.localDay(new Date(2026,10,1,23,59)),'2026-11-01');assert.equal(S.shiftDay('2026-03-08',1),'2026-03-09');assert.equal(S.shiftDay('2024-02-28',1),'2024-02-29');
+assert.throws(()=>S.validate({version:99,events:[]}));console.log('PASS daily qualification, deduplication, shields, gaps and local date boundaries');
+let savedValue=null;c.StudioStorage={getItem:()=>savedValue,setItem:(key,value)=>{savedValue=value;return true}};
+assert.equal(typeof S.record,'function');S.record('problem','attempt1','q1');S.record('problem','attempt1','q1');assert.equal(JSON.parse(savedValue).events.length,1);
+S.record('mission','assignment1');assert.equal(S.snapshot().activeToday,true);
+const month=Array.from({length:30},(_,i)=>event(S.shiftDay('2026-10-01',i)));let full=S.derive(month,'2026-10-30');assert.equal(full.streakShields,2);assert.equal(full.xpEarned,1550);assert.equal(full.badges.join(','),'3,7,14,30');assert.equal(S.derive(month,'2026-10-30').xpEarned,1550);assert.equal(S.shiftDay('2026-12-31',1),'2027-01-01');assert.throws(()=>S.validate({version:1,events:[{id:'bad',type:'mission',day:'2026-02-30'}]}));

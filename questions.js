@@ -6374,3 +6374,3847 @@ const bank=[
   "calculate": "Carry out the symbolic setup, then substitute the supplied values. Check signs, assumptions and units."
 }
 ];
+
+/* Original exam-ready expansion: 20 questions per course. */
+bank.push(...[
+  {
+    "id": "v4-1",
+    "subject": "Calculus I",
+    "topic": "Logarithm domain before algebra",
+    "title": "Logarithm domain before algebra",
+    "prompt": "Solve ln(x−1)+ln(x+1)=ln(8) over the real numbers. Which is the complete solution set?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. {3}"
+      },
+      {
+        "value": "B",
+        "label": "B. {−3,3}"
+      },
+      {
+        "value": "C",
+        "label": "C. {−3}"
+      },
+      {
+        "value": "D",
+        "label": "D. {√8}"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Determine the original domain before combining logarithms.",
+    "setup": "Intersect x>1 and x>−1, then use the product rule for logarithms.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nThe logarithms require x−1>0 and x+1>0, hence x>1. Combine the logs to obtain ln(x²−1)=ln(8), so x²=9. Of the algebraic candidates ±3, only 3 is in the original domain.\n\nWhy the other choices fail:\nB: Both roots solve the transformed polynomial, but −3 violates the logarithm domain.\nC: The negative root makes both log arguments negative.\nD: Multiplying the arguments gives x²−1, not x².",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Both roots solve the transformed polynomial, but −3 violates the logarithm domain."
+      },
+      {
+        "option": "C",
+        "explanation": "The negative root makes both log arguments negative."
+      },
+      {
+        "option": "D",
+        "explanation": "Multiplying the arguments gives x²−1, not x²."
+      }
+    ],
+    "diagram": "",
+    "hub": "functions",
+    "subtopic": "Logarithm domain before algebra",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "functions / Logarithm domain before algebra",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Logarithm domain before algebra"
+  },
+  {
+    "id": "v4-2",
+    "subject": "Calculus I",
+    "topic": "Conjugates and removable limits",
+    "title": "Conjugates and removable limits",
+    "prompt": "Evaluate lim(x→4) (√(x+5)−3)/(x−4).",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Does not exist"
+      },
+      {
+        "value": "B",
+        "label": "B. 1/6"
+      },
+      {
+        "value": "C",
+        "label": "C. 0"
+      },
+      {
+        "value": "D",
+        "label": "D. 1/3"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Rationalize the numerator.",
+    "setup": "Multiply numerator and denominator by √(x+5)+3.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nMultiply by the conjugate √(x+5)+3. The numerator becomes x−4, which cancels for x≠4. The resulting function 1/(√(x+5)+3) approaches 1/6. The original quotient is undefined at 4, but its limit exists.\n\nWhy the other choices fail:\nC: Direct substitution gives 0/0, an indeterminate form rather than zero.\nD: The conjugate denominator tends to 3+3, not 3.\nA: A missing value at the point does not prevent a two-sided limit.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Direct substitution gives 0/0, an indeterminate form rather than zero."
+      },
+      {
+        "option": "D",
+        "explanation": "The conjugate denominator tends to 3+3, not 3."
+      },
+      {
+        "option": "A",
+        "explanation": "A missing value at the point does not prevent a two-sided limit."
+      }
+    ],
+    "diagram": "",
+    "hub": "limits",
+    "subtopic": "Conjugates and removable limits",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "limits / Conjugates and removable limits",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Conjugates and removable limits"
+  },
+  {
+    "id": "v4-3",
+    "subject": "Calculus I",
+    "topic": "One-sided signs at a pole",
+    "title": "One-sided signs at a pole",
+    "prompt": "For f(x)=(x²−1)/(x−1)², which describes the one-sided limits at x=1?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Both 2"
+      },
+      {
+        "value": "B",
+        "label": "B. Left +∞; right −∞"
+      },
+      {
+        "value": "C",
+        "label": "C. Left −∞; right +∞"
+      },
+      {
+        "value": "D",
+        "label": "D. Both +∞"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Factor before analyzing the signs.",
+    "setup": "Write x²−1=(x−1)(x+1), then test each side of 1.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nFor x≠1, cancel one factor x−1 to obtain (x+1)/(x−1). Near 1 the numerator is positive. The denominator is negative on the left and positive on the right, giving −∞ and +∞ respectively; there is no two-sided limit.\n\nWhy the other choices fail:\nD: The original denominator is squared, but the numerator changes sign.\nA: Cancelling both denominator factors incorrectly removes the pole.\nB: The sign of x−1 is negative on the left, not on the right.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "The original denominator is squared, but the numerator changes sign."
+      },
+      {
+        "option": "A",
+        "explanation": "Cancelling both denominator factors incorrectly removes the pole."
+      },
+      {
+        "option": "B",
+        "explanation": "The sign of x−1 is negative on the left, not on the right."
+      }
+    ],
+    "diagram": "",
+    "hub": "limits",
+    "subtopic": "One-sided signs at a pole",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "limits / One-sided signs at a pole",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "One-sided signs at a pole"
+  },
+  {
+    "id": "v4-4",
+    "subject": "Calculus I",
+    "topic": "Join two branches smoothly",
+    "title": "Join two branches smoothly",
+    "prompt": "Let f(x)=ax+b for x<1 and f(x)=x² for x≥1. Which (a,b) makes f differentiable at 1?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. (1,0)"
+      },
+      {
+        "value": "B",
+        "label": "B. (2,1)"
+      },
+      {
+        "value": "C",
+        "label": "C. (0,1)"
+      },
+      {
+        "value": "D",
+        "label": "D. (2,−1)"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "First match values, then match slopes.",
+    "setup": "Use a+b=1 and a=2(1).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nDifferentiability requires both continuity and matching one-sided derivatives. Continuity gives a+b=1. The left slope is a and the right derivative at 1 is 2, so a=2 and b=−1. These conditions also give a shared function value of 1.\n\nWhy the other choices fail:\nA: This pair matches values but gives left slope 1 instead of 2.\nB: The slopes match, but the left limit is 3 rather than 1.\nC: The constant branch matches the value but has zero slope.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "This pair matches values but gives left slope 1 instead of 2."
+      },
+      {
+        "option": "B",
+        "explanation": "The slopes match, but the left limit is 3 rather than 1."
+      },
+      {
+        "option": "C",
+        "explanation": "The constant branch matches the value but has zero slope."
+      }
+    ],
+    "diagram": "",
+    "hub": "continuity",
+    "subtopic": "Join two branches smoothly",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "continuity / Join two branches smoothly",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Join two branches smoothly"
+  },
+  {
+    "id": "v4-5",
+    "subject": "Calculus I",
+    "topic": "Oscillation suppressed by a power",
+    "title": "Oscillation suppressed by a power",
+    "prompt": "Set f(0)=0 and f(x)=x² sin(1/x) for x≠0. What is true at zero?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Continuous and differentiable, f′(0)=0"
+      },
+      {
+        "value": "B",
+        "label": "B. Continuous but not differentiable"
+      },
+      {
+        "value": "C",
+        "label": "C. Not continuous"
+      },
+      {
+        "value": "D",
+        "label": "D. Differentiable with f′(0)=1"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Bound both the function and its difference quotient.",
+    "setup": "Use |sin(1/x)|≤1 before taking either limit.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nSince |x²sin(1/x)|≤x², the squeeze theorem proves continuity at zero. The difference quotient at zero is x sin(1/x), whose absolute value is at most |x|. It therefore tends to zero, establishing differentiability and f′(0)=0.\n\nWhy the other choices fail:\nB: The amplitude shrinks quickly enough for the difference quotient to converge.\nC: Bounded sine times x² tends to zero despite oscillation.\nD: The derivative must be computed using the difference quotient, whose limit is zero.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "The amplitude shrinks quickly enough for the difference quotient to converge."
+      },
+      {
+        "option": "C",
+        "explanation": "Bounded sine times x² tends to zero despite oscillation."
+      },
+      {
+        "option": "D",
+        "explanation": "The derivative must be computed using the difference quotient, whose limit is zero."
+      }
+    ],
+    "diagram": "",
+    "hub": "continuity",
+    "subtopic": "Oscillation suppressed by a power",
+    "difficulty": "Integration",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Challenge · original practice",
+    "topicScope": "continuity / Oscillation suppressed by a power",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Oscillation suppressed by a power"
+  },
+  {
+    "id": "v4-6",
+    "subject": "Calculus I",
+    "topic": "Product and chain rules together",
+    "title": "Product and chain rules together",
+    "prompt": "For f(x)=x²e^(−3x), find f′(1).",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 5e^(−3)"
+      },
+      {
+        "value": "B",
+        "label": "B. −e^(−3)"
+      },
+      {
+        "value": "C",
+        "label": "C. 2e^(−3)"
+      },
+      {
+        "value": "D",
+        "label": "D. −3e^(−3)"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Both factors depend on x.",
+    "setup": "Use (uv)′=u′v+uv′ and d(e^(−3x))/dx=−3e^(−3x).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nApply the product rule: f′(x)=2xe^(−3x)−3x²e^(−3x). Factor e^(−3x)(2x−3x²). At x=1 this becomes e^(−3)(2−3)=−e^(−3), so the function is locally decreasing there.\n\nWhy the other choices fail:\nC: This differentiates x² but omits the derivative of the exponential factor.\nD: This differentiates only the exponential factor.\nA: The inner derivative of −3x is −3, not +3.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "This differentiates x² but omits the derivative of the exponential factor."
+      },
+      {
+        "option": "D",
+        "explanation": "This differentiates only the exponential factor."
+      },
+      {
+        "option": "A",
+        "explanation": "The inner derivative of −3x is −3, not +3."
+      }
+    ],
+    "diagram": "",
+    "hub": "derivatives",
+    "subtopic": "Product and chain rules together",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "derivatives / Product and chain rules together",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Product and chain rules together"
+  },
+  {
+    "id": "v4-7",
+    "subject": "Calculus I",
+    "topic": "Logarithmic differentiation at a point",
+    "title": "Logarithmic differentiation at a point",
+    "prompt": "Let y=x^x for x>0. Find the slope of its tangent at x=2.",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 4 ln 2"
+      },
+      {
+        "value": "B",
+        "label": "B. 2·2^1"
+      },
+      {
+        "value": "C",
+        "label": "C. 4(ln 2+1)"
+      },
+      {
+        "value": "D",
+        "label": "D. 2"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use logarithms to bring the exponent down.",
+    "setup": "Differentiate ln y=x ln x implicitly.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nTake logarithms: ln y=x ln x. Differentiate to get y′/y=ln x+1. Thus y′=x^x(ln x+1), and at 2 the slope is 4(ln 2+1). Both the base and exponent vary, so neither a simple power rule nor a constant-base exponential rule alone applies.\n\nWhy the other choices fail:\nD: Neither a constant derivative nor the value of x gives the derivative of x^x.\nA: The extra +1 comes from differentiating ln x in the product x ln x.\nB: This is the power-rule result for x², not the derivative of x^x.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Neither a constant derivative nor the value of x gives the derivative of x^x."
+      },
+      {
+        "option": "A",
+        "explanation": "The extra +1 comes from differentiating ln x in the product x ln x."
+      },
+      {
+        "option": "B",
+        "explanation": "This is the power-rule result for x², not the derivative of x^x."
+      }
+    ],
+    "diagram": "",
+    "hub": "derivatives",
+    "subtopic": "Logarithmic differentiation at a point",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "derivatives / Logarithmic differentiation at a point",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Logarithmic differentiation at a point"
+  },
+  {
+    "id": "v4-8",
+    "subject": "Calculus I",
+    "topic": "Implicit tangent with mixed variables",
+    "title": "Implicit tangent with mixed variables",
+    "prompt": "The curve x²+xy+y²=7 passes through (1,2). What is dy/dx there?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. −1/2"
+      },
+      {
+        "value": "B",
+        "label": "B. −2"
+      },
+      {
+        "value": "C",
+        "label": "C. 4/5"
+      },
+      {
+        "value": "D",
+        "label": "D. −4/5"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "The mixed term needs the product rule.",
+    "setup": "Collect all y′ terms on one side after implicit differentiation.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nDifferentiate each term: 2x+y+xy′+2yy′=0. Group the slope terms to get y′=−(2x+y)/(x+2y). Substituting (1,2) gives −4/5. The product xy contributes both y and xy′.\n\nWhy the other choices fail:\nA: Ignoring the xy product changes both numerator and denominator.\nB: Dropping terms when collecting y′ gives the wrong denominator; it must be x+2y.\nC: Moving 2x+y to the other side introduces a minus sign.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Ignoring the xy product changes both numerator and denominator."
+      },
+      {
+        "option": "B",
+        "explanation": "Dropping terms when collecting y′ gives the wrong denominator; it must be x+2y."
+      },
+      {
+        "option": "C",
+        "explanation": "Moving 2x+y to the other side introduces a minus sign."
+      }
+    ],
+    "diagram": "",
+    "hub": "derivatives",
+    "subtopic": "Implicit tangent with mixed variables",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "derivatives / Implicit tangent with mixed variables",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Implicit tangent with mixed variables"
+  },
+  {
+    "id": "v4-9",
+    "subject": "Calculus I",
+    "topic": "Stationary does not mean extreme",
+    "title": "Stationary does not mean extreme",
+    "prompt": "For f(x)=x³−3x on [−2,2], which describes its absolute extrema?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Minimum −2 at x=−2 and 1; maximum 2 at x=−1 and 2"
+      },
+      {
+        "value": "B",
+        "label": "B. Minimum −2 only at x=1; maximum 2 only at x=−1"
+      },
+      {
+        "value": "C",
+        "label": "C. Minimum −2 at x=−1; maximum 2 at x=1"
+      },
+      {
+        "value": "D",
+        "label": "D. Minimum −6 at x=−2; maximum 6 at x=2"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Compare critical points and endpoints.",
+    "setup": "Build a value table for x=−2,−1,1,2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nCritical points satisfy f′=3x²−3=0, so x=±1. Evaluate all four candidates: f(−2)=−2, f(−1)=2, f(1)=−2, f(2)=2. The endpoints tie the interior extrema, so all locations must be reported.\n\nWhy the other choices fail:\nB: Closed-interval absolute extrema require checking the endpoints too.\nC: The local maximum and minimum locations have been reversed.\nD: Substitution into x³−3x gives ±2 at the endpoints, not ±6.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Closed-interval absolute extrema require checking the endpoints too."
+      },
+      {
+        "option": "C",
+        "explanation": "The local maximum and minimum locations have been reversed."
+      },
+      {
+        "option": "D",
+        "explanation": "Substitution into x³−3x gives ±2 at the endpoints, not ±6."
+      }
+    ],
+    "diagram": "",
+    "hub": "critical",
+    "subtopic": "Stationary does not mean extreme",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "critical / Stationary does not mean extreme",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Stationary does not mean extreme"
+  },
+  {
+    "id": "v4-10",
+    "subject": "Calculus I",
+    "topic": "A cusp in the critical set",
+    "title": "A cusp in the critical set",
+    "prompt": "For f(x)=|x−2| on (0,4), which statement is correct?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. x=2 is a local maximum"
+      },
+      {
+        "value": "B",
+        "label": "B. x=2 is critical and a local minimum, although f′(2) does not exist"
+      },
+      {
+        "value": "C",
+        "label": "C. There are no critical points because f′ is never zero"
+      },
+      {
+        "value": "D",
+        "label": "D. x=2 is critical with f′(2)=0"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Include points where the derivative is undefined.",
+    "setup": "Compare the slopes of the two linear pieces.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nA critical number belongs to the domain and has derivative zero or undefined. At 2 the left slope is −1 and right slope is +1, so the derivative does not exist. Values on both sides exceed f(2)=0, giving a local minimum.\n\nWhy the other choices fail:\nC: Undefined derivatives at points in the domain also produce critical numbers.\nD: A corner has unequal one-sided slopes, not a horizontal tangent.\nA: The graph rises away from 2 in both directions.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Undefined derivatives at points in the domain also produce critical numbers."
+      },
+      {
+        "option": "D",
+        "explanation": "A corner has unequal one-sided slopes, not a horizontal tangent."
+      },
+      {
+        "option": "A",
+        "explanation": "The graph rises away from 2 in both directions."
+      }
+    ],
+    "diagram": "",
+    "hub": "critical",
+    "subtopic": "A cusp in the critical set",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "critical / A cusp in the critical set",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A cusp in the critical set"
+  },
+  {
+    "id": "v4-11",
+    "subject": "Calculus I",
+    "topic": "Sliding ladder with changing height",
+    "title": "Sliding ladder with changing height",
+    "prompt": "A 10 m ladder rests against a vertical wall. Its foot moves away at 0.6 m/s. When the foot is 6 m from the wall, how fast is the top moving vertically?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 0.45 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. −0.6 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. −0.45 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. −0.8 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Find the height before substituting into the differentiated relation.",
+    "setup": "Use y′=−(x/y)x′ with a fixed ladder length.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe geometry gives x²+y²=100, so at x=6 the height is y=8. Differentiate with respect to time: 2x x′+2y y′=0. Hence y′=−(6/8)(0.6)=−0.45 m/s. The negative sign means the top moves downward.\n\nWhy the other choices fail:\nD: This reverses the ratio x/y and uses y/x.\nA: The top falls as the foot moves away, so the vertical derivative is negative.\nB: Horizontal and vertical speeds are not generally equal.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "This reverses the ratio x/y and uses y/x."
+      },
+      {
+        "option": "A",
+        "explanation": "The top falls as the foot moves away, so the vertical derivative is negative."
+      },
+      {
+        "option": "B",
+        "explanation": "Horizontal and vertical speeds are not generally equal."
+      }
+    ],
+    "diagram": "",
+    "hub": "related",
+    "subtopic": "Sliding ladder with changing height",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "related / Sliding ladder with changing height",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Sliding ladder with changing height"
+  },
+  {
+    "id": "v4-12",
+    "subject": "Calculus I",
+    "topic": "A growing spherical bubble",
+    "title": "A growing spherical bubble",
+    "prompt": "A spherical bubble has dV/dt=12π cm³/s. At radius r=3 cm, what is dr/dt?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 1 cm/s"
+      },
+      {
+        "value": "B",
+        "label": "B. 4/3 cm/s"
+      },
+      {
+        "value": "C",
+        "label": "C. 3 cm/s"
+      },
+      {
+        "value": "D",
+        "label": "D. 1/3 cm/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Differentiate the volume formula before inserting the radius.",
+    "setup": "Set V′=4πr²r′.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nWrite V=(4/3)πr³ and differentiate with respect to time: V′=4πr²r′. At r=3, 12π=36πr′, so r′=1/3 cm/s. The derivative of volume with respect to radius is the surface area.\n\nWhy the other choices fail:\nA: Dropping the factor of 3 from differentiating r³ gives the wrong coefficient.\nB: Using πr² instead of 4πr² misses the spherical surface-area factor.\nC: The requested quantity is radius change, not the radius itself.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Dropping the factor of 3 from differentiating r³ gives the wrong coefficient."
+      },
+      {
+        "option": "B",
+        "explanation": "Using πr² instead of 4πr² misses the spherical surface-area factor."
+      },
+      {
+        "option": "C",
+        "explanation": "The requested quantity is radius change, not the radius itself."
+      }
+    ],
+    "diagram": "",
+    "hub": "related",
+    "subtopic": "A growing spherical bubble",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "related / A growing spherical bubble",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A growing spherical bubble"
+  },
+  {
+    "id": "v4-13",
+    "subject": "Calculus I",
+    "topic": "Linearization and its error direction",
+    "title": "Linearization and its error direction",
+    "prompt": "Using the tangent line to √x at x=9, estimate √9.3 and classify the estimate.",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 3.05, an overestimate"
+      },
+      {
+        "value": "B",
+        "label": "B. 3.05, an underestimate"
+      },
+      {
+        "value": "C",
+        "label": "C. 3.1, an overestimate"
+      },
+      {
+        "value": "D",
+        "label": "D. 3.3, an underestimate"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Evaluate both the slope and the sign of the second derivative.",
+    "setup": "Use L(x)=f(9)+f′(9)(x−9).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nThe tangent approximation is L(x)=3+(x−9)/6. At 9.3 this gives 3.05. Because the second derivative of √x is negative for x>0, the curve is concave down and its tangent lies above it, so the estimate is too large.\n\nWhy the other choices fail:\nB: Concave-down curves lie below their tangent lines locally.\nC: The derivative at 9 is 1/6, not 1/3.\nD: The change in the function is not the same as the change in x.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Concave-down curves lie below their tangent lines locally."
+      },
+      {
+        "option": "C",
+        "explanation": "The derivative at 9 is 1/6, not 1/3."
+      },
+      {
+        "option": "D",
+        "explanation": "The change in the function is not the same as the change in x."
+      }
+    ],
+    "diagram": "",
+    "hub": "approximation",
+    "subtopic": "Linearization and its error direction",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "approximation / Linearization and its error direction",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Linearization and its error direction"
+  },
+  {
+    "id": "v4-14",
+    "subject": "Calculus I",
+    "topic": "Mean value theorem inside the interval",
+    "title": "Mean value theorem inside the interval",
+    "prompt": "For f(x)=x³ on [1,3], find the value c guaranteed by the mean value theorem.",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2"
+      },
+      {
+        "value": "B",
+        "label": "B. √(13/3)"
+      },
+      {
+        "value": "C",
+        "label": "C. √13"
+      },
+      {
+        "value": "D",
+        "label": "D. 13/3"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Equate derivative and secant slope.",
+    "setup": "Compute [f(3)−f(1)]/(3−1), then solve 3c² equal to that value.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nThe secant slope is (27−1)/(3−1)=13. Since f′(c)=3c², the theorem requires 3c²=13. The admissible solution is c=√(13/3), which lies between 1 and 3; the negative root is outside the interval.\n\nWhy the other choices fail:\nC: The derivative has a coefficient of 3.\nD: Solving c²=13/3 requires a square root.\nA: The midpoint need not have slope equal to the secant slope.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "The derivative has a coefficient of 3."
+      },
+      {
+        "option": "D",
+        "explanation": "Solving c²=13/3 requires a square root."
+      },
+      {
+        "option": "A",
+        "explanation": "The midpoint need not have slope equal to the secant slope."
+      }
+    ],
+    "diagram": "",
+    "hub": "approximation",
+    "subtopic": "Mean value theorem inside the interval",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "approximation / Mean value theorem inside the interval",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Mean value theorem inside the interval"
+  },
+  {
+    "id": "v4-15",
+    "subject": "Calculus I",
+    "topic": "FTC with a moving upper limit",
+    "title": "FTC with a moving upper limit",
+    "prompt": "Let F(x)=∫ from 1 to x² of ln(t) dt, with x>0. Find F′(x).",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2x ln x"
+      },
+      {
+        "value": "B",
+        "label": "B. ln(x)"
+      },
+      {
+        "value": "C",
+        "label": "C. 2x ln(x²)"
+      },
+      {
+        "value": "D",
+        "label": "D. ln(x²)"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "The upper limit is itself a function.",
+    "setup": "Use d/dx ∫₁ᵍ⁽ˣ⁾ f(t)dt=f(g(x))g′(x).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe fundamental theorem first evaluates the integrand at the upper limit, giving ln(x²). The chain rule multiplies by the derivative of x², which is 2x. Thus F′(x)=2x ln(x²)=4x ln x for x>0.\n\nWhy the other choices fail:\nD: The upper limit is not x, so its derivative must be included.\nA: For x>0, ln(x²)=2 ln x; omitting that factor halves the result.\nB: This ignores both the upper-limit substitution and chain-rule factor.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "The upper limit is not x, so its derivative must be included."
+      },
+      {
+        "option": "A",
+        "explanation": "For x>0, ln(x²)=2 ln x; omitting that factor halves the result."
+      },
+      {
+        "option": "B",
+        "explanation": "This ignores both the upper-limit substitution and chain-rule factor."
+      }
+    ],
+    "diagram": "",
+    "hub": "integration",
+    "subtopic": "FTC with a moving upper limit",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "integration / FTC with a moving upper limit",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "FTC with a moving upper limit"
+  },
+  {
+    "id": "v4-16",
+    "subject": "Calculus I",
+    "topic": "Substitution and definite bounds",
+    "title": "Substitution and definite bounds",
+    "prompt": "Evaluate ∫ from 0 to 1 of 2x/(1+x²) dx.",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2 ln 2"
+      },
+      {
+        "value": "B",
+        "label": "B. 1/2"
+      },
+      {
+        "value": "C",
+        "label": "C. ln 1"
+      },
+      {
+        "value": "D",
+        "label": "D. ln 2"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use the denominator as your substitution.",
+    "setup": "Transform both bounds when setting u=1+x².",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nSet u=1+x², so du=2x dx. The bounds become u=1 and u=2. Integrating 1/u over these bounds gives ln2−ln1=ln2. The substitution absorbs the entire factor 2x.\n\nWhy the other choices fail:\nA: Keeping an extra factor 2 after replacing 2x dx double-counts it.\nB: The antiderivative of 1/u is ln u, not a power-rule expression.\nC: The upper transformed bound is 2, not 1.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Keeping an extra factor 2 after replacing 2x dx double-counts it."
+      },
+      {
+        "option": "B",
+        "explanation": "The antiderivative of 1/u is ln u, not a power-rule expression."
+      },
+      {
+        "option": "C",
+        "explanation": "The upper transformed bound is 2, not 1."
+      }
+    ],
+    "diagram": "",
+    "hub": "integration",
+    "subtopic": "Substitution and definite bounds",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "integration / Substitution and definite bounds",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Substitution and definite bounds"
+  },
+  {
+    "id": "v4-17",
+    "subject": "Calculus I",
+    "topic": "Distance is not displacement",
+    "title": "Distance is not displacement",
+    "prompt": "A particle has v(t)=t−2 m/s for 0≤t≤5 s. What pair gives (displacement, total distance)?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. (2.5 m, 6.5 m)"
+      },
+      {
+        "value": "B",
+        "label": "B. (6.5 m, 2.5 m)"
+      },
+      {
+        "value": "C",
+        "label": "C. (2.5 m, 2.5 m)"
+      },
+      {
+        "value": "D",
+        "label": "D. (12.5 m, 12.5 m)"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Split the distance integral where velocity changes sign.",
+    "setup": "Compute ∫v dt for displacement and ∫|v|dt for distance.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nThe signed integral ∫₀⁵(t−2)dt is 12.5−10=2.5 m. Velocity changes sign at t=2. The negative triangular area has magnitude 2 m and the positive area 4.5 m, so total distance is 6.5 m.\n\nWhy the other choices fail:\nB: Signed and absolute areas have been swapped.\nC: Distance must include the magnitude of the backward motion.\nD: Integrating t alone omits the −2 m/s term.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Signed and absolute areas have been swapped."
+      },
+      {
+        "option": "C",
+        "explanation": "Distance must include the magnitude of the backward motion."
+      },
+      {
+        "option": "D",
+        "explanation": "Integrating t alone omits the −2 m/s term."
+      }
+    ],
+    "diagram": "",
+    "hub": "integral-apps",
+    "subtopic": "Distance is not displacement",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "integral-apps / Distance is not displacement",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Distance is not displacement"
+  },
+  {
+    "id": "v4-18",
+    "subject": "Calculus I",
+    "topic": "A washer volume with two radii",
+    "title": "A washer volume with two radii",
+    "prompt": "Rotate the region between y=x and y=x², 0≤x≤1, about the x-axis. What is its volume?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. π/30"
+      },
+      {
+        "value": "B",
+        "label": "B. 2π/15"
+      },
+      {
+        "value": "C",
+        "label": "C. π/3"
+      },
+      {
+        "value": "D",
+        "label": "D. π/5"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Identify the outer and inner radius separately.",
+    "setup": "Use V=π∫(R²−r²)dx.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nOn this interval, x≥x², so the outer radius is x and inner radius is x². The washer integral is π∫₀¹(x²−x⁴)dx. Evaluation gives π(1/3−1/5)=2π/15, with the cavity correctly subtracted.\n\nWhy the other choices fail:\nC: This is the volume of the outer cone without subtracting the inner solid.\nD: This is the inner solid alone.\nA: Squaring the radius difference gives (x−x²)², not the difference of squared radii.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "This is the volume of the outer cone without subtracting the inner solid."
+      },
+      {
+        "option": "D",
+        "explanation": "This is the inner solid alone."
+      },
+      {
+        "option": "A",
+        "explanation": "Squaring the radius difference gives (x−x²)², not the difference of squared radii."
+      }
+    ],
+    "diagram": "",
+    "hub": "integral-apps",
+    "subtopic": "A washer volume with two radii",
+    "difficulty": "Integration",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Challenge · original practice",
+    "topicScope": "integral-apps / A washer volume with two radii",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A washer volume with two radii"
+  },
+  {
+    "id": "v4-19",
+    "subject": "Calculus I",
+    "topic": "A trigonometric scale factor",
+    "title": "A trigonometric scale factor",
+    "prompt": "Evaluate lim(x→0) sin(5x)/tan(2x), with angles in radians.",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 1"
+      },
+      {
+        "value": "B",
+        "label": "B. 0"
+      },
+      {
+        "value": "C",
+        "label": "C. 5/2"
+      },
+      {
+        "value": "D",
+        "label": "D. 2/5"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Normalize each trigonometric function by its argument.",
+    "setup": "Insert factors 5x and 2x to use the standard small-angle limits.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nRewrite the expression as [sin(5x)/(5x)]·[2x/tan(2x)]·(5/2). Both bracketed factors tend to one in radians. Therefore the limit is 5/2; the unequal angle scale factors survive the limit.\n\nWhy the other choices fail:\nD: The numerator and denominator scale factors have been inverted.\nA: The standard trigonometric limits do not eliminate unequal constants.\nB: Both quantities tending to zero does not make their quotient tend to zero.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "The numerator and denominator scale factors have been inverted."
+      },
+      {
+        "option": "A",
+        "explanation": "The standard trigonometric limits do not eliminate unequal constants."
+      },
+      {
+        "option": "B",
+        "explanation": "Both quantities tending to zero does not make their quotient tend to zero."
+      }
+    ],
+    "diagram": "",
+    "hub": "limits",
+    "subtopic": "A trigonometric scale factor",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "limits / A trigonometric scale factor",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A trigonometric scale factor"
+  },
+  {
+    "id": "v4-20",
+    "subject": "Calculus I",
+    "topic": "Maximize a fenced rectangle",
+    "title": "Maximize a fenced rectangle",
+    "prompt": "A rectangle against a straight wall needs fencing on only three sides. With 60 m of fence, what width perpendicular to the wall maximizes area?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 20 m"
+      },
+      {
+        "value": "B",
+        "label": "B. 30 m"
+      },
+      {
+        "value": "C",
+        "label": "C. 10 m"
+      },
+      {
+        "value": "D",
+        "label": "D. 15 m"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Eliminate the parallel length using the fence constraint.",
+    "setup": "Maximize A(w)=w(60−2w) on 0≤w≤30.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nLet width be w and the parallel fenced length be L. The constraint is 2w+L=60, so A=w(60−2w). Its derivative is 60−4w, giving w=15 m, with negative second derivative −4. The corresponding length is 30 m and endpoints give zero area.\n\nWhy the other choices fail:\nA: Equal allocation to three sides does not maximize their rectangular area.\nB: At w=30 the length is zero and no positive area remains.\nC: This does not satisfy the stationary condition for area.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Equal allocation to three sides does not maximize their rectangular area."
+      },
+      {
+        "option": "B",
+        "explanation": "At w=30 the length is zero and no positive area remains."
+      },
+      {
+        "option": "C",
+        "explanation": "This does not satisfy the stationary condition for area."
+      }
+    ],
+    "diagram": "",
+    "hub": "critical",
+    "subtopic": "Maximize a fenced rectangle",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/calculus-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "critical / Maximize a fenced rectangle",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Maximize a fenced rectangle"
+  },
+  {
+    "id": "v4-21",
+    "subject": "Physics I",
+    "topic": "Two-stage motion and signed velocity",
+    "title": "Two-stage motion and signed velocity",
+    "prompt": "A cart starts at rest, accelerates at +2 m/s² for 3 s, then at −3 m/s² for 4 s. What are its final velocity and total displacement?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. −6 m/s; 9 m"
+      },
+      {
+        "value": "B",
+        "label": "B. −6 m/s; 21 m"
+      },
+      {
+        "value": "C",
+        "label": "C. 6 m/s; 9 m"
+      },
+      {
+        "value": "D",
+        "label": "D. −12 m/s; −15 m"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Carry the first-stage final velocity into the second stage.",
+    "setup": "Use v=v₀+at and Δx=v₀t+at²/2 separately for each interval.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nAfter stage one, v=6 m/s and displacement is 9 m. Stage two gives v=6−3(4)=−6 m/s and displacement 6(4)−(3/2)(16)=0. Adding signed displacements gives 9 m; the cart reverses direction partway through the second stage.\n\nWhy the other choices fail:\nB: This adds distance traveled during reversal rather than signed displacement.\nC: The negative acceleration eventually reverses the velocity.\nD: The second stage starts at +6 m/s, not from rest.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "This adds distance traveled during reversal rather than signed displacement."
+      },
+      {
+        "option": "C",
+        "explanation": "The negative acceleration eventually reverses the velocity."
+      },
+      {
+        "option": "D",
+        "explanation": "The second stage starts at +6 m/s, not from rest."
+      }
+    ],
+    "diagram": "",
+    "hub": "kinematics",
+    "subtopic": "Two-stage motion and signed velocity",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "kinematics / Two-stage motion and signed velocity",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Two-stage motion and signed velocity"
+  },
+  {
+    "id": "v4-22",
+    "subject": "Physics I",
+    "topic": "Component addition with quadrant check",
+    "title": "Component addition with quadrant check",
+    "prompt": "A displacement is 6 m east followed by 8 m north and 10 m west. What is the resultant magnitude and direction measured counterclockwise from east?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. √20 m; 63.4°"
+      },
+      {
+        "value": "B",
+        "label": "B. √80 m; 116.6°"
+      },
+      {
+        "value": "C",
+        "label": "C. √80 m; −63.4°"
+      },
+      {
+        "value": "D",
+        "label": "D. 24 m; 116.6°"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Sketch the net signed components.",
+    "setup": "Use √(x²+y²) and a quadrant-aware direction.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nThe net components are x=6−10=−4 m and y=8 m. The magnitude is √(16+64)=√80 m. The vector lies in quadrant II, so the direction is 180°−arctan(8/4)=116.6°, not the principal arctangent in quadrant IV.\n\nWhy the other choices fail:\nC: A plain arctangent ratio without a quadrant correction points in the opposite direction.\nD: The path length is 24 m, not the resultant displacement magnitude.\nA: The components are −4 and 8; neither the magnitude nor quadrant matches.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "A plain arctangent ratio without a quadrant correction points in the opposite direction."
+      },
+      {
+        "option": "D",
+        "explanation": "The path length is 24 m, not the resultant displacement magnitude."
+      },
+      {
+        "option": "A",
+        "explanation": "The components are −4 and 8; neither the magnitude nor quadrant matches."
+      }
+    ],
+    "diagram": "",
+    "hub": "vectors",
+    "subtopic": "Component addition with quadrant check",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "vectors / Component addition with quadrant check",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Component addition with quadrant check"
+  },
+  {
+    "id": "v4-23",
+    "subject": "Physics I",
+    "topic": "Friction must be tested before motion",
+    "title": "Friction must be tested before motion",
+    "prompt": "A 5 kg block rests on a level table with μs=0.5 and μk=0.3. A horizontal 20 N force is applied. With g=10 m/s², what are friction and acceleration?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 15 N opposing the pull; 1 m/s²"
+      },
+      {
+        "value": "B",
+        "label": "B. 0 N; 4 m/s²"
+      },
+      {
+        "value": "C",
+        "label": "C. 20 N opposing the pull; 0"
+      },
+      {
+        "value": "D",
+        "label": "D. 25 N opposing the pull; −1 m/s²"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Compare the applied force with the maximum static friction.",
+    "setup": "Compute N=mg and μsN before deciding whether the block slides.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe normal force is 50 N and maximum static friction is 25 N. Since the applied 20 N is below this threshold, the block remains at rest and static friction adjusts to 20 N. There is no acceleration and kinetic friction is not applicable.\n\nWhy the other choices fail:\nD: Static friction is not always at its maximum value.\nA: Kinetic friction applies only once sliding occurs.\nB: The frictional force balances this subthreshold pull.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Static friction is not always at its maximum value."
+      },
+      {
+        "option": "A",
+        "explanation": "Kinetic friction applies only once sliding occurs."
+      },
+      {
+        "option": "B",
+        "explanation": "The frictional force balances this subthreshold pull."
+      }
+    ],
+    "diagram": "",
+    "hub": "forces",
+    "subtopic": "Friction must be tested before motion",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "forces / Friction must be tested before motion",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Friction must be tested before motion"
+  },
+  {
+    "id": "v4-24",
+    "subject": "Physics I",
+    "topic": "A two-mass ideal pulley",
+    "title": "A two-mass ideal pulley",
+    "prompt": "Masses 2 kg and 3 kg hang from an ideal massless string over a frictionless massless pulley. With g=10 m/s², find acceleration magnitude and tension.",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2 m/s²; 20 N"
+      },
+      {
+        "value": "B",
+        "label": "B. 10 m/s²; 0 N"
+      },
+      {
+        "value": "C",
+        "label": "C. 5 m/s²; 15 N"
+      },
+      {
+        "value": "D",
+        "label": "D. 2 m/s²; 24 N"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use separate free-body equations and one shared acceleration.",
+    "setup": "Add (m₂g−T)=m₂a and (T−m₁g)=m₁a.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nFor the 3 kg mass downward, 30−T=3a. For the 2 kg mass upward, T−20=2a. Adding gives 10=5a, hence a=2 m/s². Substitution gives T=24 N, between the two weights as expected.\n\nWhy the other choices fail:\nA: The lighter mass accelerates upward, so tension exceeds its weight.\nB: The masses are coupled; neither is in free fall.\nC: The net driving force is divided by the total moving mass.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "The lighter mass accelerates upward, so tension exceeds its weight."
+      },
+      {
+        "option": "B",
+        "explanation": "The masses are coupled; neither is in free fall."
+      },
+      {
+        "option": "C",
+        "explanation": "The net driving force is divided by the total moving mass."
+      }
+    ],
+    "diagram": "",
+    "hub": "forces",
+    "subtopic": "A two-mass ideal pulley",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "forces / A two-mass ideal pulley",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A two-mass ideal pulley"
+  },
+  {
+    "id": "v4-25",
+    "subject": "Physics I",
+    "topic": "Contact at the top of a loop",
+    "title": "Contact at the top of a loop",
+    "prompt": "A small cart travels inside a vertical circular loop of radius 2 m. Neglect friction and take g=10 m/s². What minimum speed at the top maintains contact?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. √20 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. √40 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. 20 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. 0 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Set the normal force to zero only at the contact threshold.",
+    "setup": "Resolve forces inward at the top: mg+N=mv²/r.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nAt the top both gravity and the inward normal force point toward the center. The radial equation is mg+N=mv²/r. At the contact threshold N=0, so v²=gr=20 m²/s² and v=√20 m/s. A lower speed would require a negative normal force.\n\nWhy the other choices fail:\nB: The factor two does not arise in the top-of-loop radial force balance.\nC: gr has units of speed squared; take its square root.\nD: Gravity alone still requires sufficient speed to follow the circular path.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "The factor two does not arise in the top-of-loop radial force balance."
+      },
+      {
+        "option": "C",
+        "explanation": "gr has units of speed squared; take its square root."
+      },
+      {
+        "option": "D",
+        "explanation": "Gravity alone still requires sufficient speed to follow the circular path."
+      }
+    ],
+    "diagram": "",
+    "hub": "circular",
+    "subtopic": "Contact at the top of a loop",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "circular / Contact at the top of a loop",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Contact at the top of a loop"
+  },
+  {
+    "id": "v4-26",
+    "subject": "Physics I",
+    "topic": "Spring launch against friction",
+    "title": "Spring launch against friction",
+    "prompt": "A 2 kg block is launched from a spring of k=200 N/m compressed 0.30 m along a level surface. Kinetic friction is 4 N throughout. What is its speed after traveling 1.0 m from release, when no longer touching the spring?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 5 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. √5 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. 3 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. √13 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Include friction over the full stated travel distance.",
+    "setup": "Set kx₀²/2−fd=mv²/2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nInitial spring energy is (1/2)(200)(0.30)²=9 J. Friction removes 4 J over the entire 1 m. Final kinetic energy is 5 J, and (1/2)(2)v²=5 yields v=√5 m/s. The spring has returned to its natural length by this point.\n\nWhy the other choices fail:\nC: This ignores energy dissipated by friction.\nD: Friction removes mechanical energy rather than adding it.\nA: The kinetic-energy equation determines v²=5, not v=5.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "This ignores energy dissipated by friction."
+      },
+      {
+        "option": "D",
+        "explanation": "Friction removes mechanical energy rather than adding it."
+      },
+      {
+        "option": "A",
+        "explanation": "The kinetic-energy equation determines v²=5, not v=5."
+      }
+    ],
+    "diagram": "",
+    "hub": "energy",
+    "subtopic": "Spring launch against friction",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "energy / Spring launch against friction",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Spring launch against friction"
+  },
+  {
+    "id": "v4-27",
+    "subject": "Physics I",
+    "topic": "A variable-force work integral",
+    "title": "A variable-force work integral",
+    "prompt": "A 2 kg particle starts at x=0 with velocity +2 m/s. A net force F(x)=6x N acts along +x, where x is in meters. What is its speed at x=2 m?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 6 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. 12 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. 4 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. √12 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Find the area under the force-position graph.",
+    "setup": "Compute W=∫F dx, then W=mv²/2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe net work is ∫₀²6x dx=12 J. Initial kinetic energy is (1/2)(2)(2²)=4 J, so final kinetic energy is 16 J. Because (1/2)mv²=v² for m=2 kg, vf=4 m/s. The positive initial velocity carries the particle away from x=0, and the force then accelerates it further.\n\nWhy the other choices fail:\nA: Treating the final force as constant overestimates the work.\nB: Position-dependent force does not justify a constant-acceleration calculation.\nD: This ignores the initial kinetic energy.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Treating the final force as constant overestimates the work."
+      },
+      {
+        "option": "B",
+        "explanation": "Position-dependent force does not justify a constant-acceleration calculation."
+      },
+      {
+        "option": "D",
+        "explanation": "This ignores the initial kinetic energy."
+      }
+    ],
+    "diagram": "",
+    "hub": "energy",
+    "subtopic": "A variable-force work integral",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "energy / A variable-force work integral",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A variable-force work integral"
+  },
+  {
+    "id": "v4-28",
+    "subject": "Physics I",
+    "topic": "A sticking collision and energy loss",
+    "title": "A sticking collision and energy loss",
+    "prompt": "A 2 kg cart moving at 6 m/s hits and sticks to a stationary 4 kg cart on a frictionless track. Find the common speed and kinetic energy lost.",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2 m/s; 0 J"
+      },
+      {
+        "value": "B",
+        "label": "B. 3 m/s; 9 J"
+      },
+      {
+        "value": "C",
+        "label": "C. 6 m/s; 72 J"
+      },
+      {
+        "value": "D",
+        "label": "D. 2 m/s; 24 J"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Conserve momentum first, then compare kinetic energies.",
+    "setup": "Use m₁v₁=(m₁+m₂)v and calculate both energies.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nMomentum conservation gives 2(6)=(2+4)v, so v=2 m/s. Initial kinetic energy is 36 J and final kinetic energy is (1/2)(6)(4)=12 J. Therefore 24 J converts to internal energy; momentum conservation does not imply kinetic-energy conservation.\n\nWhy the other choices fail:\nA: A perfectly inelastic collision does not conserve kinetic energy.\nB: The final momentum must be 12 kg·m/s, not 18.\nC: The added stationary mass changes the common velocity.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "A perfectly inelastic collision does not conserve kinetic energy."
+      },
+      {
+        "option": "B",
+        "explanation": "The final momentum must be 12 kg·m/s, not 18."
+      },
+      {
+        "option": "C",
+        "explanation": "The added stationary mass changes the common velocity."
+      }
+    ],
+    "diagram": "",
+    "hub": "momentum",
+    "subtopic": "A sticking collision and energy loss",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "momentum / A sticking collision and energy loss",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A sticking collision and energy loss"
+  },
+  {
+    "id": "v4-29",
+    "subject": "Physics I",
+    "topic": "Impulse with a force reversal",
+    "title": "Impulse with a force reversal",
+    "prompt": "A 1 kg object initially moves at +2 m/s. Net force is +4 N for 2 s, then −3 N for 1 s. What is the final velocity?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. +7 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. +5 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. +13 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. −3 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Add signed impulses to the initial momentum.",
+    "setup": "Use mvf=mvi+ΣFΔt.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nNet impulse is 4(2)−3(1)=5 N·s. The initial momentum is 2 kg·m/s, so final momentum is 7 kg·m/s. Dividing by 1 kg gives +7 m/s. The negative final force reduces velocity but does not reverse it during that one second.\n\nWhy the other choices fail:\nB: Impulse gives change in momentum, not final momentum.\nC: The second force contributes a negative impulse.\nD: Force direction alone does not determine velocity direction.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Impulse gives change in momentum, not final momentum."
+      },
+      {
+        "option": "C",
+        "explanation": "The second force contributes a negative impulse."
+      },
+      {
+        "option": "D",
+        "explanation": "Force direction alone does not determine velocity direction."
+      }
+    ],
+    "diagram": "",
+    "hub": "momentum",
+    "subtopic": "Impulse with a force reversal",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "momentum / Impulse with a force reversal",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Impulse with a force reversal"
+  },
+  {
+    "id": "v4-30",
+    "subject": "Physics I",
+    "topic": "Rolling solid cylinder down a ramp",
+    "title": "Rolling solid cylinder down a ramp",
+    "prompt": "A solid cylinder rolls without slipping from rest through a vertical drop of 3 m. With I=MR²/2 and g=10 m/s², find its center-of-mass speed.",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. √20 m/s"
+      },
+      {
+        "value": "B",
+        "label": "B. √40 m/s"
+      },
+      {
+        "value": "C",
+        "label": "C. √60 m/s"
+      },
+      {
+        "value": "D",
+        "label": "D. √30 m/s"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Include translation and rotation, then enforce rolling.",
+    "setup": "Set Mgh=Mv²/2+(MR²/2)(v/R)²/2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nConservation of energy gives Mgh=Mv²/2+Iω²/2. Using ω=v/R and I=MR²/2, the total kinetic energy is 3Mv²/4. Thus v²=4gh/3=40 m²/s². Static friction enables rolling but does no work at an ideal stationary contact.\n\nWhy the other choices fail:\nC: This ignores rotational kinetic energy.\nD: This corresponds to a hoop, not a solid cylinder.\nA: The translational and rotational energies are not equal for this inertia.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "This ignores rotational kinetic energy."
+      },
+      {
+        "option": "D",
+        "explanation": "This corresponds to a hoop, not a solid cylinder."
+      },
+      {
+        "option": "A",
+        "explanation": "The translational and rotational energies are not equal for this inertia."
+      }
+    ],
+    "diagram": "",
+    "hub": "rotation",
+    "subtopic": "Rolling solid cylinder down a ramp",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "rotation / Rolling solid cylinder down a ramp",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Rolling solid cylinder down a ramp"
+  },
+  {
+    "id": "v4-31",
+    "subject": "Physics I",
+    "topic": "Parallel-axis inertia of a rod",
+    "title": "Parallel-axis inertia of a rod",
+    "prompt": "A uniform rod has mass 3 kg and length 2 m. Its central perpendicular moment of inertia is ML²/12. What is its inertia about a perpendicular axis through one end?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 13 kg·m²"
+      },
+      {
+        "value": "B",
+        "label": "B. 3 kg·m²"
+      },
+      {
+        "value": "C",
+        "label": "C. 4 kg·m²"
+      },
+      {
+        "value": "D",
+        "label": "D. 1 kg·m²"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Measure the separation between the two axes.",
+    "setup": "Use Iend=Icm+Md² with d=L/2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe central inertia is 3(2²)/12=1 kg·m². The end axis is L/2=1 m from the center, so the parallel-axis term is M(L/2)²=3 kg·m². Adding gives 4 kg·m², also equal to ML²/3.\n\nWhy the other choices fail:\nD: This is the central inertia before shifting the axis.\nA: The shift distance is half the length, not the full length.\nB: This is only the added parallel-axis term.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "This is the central inertia before shifting the axis."
+      },
+      {
+        "option": "A",
+        "explanation": "The shift distance is half the length, not the full length."
+      },
+      {
+        "option": "B",
+        "explanation": "This is only the added parallel-axis term."
+      }
+    ],
+    "diagram": "",
+    "hub": "rotation",
+    "subtopic": "Parallel-axis inertia of a rod",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "rotation / Parallel-axis inertia of a rod",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Parallel-axis inertia of a rod"
+  },
+  {
+    "id": "v4-32",
+    "subject": "Physics I",
+    "topic": "Angle matters in torque",
+    "title": "Angle matters in torque",
+    "prompt": "A 10 N force acts at the end of a 0.50 m wrench. The force makes a 30° angle with the wrench radius vector. What is the torque magnitude?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 5 N·m"
+      },
+      {
+        "value": "B",
+        "label": "B. 4.33 N·m"
+      },
+      {
+        "value": "C",
+        "label": "C. 20 N·m"
+      },
+      {
+        "value": "D",
+        "label": "D. 2.5 N·m"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use the component perpendicular to the wrench.",
+    "setup": "Evaluate τ=rF sinθ with θ=30°.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nTorque magnitude is rF sinθ, where θ is the angle between the radius vector and force. Substitution gives (0.50)(10)sin30°=2.5 N·m. Only the perpendicular force component contributes to rotation about the pivot.\n\nWhy the other choices fail:\nA: This assumes a perpendicular force instead of a 30° angle.\nB: Cosine extracts the parallel component for the stated angle.\nC: Torque multiplies by the lever arm; it does not divide by it.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "This assumes a perpendicular force instead of a 30° angle."
+      },
+      {
+        "option": "B",
+        "explanation": "Cosine extracts the parallel component for the stated angle."
+      },
+      {
+        "option": "C",
+        "explanation": "Torque multiplies by the lever arm; it does not divide by it."
+      }
+    ],
+    "diagram": "",
+    "hub": "torque",
+    "subtopic": "Angle matters in torque",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "torque / Angle matters in torque",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Angle matters in torque"
+  },
+  {
+    "id": "v4-33",
+    "subject": "Physics I",
+    "topic": "A beam in rotational equilibrium",
+    "title": "A beam in rotational equilibrium",
+    "prompt": "A massless horizontal 4 m beam is hinged at its left end. A 100 N load hangs 3 m from the hinge. A vertical cable supports the right end. Find the cable tension and upward hinge force.",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 75 N; 25 N"
+      },
+      {
+        "value": "B",
+        "label": "B. 100 N; 0 N"
+      },
+      {
+        "value": "C",
+        "label": "C. 25 N; 75 N"
+      },
+      {
+        "value": "D",
+        "label": "D. 300 N; −200 N"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Take torques about the hinge first.",
+    "setup": "Use 4T=3W, then Hy+T=W.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nTaking moments about the hinge eliminates its force: 4T−3(100)=0, so T=75 N. Vertical force balance then gives Hy+75−100=0, hence Hy=25 N upward. Both force and torque equilibrium must hold.\n\nWhy the other choices fail:\nB: Balancing forces alone misses the unequal lever arms.\nC: This reverses the support shares set by the lever arms.\nD: The load moment is 300 N·m, which must be divided by the 4 m cable lever arm.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Balancing forces alone misses the unequal lever arms."
+      },
+      {
+        "option": "C",
+        "explanation": "This reverses the support shares set by the lever arms."
+      },
+      {
+        "option": "D",
+        "explanation": "The load moment is 300 N·m, which must be divided by the 4 m cable lever arm."
+      }
+    ],
+    "diagram": "",
+    "hub": "torque",
+    "subtopic": "A beam in rotational equilibrium",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "torque / A beam in rotational equilibrium",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A beam in rotational equilibrium"
+  },
+  {
+    "id": "v4-34",
+    "subject": "Physics I",
+    "topic": "Pulling masses inward changes energy",
+    "title": "Pulling masses inward changes energy",
+    "prompt": "A rotating system with no external torque reduces its moment of inertia from 6 to 2 kg·m². Initially ω=3 rad/s. What are final ω and the ratio Kf/Ki?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 3 rad/s; 1/3"
+      },
+      {
+        "value": "B",
+        "label": "B. 9 rad/s; 3"
+      },
+      {
+        "value": "C",
+        "label": "C. 1 rad/s; 1/3"
+      },
+      {
+        "value": "D",
+        "label": "D. 9 rad/s; 1"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Conserve angular momentum, not kinetic energy.",
+    "setup": "Use Iiωi=Ifωf and K=L²/(2I).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nAngular momentum Iω is conserved, so 6(3)=2ωf and ωf=9 rad/s. Since K=L²/(2I) for fixed L, reducing inertia by a factor of three triples rotational energy. Internal work supplies the extra kinetic energy.\n\nWhy the other choices fail:\nC: Conservation of Iω makes angular speed increase as inertia falls.\nD: Angular momentum conservation does not require rotational kinetic energy conservation.\nA: Constant angular speed would violate angular momentum conservation here.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Conservation of Iω makes angular speed increase as inertia falls."
+      },
+      {
+        "option": "D",
+        "explanation": "Angular momentum conservation does not require rotational kinetic energy conservation."
+      },
+      {
+        "option": "A",
+        "explanation": "Constant angular speed would violate angular momentum conservation here."
+      }
+    ],
+    "diagram": "",
+    "hub": "angular-momentum",
+    "subtopic": "Pulling masses inward changes energy",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "angular-momentum / Pulling masses inward changes energy",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Pulling masses inward changes energy"
+  },
+  {
+    "id": "v4-35",
+    "subject": "Physics I",
+    "topic": "Changing a circular orbit radius",
+    "title": "Changing a circular orbit radius",
+    "prompt": "A satellite moves from a circular orbit of radius r to a circular orbit of radius 4r around the same planet. What are vf/vi and Tf/Ti?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 1/2; 4"
+      },
+      {
+        "value": "B",
+        "label": "B. 2; 1/8"
+      },
+      {
+        "value": "C",
+        "label": "C. 1/2; 8"
+      },
+      {
+        "value": "D",
+        "label": "D. 1/4; 4"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Combine gravitational centripetal balance with period.",
+    "setup": "Use v∝r^(−1/2) and T∝r^(3/2).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nCircular-orbit speed is √(GM/r), so quadrupling radius halves speed. Period is circumference divided by speed: 2πr/v. The new circumference is four times larger and speed half as large, giving an eightfold period increase.\n\nWhy the other choices fail:\nD: Speed scales with inverse square root of radius, not inverse radius.\nA: The larger circumference and reduced speed both affect the period.\nB: Higher circular orbits are slower and have longer periods.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Speed scales with inverse square root of radius, not inverse radius."
+      },
+      {
+        "option": "A",
+        "explanation": "The larger circumference and reduced speed both affect the period."
+      },
+      {
+        "option": "B",
+        "explanation": "Higher circular orbits are slower and have longer periods."
+      }
+    ],
+    "diagram": "",
+    "hub": "gravitation",
+    "subtopic": "Changing a circular orbit radius",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "gravitation / Changing a circular orbit radius",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Changing a circular orbit radius"
+  },
+  {
+    "id": "v4-36",
+    "subject": "Physics I",
+    "topic": "Energy partition in a spring oscillator",
+    "title": "Energy partition in a spring oscillator",
+    "prompt": "An ideal mass-spring oscillator has amplitude A. At x=A/2, what fraction of total mechanical energy is kinetic, and what is |v|/vmax?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 1/2; 1/2"
+      },
+      {
+        "value": "B",
+        "label": "B. 1/4; 1/2"
+      },
+      {
+        "value": "C",
+        "label": "C. 3/4; 3/4"
+      },
+      {
+        "value": "D",
+        "label": "D. 3/4; √3/2"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Compute potential energy as a fraction of total energy first.",
+    "setup": "Use K/E=1−x²/A² and v/vmax=√(K/E).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nTotal energy is kA²/2. At x=A/2 the potential energy kx²/2 is one quarter of the total, leaving three quarters as kinetic. Since kinetic energy scales as v², the speed ratio is √(3/4)=√3/2.\n\nWhy the other choices fail:\nA: Spring energy depends on displacement squared rather than displacement.\nB: One quarter is the potential-energy fraction, not the kinetic fraction.\nC: Speed is proportional to the square root of kinetic energy.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Spring energy depends on displacement squared rather than displacement."
+      },
+      {
+        "option": "B",
+        "explanation": "One quarter is the potential-energy fraction, not the kinetic fraction."
+      },
+      {
+        "option": "C",
+        "explanation": "Speed is proportional to the square root of kinetic energy."
+      }
+    ],
+    "diagram": "",
+    "hub": "oscillations",
+    "subtopic": "Energy partition in a spring oscillator",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "oscillations / Energy partition in a spring oscillator",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Energy partition in a spring oscillator"
+  },
+  {
+    "id": "v4-37",
+    "subject": "Physics I",
+    "topic": "Standing-wave harmonics on a string",
+    "title": "Standing-wave harmonics on a string",
+    "prompt": "A string fixed at both ends is 1.2 m long and carries waves at 120 m/s. Find the frequency and wavelength of its third harmonic.",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 150 Hz; 0.80 m"
+      },
+      {
+        "value": "B",
+        "label": "B. 300 Hz; 0.40 m"
+      },
+      {
+        "value": "C",
+        "label": "C. 50 Hz; 2.4 m"
+      },
+      {
+        "value": "D",
+        "label": "D. 100 Hz; 1.2 m"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Count half-wavelengths between fixed ends.",
+    "setup": "Use L=nλ/2 and f=v/λ.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nFixed ends require n half-wavelengths in the string length, so λn=2L/n. With n=3, λ=2.4/3=0.80 m. The frequency is v/λ=120/0.80=150 Hz, three times the 50 Hz fundamental.\n\nWhy the other choices fail:\nB: This fits six half-wavelengths, corresponding to the sixth harmonic.\nC: These are the fundamental values, not third-harmonic values.\nD: These values describe the second harmonic.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "This fits six half-wavelengths, corresponding to the sixth harmonic."
+      },
+      {
+        "option": "C",
+        "explanation": "These are the fundamental values, not third-harmonic values."
+      },
+      {
+        "option": "D",
+        "explanation": "These values describe the second harmonic."
+      }
+    ],
+    "diagram": "",
+    "hub": "waves",
+    "subtopic": "Standing-wave harmonics on a string",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "waves / Standing-wave harmonics on a string",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Standing-wave harmonics on a string"
+  },
+  {
+    "id": "v4-38",
+    "subject": "Physics I",
+    "topic": "Continuity and Bernoulli together",
+    "title": "Continuity and Bernoulli together",
+    "prompt": "Water of density 1000 kg/m³ flows horizontally through an ideal pipe. Area decreases from 4 cm² to 2 cm²; speed upstream is 2 m/s. What is P1−P2?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 8000 Pa"
+      },
+      {
+        "value": "B",
+        "label": "B. 6000 Pa"
+      },
+      {
+        "value": "C",
+        "label": "C. 2000 Pa"
+      },
+      {
+        "value": "D",
+        "label": "D. −6000 Pa"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use continuity to find the second speed before applying energy balance.",
+    "setup": "Set v2=(A1/A2)v1, then ΔP=ρ(v2²−v1²)/2.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nContinuity gives A1v1=A2v2, so v2=4 m/s. At equal height, Bernoulli gives P1−P2=(ρ/2)(v2²−v1²). This is 500(16−4)=6000 Pa; the narrower faster section has lower pressure.\n\nWhy the other choices fail:\nC: Bernoulli uses squared speeds, not just their difference.\nD: The faster section has lower pressure under the stated ideal assumptions.\nA: Subtract the upstream kinetic term rather than using the downstream term alone.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Bernoulli uses squared speeds, not just their difference."
+      },
+      {
+        "option": "D",
+        "explanation": "The faster section has lower pressure under the stated ideal assumptions."
+      },
+      {
+        "option": "A",
+        "explanation": "Subtract the upstream kinetic term rather than using the downstream term alone."
+      }
+    ],
+    "diagram": "",
+    "hub": "fluids",
+    "subtopic": "Continuity and Bernoulli together",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "fluids / Continuity and Bernoulli together",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Continuity and Bernoulli together"
+  },
+  {
+    "id": "v4-39",
+    "subject": "Physics I",
+    "topic": "Dimensions expose a flawed pendulum formula",
+    "title": "Dimensions expose a flawed pendulum formula",
+    "prompt": "A proposed period law uses only pendulum length L and gravitational acceleration g: T=C L^a g^b, where C is dimensionless. Which exponents are dimensionally possible?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. a=−1/2, b=1/2"
+      },
+      {
+        "value": "B",
+        "label": "B. a=0, b=−1/2"
+      },
+      {
+        "value": "C",
+        "label": "C. a=1/2, b=−1/2"
+      },
+      {
+        "value": "D",
+        "label": "D. a=1, b=−1"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Match time and length exponents separately.",
+    "setup": "Use [g]=length/time² and require [T]=time.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe dimensions are length^(a+b) time^(−2b). Matching a period requires a+b=0 and −2b=1. Therefore b=−1/2 and a=1/2. Dimensional analysis determines the scaling but cannot determine C or justify small-angle assumptions.\n\nWhy the other choices fail:\nD: These exponents produce time squared rather than time.\nA: This gives inverse time, the dimensions of frequency.\nB: The residual length dimension must cancel as well.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "These exponents produce time squared rather than time."
+      },
+      {
+        "option": "A",
+        "explanation": "This gives inverse time, the dimensions of frequency."
+      },
+      {
+        "option": "B",
+        "explanation": "The residual length dimension must cancel as well."
+      }
+    ],
+    "diagram": "",
+    "hub": "measurement",
+    "subtopic": "Dimensions expose a flawed pendulum formula",
+    "difficulty": "Core",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "measurement / Dimensions expose a flawed pendulum formula",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Dimensions expose a flawed pendulum formula"
+  },
+  {
+    "id": "v4-40",
+    "subject": "Physics I",
+    "topic": "Minimum release height for a loop",
+    "title": "Minimum release height for a loop",
+    "prompt": "A frictionless point-mass cart starts from rest at height h above the bottom of a vertical loop of radius R. What minimum h keeps contact at the top?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2R"
+      },
+      {
+        "value": "B",
+        "label": "B. 3R"
+      },
+      {
+        "value": "C",
+        "label": "C. R/2"
+      },
+      {
+        "value": "D",
+        "label": "D. 5R/2"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Combine the top contact condition with conservation of energy.",
+    "setup": "Use vtop²=gR and h=2R+vtop²/(2g).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nAt the top contact threshold, vtop²=gR. Energy from release to the top gives mgh=mg(2R)+mvtop²/2. Substitution yields h=2R+R/2=5R/2. Merely reaching the top with zero speed is insufficient for contact.\n\nWhy the other choices fail:\nA: This supplies only the top gravitational potential, leaving no necessary speed.\nB: The threshold kinetic contribution is mgR/2, not mgR.\nC: The height of the loop top above the bottom must also be included.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "This supplies only the top gravitational potential, leaving no necessary speed."
+      },
+      {
+        "option": "B",
+        "explanation": "The threshold kinetic contribution is mgR/2, not mgR."
+      },
+      {
+        "option": "C",
+        "explanation": "The height of the loop top above the bottom must also be included."
+      }
+    ],
+    "diagram": "",
+    "hub": "energy",
+    "subtopic": "Minimum release height for a loop",
+    "difficulty": "Integration",
+    "type": "Multi-step",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/university-physics-volume-1. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Challenge · original practice",
+    "topicScope": "energy / Minimum release height for a loop",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Minimum release height for a loop"
+  },
+  {
+    "id": "v4-41",
+    "subject": "Organic Chemistry I",
+    "topic": "Unsaturation from a molecular formula",
+    "title": "Unsaturation from a molecular formula",
+    "prompt": "For a neutral closed-shell compound C5H8O2 with ordinary valences, what is its degree of unsaturation, and which feature set is compatible?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2; one ring and one carbonyl"
+      },
+      {
+        "value": "B",
+        "label": "B. 1; one carbonyl only"
+      },
+      {
+        "value": "C",
+        "label": "C. 3; one ring and two carbonyls"
+      },
+      {
+        "value": "D",
+        "label": "D. 0; acyclic saturated structure"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Ignore oxygen when calculating hydrogen deficiency.",
+    "setup": "Use DBE=(2C+2+N−H−X)/2 for ordinary neutral formulas.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nOxygen does not affect the hydrogen-deficiency count. DBE=(2C+2−H)/2=(10+2−8)/2=2. Each ring or double bond contributes one, so a ring plus one carbonyl is compatible; the formula alone does not prove that particular structure.\n\nWhy the other choices fail:\nB: Eight hydrogens are four fewer than the saturated acyclic reference, not two fewer.\nC: That feature set requires three degrees of unsaturation.\nD: An acyclic saturated oxygen-containing C5 compound would have twelve hydrogens.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Eight hydrogens are four fewer than the saturated acyclic reference, not two fewer."
+      },
+      {
+        "option": "C",
+        "explanation": "That feature set requires three degrees of unsaturation."
+      },
+      {
+        "option": "D",
+        "explanation": "An acyclic saturated oxygen-containing C5 compound would have twelve hydrogens."
+      }
+    ],
+    "diagram": "",
+    "hub": "structure",
+    "subtopic": "Unsaturation from a molecular formula",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "structure / Unsaturation from a molecular formula",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Unsaturation from a molecular formula"
+  },
+  {
+    "id": "v4-42",
+    "subject": "Organic Chemistry I",
+    "topic": "Amide nitrogen geometry",
+    "title": "Amide nitrogen geometry",
+    "prompt": "Which describes the nitrogen in a simple planar amide such as acetamide, CH3CONH2?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. sp²; it is more basic than a comparable amine"
+      },
+      {
+        "value": "B",
+        "label": "B. Approximately sp²; its lone pair is delocalized into the carbonyl"
+      },
+      {
+        "value": "C",
+        "label": "C. sp³; free rotation about the C–N bond"
+      },
+      {
+        "value": "D",
+        "label": "D. sp; two linear sigma bonds"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Consider overlap between the nitrogen lone pair and carbonyl π orbitals.",
+    "setup": "Draw the resonance contributor with N positive and O negative.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nThe nitrogen lone pair overlaps with the adjacent carbonyl π system. Resonance gives the C–N bond partial double-bond character and favors a planar, approximately sp² nitrogen. This delocalization reduces lone-pair availability for protonation compared with an ordinary amine.\n\nWhy the other choices fail:\nC: Free rotation and fully localized sp³ description ignore conjugation.\nD: The nitrogen has three sigma bonds and is not linear.\nA: Delocalization makes the lone pair less available, reducing basicity.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Free rotation and fully localized sp³ description ignore conjugation."
+      },
+      {
+        "option": "D",
+        "explanation": "The nitrogen has three sigma bonds and is not linear."
+      },
+      {
+        "option": "A",
+        "explanation": "Delocalization makes the lone pair less available, reducing basicity."
+      }
+    ],
+    "diagram": "",
+    "hub": "structure",
+    "subtopic": "Amide nitrogen geometry",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "structure / Amide nitrogen geometry",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Amide nitrogen geometry"
+  },
+  {
+    "id": "v4-43",
+    "subject": "Organic Chemistry I",
+    "topic": "Avoid double-counting a carboxylic acid",
+    "title": "Avoid double-counting a carboxylic acid",
+    "prompt": "Which set correctly identifies the distinct functional groups in HOCH2CH2C(=O)OH?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Ether and aldehyde"
+      },
+      {
+        "value": "B",
+        "label": "B. Alcohol and ester"
+      },
+      {
+        "value": "C",
+        "label": "C. Alcohol and carboxylic acid"
+      },
+      {
+        "value": "D",
+        "label": "D. Two alcohols and a ketone"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Recognize combined carbonyl functional groups as units.",
+    "setup": "Inspect what is bonded directly to the carbonyl carbon.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe terminal HOCH2 group is an alcohol. The C(=O)OH unit is one carboxylic-acid functional group, whose OH and carbonyl are interpreted together. It is not a separate ketone or alcohol, and no ester O–carbon substituent follows the acyl oxygen.\n\nWhy the other choices fail:\nD: A carboxyl OH is part of the acid group and its carbonyl is not a ketone.\nA: There is no oxygen joining two carbons as an ether or terminal CHO group.\nB: An ester would have C(=O)OR with R carbon-containing rather than H.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "A carboxyl OH is part of the acid group and its carbonyl is not a ketone."
+      },
+      {
+        "option": "A",
+        "explanation": "There is no oxygen joining two carbons as an ether or terminal CHO group."
+      },
+      {
+        "option": "B",
+        "explanation": "An ester would have C(=O)OR with R carbon-containing rather than H."
+      }
+    ],
+    "diagram": "",
+    "hub": "groups",
+    "subtopic": "Avoid double-counting a carboxylic acid",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "groups / Avoid double-counting a carboxylic acid",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Avoid double-counting a carboxylic acid"
+  },
+  {
+    "id": "v4-44",
+    "subject": "Organic Chemistry I",
+    "topic": "Name the highest-priority group",
+    "title": "Name the highest-priority group",
+    "prompt": "Choose the systematic name for CH3CH(OH)CH2COOH.",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 2-hydroxybutanoic acid"
+      },
+      {
+        "value": "B",
+        "label": "B. Butan-2-ol-4-oic acid"
+      },
+      {
+        "value": "C",
+        "label": "C. 3-hydroxybutanal"
+      },
+      {
+        "value": "D",
+        "label": "D. 3-hydroxybutanoic acid"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Number from the principal carboxylic-acid carbon.",
+    "setup": "Choose the acid parent before assigning the hydroxy locant.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nThe carboxylic acid is the principal group and its carbon is carbon 1. Counting outward gives COOH(1)–CH2(2)–CH(OH)(3)–CH3(4). The parent is butanoic acid and the alcohol is named as the hydroxy substituent at carbon 3.\n\nWhy the other choices fail:\nA: Numbering begins at the acid carbon, not the methyl end.\nB: The acid supplies the suffix and fixes carbon 1; OH becomes a prefix.\nC: The terminal group is COOH, not CHO.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Numbering begins at the acid carbon, not the methyl end."
+      },
+      {
+        "option": "B",
+        "explanation": "The acid supplies the suffix and fixes carbon 1; OH becomes a prefix."
+      },
+      {
+        "option": "C",
+        "explanation": "The terminal group is COOH, not CHO."
+      }
+    ],
+    "diagram": "",
+    "hub": "groups",
+    "subtopic": "Name the highest-priority group",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "groups / Name the highest-priority group",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Name the highest-priority group"
+  },
+  {
+    "id": "v4-45",
+    "subject": "Organic Chemistry I",
+    "topic": "Predict equilibrium with supplied pKa values",
+    "title": "Predict equilibrium with supplied pKa values",
+    "prompt": "For HA+B− ⇌ A−+HB, pKa(HA)=5 and pKa(HB)=10. Estimate K for the forward proton transfer.",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 10^5"
+      },
+      {
+        "value": "B",
+        "label": "B. 10^(−5)"
+      },
+      {
+        "value": "C",
+        "label": "C. 5"
+      },
+      {
+        "value": "D",
+        "label": "D. 10^15"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Compare the acid on each side of the reaction.",
+    "setup": "Use K≈10^(pKa of product acid−pKa of reactant acid).",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nThe approximate proton-transfer equilibrium constant is 10^[pKa(HB)−pKa(HA)]. The difference is 10−5=5, so K≈10^5 and products are favored. The reaction converts the stronger acid HA into the weaker acid HB.\n\nWhy the other choices fail:\nB: Reversing the pKa difference gives the reverse reaction constant.\nC: pKa is logarithmic, so the difference is an exponent rather than K itself.\nD: Use the difference of pKa values, not their sum.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Reversing the pKa difference gives the reverse reaction constant."
+      },
+      {
+        "option": "C",
+        "explanation": "pKa is logarithmic, so the difference is an exponent rather than K itself."
+      },
+      {
+        "option": "D",
+        "explanation": "Use the difference of pKa values, not their sum."
+      }
+    ],
+    "diagram": "",
+    "hub": "acids",
+    "subtopic": "Predict equilibrium with supplied pKa values",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "acids / Predict equilibrium with supplied pKa values",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Predict equilibrium with supplied pKa values"
+  },
+  {
+    "id": "v4-46",
+    "subject": "Organic Chemistry I",
+    "topic": "Induction and acid strength",
+    "title": "Induction and acid strength",
+    "prompt": "Which is the strongest acid among CH3COOH, ClCH2COOH, Cl2CHCOOH, and CH3CH2OH?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. CH3CH2OH"
+      },
+      {
+        "value": "B",
+        "label": "B. Cl2CHCOOH"
+      },
+      {
+        "value": "C",
+        "label": "C. ClCH2COOH"
+      },
+      {
+        "value": "D",
+        "label": "D. CH3COOH"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Compare stabilization of the conjugate bases.",
+    "setup": "Separate resonance effects from the additional inductive effect of chlorine.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nCarboxylate conjugate bases distribute charge over two oxygens, unlike an alkoxide. Electron-withdrawing chlorine substituents further stabilize the conjugate base through induction. With two nearby chlorines, dichloroacetic acid is strongest among these choices.\n\nWhy the other choices fail:\nC: A second electron-withdrawing chlorine further increases acidity.\nD: The unsubstituted acid lacks chlorine’s inductive stabilization.\nA: An ordinary alcohol has a much less stabilized conjugate base than these carboxylic acids.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "A second electron-withdrawing chlorine further increases acidity."
+      },
+      {
+        "option": "D",
+        "explanation": "The unsubstituted acid lacks chlorine’s inductive stabilization."
+      },
+      {
+        "option": "A",
+        "explanation": "An ordinary alcohol has a much less stabilized conjugate base than these carboxylic acids."
+      }
+    ],
+    "diagram": "",
+    "hub": "acids",
+    "subtopic": "Induction and acid strength",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "acids / Induction and acid strength",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Induction and acid strength"
+  },
+  {
+    "id": "v4-47",
+    "subject": "Organic Chemistry I",
+    "topic": "Resonance preserves atomic connectivity",
+    "title": "Resonance preserves atomic connectivity",
+    "prompt": "Which proposed operation can relate two valid resonance contributors of an allylic carbocation?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Break a carbon-carbon sigma bond and reconnect the chain"
+      },
+      {
+        "value": "B",
+        "label": "B. Rotate a saturated single bond to get another conformation"
+      },
+      {
+        "value": "C",
+        "label": "C. Shift the neighboring π-electron pair toward the cation while keeping nuclei fixed"
+      },
+      {
+        "value": "D",
+        "label": "D. Move a hydrogen nucleus to the cationic carbon"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Only electrons move between resonance contributors.",
+    "setup": "Keep the sigma framework fixed and track charge after moving a π pair.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nIn an allylic carbocation, moving a π pair forms a new π bond next to the original cation and relocates positive charge to the other end. This changes electron placement without moving atoms or changing the sigma skeleton. Resonance contributors describe one delocalized species.\n\nWhy the other choices fail:\nD: Moving a proton changes nuclear positions and is a chemical transformation, not resonance.\nA: Changing sigma connectivity generates a different constitutional structure.\nB: Conformers differ by geometry, not resonance electron placement.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Moving a proton changes nuclear positions and is a chemical transformation, not resonance."
+      },
+      {
+        "option": "A",
+        "explanation": "Changing sigma connectivity generates a different constitutional structure."
+      },
+      {
+        "option": "B",
+        "explanation": "Conformers differ by geometry, not resonance electron placement."
+      }
+    ],
+    "diagram": "",
+    "hub": "resonance",
+    "subtopic": "Resonance preserves atomic connectivity",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "resonance / Resonance preserves atomic connectivity",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Resonance preserves atomic connectivity"
+  },
+  {
+    "id": "v4-48",
+    "subject": "Organic Chemistry I",
+    "topic": "Formal charge on a three-bond oxygen",
+    "title": "Formal charge on a three-bond oxygen",
+    "prompt": "An oxygen has three single bonds and one lone pair. What formal charge does it carry?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. −1"
+      },
+      {
+        "value": "B",
+        "label": "B. 0"
+      },
+      {
+        "value": "C",
+        "label": "C. +2"
+      },
+      {
+        "value": "D",
+        "label": "D. +1"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Assign half of each bonding pair to oxygen.",
+    "setup": "Use formal charge=valence−nonbonding−one-half bonding electrons.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nOxygen has six valence electrons as a neutral atom. In this structure it is assigned two nonbonding electrons plus one electron from each of three bonds, totaling five. Formal charge is 6−5=+1, as in an oxonium center.\n\nWhy the other choices fail:\nA: A three-bond oxygen with one lone pair is electron-deficient by formal counting, not negative.\nB: Neutral oxygen ordinarily has two bonds and two lone pairs.\nC: The assigned count is five rather than four.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "A three-bond oxygen with one lone pair is electron-deficient by formal counting, not negative."
+      },
+      {
+        "option": "B",
+        "explanation": "Neutral oxygen ordinarily has two bonds and two lone pairs."
+      },
+      {
+        "option": "C",
+        "explanation": "The assigned count is five rather than four."
+      }
+    ],
+    "diagram": "",
+    "hub": "resonance",
+    "subtopic": "Formal charge on a three-bond oxygen",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "resonance / Formal charge on a three-bond oxygen",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Formal charge on a three-bond oxygen"
+  },
+  {
+    "id": "v4-49",
+    "subject": "Organic Chemistry I",
+    "topic": "A chair flip preserves configuration",
+    "title": "A chair flip preserves configuration",
+    "prompt": "For methylcyclohexane in a chair with methyl axial up, what does a ring flip do?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Makes methyl equatorial up; the flipped form is usually more stable"
+      },
+      {
+        "value": "B",
+        "label": "B. Makes methyl equatorial down; configuration inverts"
+      },
+      {
+        "value": "C",
+        "label": "C. Keeps methyl axial up; only hydrogens move"
+      },
+      {
+        "value": "D",
+        "label": "D. Makes methyl equatorial up; the flipped form is less stable"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Track up/down separately from axial/equatorial.",
+    "setup": "A chair flip swaps axial and equatorial but does not invert a stereocenter.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nA chair flip exchanges axial and equatorial positions while preserving whether each substituent points up or down. Thus axial-up methyl becomes equatorial-up. Equatorial methyl avoids the unfavorable axial interactions and is generally favored in this monosubstituted ring.\n\nWhy the other choices fail:\nB: Up/down orientation is preserved during a chair flip.\nC: The methyl group changes axial/equatorial position along with the ring.\nD: Equatorial placement reduces steric axial interactions for methyl.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "Up/down orientation is preserved during a chair flip."
+      },
+      {
+        "option": "C",
+        "explanation": "The methyl group changes axial/equatorial position along with the ring."
+      },
+      {
+        "option": "D",
+        "explanation": "Equatorial placement reduces steric axial interactions for methyl."
+      }
+    ],
+    "diagram": "",
+    "hub": "conformations",
+    "subtopic": "A chair flip preserves configuration",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "conformations / A chair flip preserves configuration",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A chair flip preserves configuration"
+  },
+  {
+    "id": "v4-50",
+    "subject": "Organic Chemistry I",
+    "topic": "Distinguish conformation from configuration",
+    "title": "Distinguish conformation from configuration",
+    "prompt": "Which pair can interconvert by ordinary single-bond rotation without breaking bonds?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Cis- and trans-1,2-dimethylcyclopropane"
+      },
+      {
+        "value": "B",
+        "label": "B. Anti and gauche conformers of n-butane"
+      },
+      {
+        "value": "C",
+        "label": "C. (R)- and (S)-2-butanol"
+      },
+      {
+        "value": "D",
+        "label": "D. E- and Z-2-butene"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Ask whether the difference is only a dihedral angle about a sigma bond.",
+    "setup": "Separate conformers from configurational stereoisomers.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nRotating around the central C–C sigma bond of n-butane changes the dihedral angle between methyl groups, interconverting anti and gauche conformers. The other pairs differ in configuration, which ordinary single-bond rotation cannot change. Rotation around a double bond would disrupt π overlap.\n\nWhy the other choices fail:\nC: Single-bond rotation does not invert the configuration of one tetrahedral stereocenter.\nD: An alkene π bond prevents ordinary free rotation between E and Z.\nA: Ring connectivity locks the relative faces in this small ring.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "Single-bond rotation does not invert the configuration of one tetrahedral stereocenter."
+      },
+      {
+        "option": "D",
+        "explanation": "An alkene π bond prevents ordinary free rotation between E and Z."
+      },
+      {
+        "option": "A",
+        "explanation": "Ring connectivity locks the relative faces in this small ring."
+      }
+    ],
+    "diagram": "",
+    "hub": "conformations",
+    "subtopic": "Distinguish conformation from configuration",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "conformations / Distinguish conformation from configuration",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Distinguish conformation from configuration"
+  },
+  {
+    "id": "v4-51",
+    "subject": "Organic Chemistry I",
+    "topic": "CIP priorities beyond the first atom",
+    "title": "CIP priorities beyond the first atom",
+    "prompt": "At a stereocenter attached to OH, CHO, CH2OH, and H, what is the descending CIP priority?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. OH > CH2OH > CHO > H"
+      },
+      {
+        "value": "B",
+        "label": "B. H > OH > CHO > CH2OH"
+      },
+      {
+        "value": "C",
+        "label": "C. OH > CHO > CH2OH > H"
+      },
+      {
+        "value": "D",
+        "label": "D. CHO > OH > CH2OH > H"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Resolve the carbon tie using multiple-bond duplicate-atom bookkeeping.",
+    "setup": "Compare first atoms, then sorted neighbor lists for tied atoms.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe directly attached oxygen in OH outranks carbon, and H is last. To compare the carbon groups, represent the aldehyde double bond by duplicate oxygen entries: CHO has [O,O,H], while CH2OH has [O,H,H]. The first difference gives CHO priority over CH2OH.\n\nWhy the other choices fail:\nD: Directly attached atomic number is compared before atoms farther away.\nA: The carbonyl’s duplicate oxygen gives CHO higher priority.\nB: Hydrogen has the lowest atomic number among the directly attached atoms.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Directly attached atomic number is compared before atoms farther away."
+      },
+      {
+        "option": "A",
+        "explanation": "The carbonyl’s duplicate oxygen gives CHO higher priority."
+      },
+      {
+        "option": "B",
+        "explanation": "Hydrogen has the lowest atomic number among the directly attached atoms."
+      }
+    ],
+    "diagram": "",
+    "hub": "stereo",
+    "subtopic": "CIP priorities beyond the first atom",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "stereo / CIP priorities beyond the first atom",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "CIP priorities beyond the first atom"
+  },
+  {
+    "id": "v4-52",
+    "subject": "Organic Chemistry I",
+    "topic": "Invert a front-facing priority four",
+    "title": "Invert a front-facing priority four",
+    "prompt": "A stereocenter has priority 4 pointing directly toward you. In the drawing, 1→2→3 runs clockwise. What is the configuration?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. R"
+      },
+      {
+        "value": "B",
+        "label": "B. E"
+      },
+      {
+        "value": "C",
+        "label": "C. Achiral necessarily"
+      },
+      {
+        "value": "D",
+        "label": "D. S"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Check which way the lowest-priority group points.",
+    "setup": "Reverse the apparent clockwise/counterclockwise assignment when priority 4 points toward you.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nThe clockwise-to-R rule applies only with priority 4 directed away. Here priority 4 points toward the viewer, so the observed direction must be reversed. The center therefore has S configuration; the clockwise trace alone is insufficient without depth orientation.\n\nWhy the other choices fail:\nA: This neglects reversal for a front-facing lowest-priority group.\nB: E is an alkene descriptor, not the tetrahedral descriptor requested.\nC: Four different substituents may still form a chiral center regardless of viewing direction.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "This neglects reversal for a front-facing lowest-priority group."
+      },
+      {
+        "option": "B",
+        "explanation": "E is an alkene descriptor, not the tetrahedral descriptor requested."
+      },
+      {
+        "option": "C",
+        "explanation": "Four different substituents may still form a chiral center regardless of viewing direction."
+      }
+    ],
+    "diagram": "",
+    "hub": "stereo",
+    "subtopic": "Invert a front-facing priority four",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "stereo / Invert a front-facing priority four",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Invert a front-facing priority four"
+  },
+  {
+    "id": "v4-53",
+    "subject": "Organic Chemistry I",
+    "topic": "E/Z with unequal atoms",
+    "title": "E/Z with unequal atoms",
+    "prompt": "An alkene has Cl above and CH3 below on its left carbon; on its right carbon CH2CH3 is above and H below. What is its configuration?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Z"
+      },
+      {
+        "value": "B",
+        "label": "B. E"
+      },
+      {
+        "value": "C",
+        "label": "C. R"
+      },
+      {
+        "value": "D",
+        "label": "D. No E/Z designation is possible"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use CIP independently on each end of the double bond.",
+    "setup": "Compare the positions of the higher-priority substituent at each carbon.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nOn the left, Cl has higher priority than the carbon of CH3. On the right, the carbon of ethyl outranks hydrogen. These two higher-priority substituents are both above the double bond, so the configuration is Z. Each alkene carbon has two different substituents.\n\nWhy the other choices fail:\nB: The higher-priority groups lie on the same side, not opposite sides.\nC: R describes tetrahedral chirality, not this alkene geometry.\nD: Both alkene carbons have distinct substituents, so E/Z is defined.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "The higher-priority groups lie on the same side, not opposite sides."
+      },
+      {
+        "option": "C",
+        "explanation": "R describes tetrahedral chirality, not this alkene geometry."
+      },
+      {
+        "option": "D",
+        "explanation": "Both alkene carbons have distinct substituents, so E/Z is defined."
+      }
+    ],
+    "diagram": "",
+    "hub": "stereo",
+    "subtopic": "E/Z with unequal atoms",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "stereo / E/Z with unequal atoms",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "E/Z with unequal atoms"
+  },
+  {
+    "id": "v4-54",
+    "subject": "Organic Chemistry I",
+    "topic": "Symmetry reduces the stereoisomer count",
+    "title": "Symmetry reduces the stereoisomer count",
+    "prompt": "How many configurational stereoisomers does 2,3-dibromobutane have, and why?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 1: every form is achiral"
+      },
+      {
+        "value": "B",
+        "label": "B. 3: one enantiomeric pair and one meso form"
+      },
+      {
+        "value": "C",
+        "label": "C. 4: all 2² configurations are distinct"
+      },
+      {
+        "value": "D",
+        "label": "D. 2: only a meso pair"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Check molecular symmetry before using 2^n as an exact count.",
+    "setup": "List RR, SS, RS, SR and identify symmetry-equivalent descriptions.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nTwo stereocenters give a maximum of four configurations, but internal symmetry makes the R,S and S,R descriptions represent the same meso stereoisomer. The R,R and S,S forms are an enantiomeric pair. Thus there are three configurational stereoisomers total.\n\nWhy the other choices fail:\nC: The 2^n rule is an upper bound; symmetry can reduce the total.\nD: A meso form is achiral and does not have a distinct enantiomer.\nA: The R,R and S,S structures are chiral and mutually non-superimposable.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "The 2^n rule is an upper bound; symmetry can reduce the total."
+      },
+      {
+        "option": "D",
+        "explanation": "A meso form is achiral and does not have a distinct enantiomer."
+      },
+      {
+        "option": "A",
+        "explanation": "The R,R and S,S structures are chiral and mutually non-superimposable."
+      }
+    ],
+    "diagram": "",
+    "hub": "stereo",
+    "subtopic": "Symmetry reduces the stereoisomer count",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "stereo / Symmetry reduces the stereoisomer count",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Symmetry reduces the stereoisomer count"
+  },
+  {
+    "id": "v4-55",
+    "subject": "Organic Chemistry I",
+    "topic": "A catalyst changes rates, not equilibrium",
+    "title": "A catalyst changes rates, not equilibrium",
+    "prompt": "A catalyst lowers the activation free energy of a reversible reaction without changing reactant or product free energies. Which statement follows?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. The reaction free energy becomes more negative"
+      },
+      {
+        "value": "B",
+        "label": "B. The equilibrium constant increases because the barrier is lower"
+      },
+      {
+        "value": "C",
+        "label": "C. Both directions speed up; equilibrium constant is unchanged"
+      },
+      {
+        "value": "D",
+        "label": "D. Only the forward reaction speeds up; products become favored"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Separate the transition-state barrier from the reactant-product energy difference.",
+    "setup": "Use rate ↔ activation barrier and equilibrium ↔ reaction free energy.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nA catalyst provides an alternative kinetic pathway while preserving the free-energy difference between reactants and products. It lowers the effective barriers for both directions and accelerates approach to equilibrium. The equilibrium constant depends on the reaction free energy, which is unchanged.\n\nWhy the other choices fail:\nD: Catalysts do not selectively change equilibrium composition by accelerating only one direction.\nA: Reactant and product free energies were explicitly held fixed.\nB: Activation barriers control rates; the state free-energy difference controls equilibrium.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Catalysts do not selectively change equilibrium composition by accelerating only one direction."
+      },
+      {
+        "option": "A",
+        "explanation": "Reactant and product free energies were explicitly held fixed."
+      },
+      {
+        "option": "B",
+        "explanation": "Activation barriers control rates; the state free-energy difference controls equilibrium."
+      }
+    ],
+    "diagram": "",
+    "hub": "reactions",
+    "subtopic": "A catalyst changes rates, not equilibrium",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "reactions / A catalyst changes rates, not equilibrium",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A catalyst changes rates, not equilibrium"
+  },
+  {
+    "id": "v4-56",
+    "subject": "Organic Chemistry I",
+    "topic": "Hydroboration of a terminal alkene",
+    "title": "Hydroboration of a terminal alkene",
+    "prompt": "Treat 1-hexene with BH3·THF, then H2O2/OH−. What is the principal alcohol connectivity?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Hexan-2-ol"
+      },
+      {
+        "value": "B",
+        "label": "B. Hexan-3-ol"
+      },
+      {
+        "value": "C",
+        "label": "C. Hexan-1,2-diol"
+      },
+      {
+        "value": "D",
+        "label": "D. Hexan-1-ol"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Track which carbon receives boron, then oxygen.",
+    "setup": "Apply anti-Markovnikov hydration connectivity for a terminal alkene.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nHydroboration places boron preferentially at the less substituted end of a terminal alkene. Oxidation replaces the carbon-boron bond with a carbon-oxygen bond while retaining its position. The resulting anti-Markovnikov alcohol is hexan-1-ol; this sequence adds one OH, not two.\n\nWhy the other choices fail:\nA: This is the Markovnikov hydration connectivity, unlike hydroboration-oxidation.\nB: The reaction does not move the alkene inward to install OH at carbon 3.\nC: A dihydroxylation reagent sequence is needed to install two OH groups.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "This is the Markovnikov hydration connectivity, unlike hydroboration-oxidation."
+      },
+      {
+        "option": "B",
+        "explanation": "The reaction does not move the alkene inward to install OH at carbon 3."
+      },
+      {
+        "option": "C",
+        "explanation": "A dihydroxylation reagent sequence is needed to install two OH groups."
+      }
+    ],
+    "diagram": "",
+    "hub": "reactions",
+    "subtopic": "Hydroboration of a terminal alkene",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "reactions / Hydroboration of a terminal alkene",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Hydroboration of a terminal alkene"
+  },
+  {
+    "id": "v4-57",
+    "subject": "Organic Chemistry I",
+    "topic": "Partial reduction controls alkene geometry",
+    "title": "Partial reduction controls alkene geometry",
+    "prompt": "Which reagent converts 2-butyne predominantly to cis-2-butene without continuing to butane under standard controlled conditions?",
+    "answer": [
+      "A"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. H2 with Lindlar catalyst"
+      },
+      {
+        "value": "B",
+        "label": "B. H2 with excess Pd/C"
+      },
+      {
+        "value": "C",
+        "label": "C. Na in liquid NH3"
+      },
+      {
+        "value": "D",
+        "label": "D. HBr, one equivalent"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Distinguish partial syn reduction from complete or dissolving-metal reduction.",
+    "setup": "Choose a reagent that stops at an alkene and adds the two hydrogens syn.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: A.\n\nLindlar catalyst is a poisoned hydrogenation catalyst used for partial alkyne reduction. Syn delivery of hydrogen produces the cis alkene and the catalyst suppresses continued hydrogenation. For 2-butyne this gives cis-2-butene, equivalent to the Z configuration.\n\nWhy the other choices fail:\nB: An active Pd/C catalyst with excess hydrogen typically reduces fully to the alkane.\nC: Dissolving-metal reduction produces the trans alkene under standard conditions.\nD: HBr adds hydrogen and bromine, not two hydrogens.",
+    "distractorExplanations": [
+      {
+        "option": "B",
+        "explanation": "An active Pd/C catalyst with excess hydrogen typically reduces fully to the alkane."
+      },
+      {
+        "option": "C",
+        "explanation": "Dissolving-metal reduction produces the trans alkene under standard conditions."
+      },
+      {
+        "option": "D",
+        "explanation": "HBr adds hydrogen and bromine, not two hydrogens."
+      }
+    ],
+    "diagram": "",
+    "hub": "alkynes",
+    "subtopic": "Partial reduction controls alkene geometry",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "alkynes / Partial reduction controls alkene geometry",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Partial reduction controls alkene geometry"
+  },
+  {
+    "id": "v4-58",
+    "subject": "Organic Chemistry I",
+    "topic": "SN2 rate responds to both reactants",
+    "title": "SN2 rate responds to both reactants",
+    "prompt": "For an elementary SN2 reaction with rate=k[RX][Nu−], doubling RX and tripling Nu− changes the rate by what factor?",
+    "answer": [
+      "B"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. 5"
+      },
+      {
+        "value": "B",
+        "label": "B. 6"
+      },
+      {
+        "value": "C",
+        "label": "C. 2"
+      },
+      {
+        "value": "D",
+        "label": "D. 3"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Apply each concentration factor to its own first-order term.",
+    "setup": "Divide the new rate expression by the original one.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: B.\n\nThe bimolecular rate law is first order in each reactant. The new rate is k(2[RX])(3[Nu−])=6k[RX][Nu−]. Therefore the rate increases sixfold, assuming temperature, solvent, and the rate constant remain unchanged.\n\nWhy the other choices fail:\nC: This includes only the substrate concentration change.\nD: This includes only the nucleophile concentration change.\nA: Independent multiplicative concentration factors multiply, not add.",
+    "distractorExplanations": [
+      {
+        "option": "C",
+        "explanation": "This includes only the substrate concentration change."
+      },
+      {
+        "option": "D",
+        "explanation": "This includes only the nucleophile concentration change."
+      },
+      {
+        "option": "A",
+        "explanation": "Independent multiplicative concentration factors multiply, not add."
+      }
+    ],
+    "diagram": "",
+    "hub": "substitution",
+    "subtopic": "SN2 rate responds to both reactants",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "substitution / SN2 rate responds to both reactants",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "SN2 rate responds to both reactants"
+  },
+  {
+    "id": "v4-59",
+    "subject": "Organic Chemistry I",
+    "topic": "A cyclohexane E2 requires the right chair",
+    "title": "A cyclohexane E2 requires the right chair",
+    "prompt": "For E2 elimination from a cyclohexyl halide, which geometry is required between the leaving group and the β-H being removed?",
+    "answer": [
+      "C"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Axial leaving group and equatorial β-H"
+      },
+      {
+        "value": "B",
+        "label": "B. Both axial and pointing to the same face"
+      },
+      {
+        "value": "C",
+        "label": "C. Both axial on adjacent carbons, one up and one down"
+      },
+      {
+        "value": "D",
+        "label": "D. Both equatorial on adjacent carbons"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Translate antiperiplanar into chair geometry.",
+    "setup": "Locate an axial leaving group and an adjacent axial hydrogen on the opposite face.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: C.\n\nThe E2 pathway requires an approximately antiperiplanar C–H and C–leaving-group arrangement. In a cyclohexane chair this is achieved by trans-diaxial substituents on adjacent carbons. A chair flip may be required to make the leaving group axial, and only an available axial β-H can then be removed.\n\nWhy the other choices fail:\nD: Diequatorial placement does not provide the needed antiperiplanar geometry in a chair.\nA: The adjacent equatorial C–H bond is not antiperiplanar to the axial leaving group.\nB: Adjacent axial bonds alternate up and down; same-face placement is not the required trans relation.",
+    "distractorExplanations": [
+      {
+        "option": "D",
+        "explanation": "Diequatorial placement does not provide the needed antiperiplanar geometry in a chair."
+      },
+      {
+        "option": "A",
+        "explanation": "The adjacent equatorial C–H bond is not antiperiplanar to the axial leaving group."
+      },
+      {
+        "option": "B",
+        "explanation": "Adjacent axial bonds alternate up and down; same-face placement is not the required trans relation."
+      }
+    ],
+    "diagram": "",
+    "hub": "substitution",
+    "subtopic": "A cyclohexane E2 requires the right chair",
+    "difficulty": "Integration",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Challenge · original practice",
+    "topicScope": "substitution / A cyclohexane E2 requires the right chair",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "A cyclohexane E2 requires the right chair"
+  },
+  {
+    "id": "v4-60",
+    "subject": "Organic Chemistry I",
+    "topic": "Combine formula and spectroscopy",
+    "title": "Combine formula and spectroscopy",
+    "prompt": "An unknown C3H6O has a strong IR band near 1715 cm−1 and one 1H NMR singlet integrating to 6 H. Which structure best fits?",
+    "answer": [
+      "D"
+    ],
+    "options": [
+      {
+        "value": "A",
+        "label": "A. Propanal"
+      },
+      {
+        "value": "B",
+        "label": "B. Allyl alcohol"
+      },
+      {
+        "value": "C",
+        "label": "C. Methoxyethene"
+      },
+      {
+        "value": "D",
+        "label": "D. Propanone (acetone)"
+      }
+    ],
+    "clarify": "Select one complete answer. Explain your reasoning in the work field before checking; options describe the stated idealized conditions.",
+    "hint": "Use all three constraints rather than the IR band alone.",
+    "setup": "Combine hydrogen deficiency, carbonyl evidence, and proton equivalence.",
+    "calculate": "Carry out your setup and compare it against every option. Check signs, domains, units, or stereochemical conventions as relevant.",
+    "solution": "Correct choice: D.\n\nThe formula gives one degree of unsaturation, and the IR band supports a carbonyl. Propanone has two symmetry-equivalent methyl groups with no adjacent carbon-bound hydrogens to split them, giving one six-proton singlet. Propanal would have several proton environments, including an aldehydic proton.\n\nWhy the other choices fail:\nA: Propanal has an aldehydic H plus distinct CH2 and CH3 environments.\nB: Allyl alcohol lacks a carbonyl and would show multiple proton environments.\nC: An enol ether lacks the indicated carbonyl and has inequivalent vinyl protons.",
+    "distractorExplanations": [
+      {
+        "option": "A",
+        "explanation": "Propanal has an aldehydic H plus distinct CH2 and CH3 environments."
+      },
+      {
+        "option": "B",
+        "explanation": "Allyl alcohol lacks a carbonyl and would show multiple proton environments."
+      },
+      {
+        "option": "C",
+        "explanation": "An enol ether lacks the indicated carbonyl and has inequivalent vinyl protons."
+      }
+    ],
+    "diagram": "",
+    "hub": "spectra",
+    "subtopic": "Combine formula and spectroscopy",
+    "difficulty": "Core",
+    "type": "Conceptual",
+    "minutes": 6,
+    "source": "Original authored problem; public textbook concept reference: https://openstax.org/details/books/organic-chemistry. Not an RPI exam question.",
+    "sourceTag": "OpenStax first-course concepts · Exam-Ready · original practice",
+    "topicScope": "spectra / Combine formula and spectroscopy",
+    "units": "",
+    "rubric": [
+      "State the principle and any domain or geometry constraints.",
+      "Show the intermediate reasoning before selecting a choice.",
+      "Check why competing choices fail without opening the solution first."
+    ],
+    "kind": "text",
+    "objective": "Combine formula and spectroscopy"
+  }
+]);

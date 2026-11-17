@@ -1574,5 +1574,5 @@ const gaps=[{"course":"All courses","area":"Instructor alignment","status":"Gene
 
 /* University-style extension: keep topic practice and coverage in sync. */
 for (const h of hubs) for (const p of bank) {
-  if (p.id.startsWith("v3-") && p.hub === h.id && !h.problems.includes(p.id)) h.problems.push(p.id);
+  if ((p.id.startsWith("v3-") || p.id.startsWith("v4-")) && p.hub === h.id && !h.problems.includes(p.id)) h.problems.push(p.id);
 }
