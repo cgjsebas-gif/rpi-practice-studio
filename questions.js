@@ -10218,3 +10218,652 @@ bank.push(...[
     "objective": "Combine formula and spectroscopy"
   }
 ]);
+
+/* Original molecular integration challenges. */
+bank.push(...[
+  {
+    "id": "v5-chem-1",
+    "subject": "Organic Chemistry I",
+    "topic": "Two doses of HCl: branched terminal alkyne",
+    "title": "Two doses of HCl: branched terminal alkyne",
+    "prompt": "Treat 5-methylhex-1-yne with one equivalent of HCl, then treat that product with a second equivalent of HCl (no peroxides). Draw product A after the first dose and product B after the second. Explain why the two chlorine atoms end up on the same carbon and whether A can have E/Z isomers.",
+    "reactant": "C#CCCC(C)C",
+    "reactantLabel": "Starting material: 5-methylhex-1-yne",
+    "products": [
+      {
+        "label": "Product A",
+        "smiles": "C=C(Cl)CCC(C)C",
+        "stereo": false
+      },
+      {
+        "label": "Product B",
+        "smiles": "CC(Cl)(Cl)CCC(C)C",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "Two doses of HCl: branched terminal alkyne",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / Two doses of HCl: branched terminal alkyne",
+    "units": "",
+    "objective": "Two doses of HCl: branched terminal alkyne",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Follow Markovnikov orientation at each addition; do not move the methyl branch.",
+    "setup": "Number the terminal alkyne carbons C1 and C2. Track bond order and H/Cl addition one equivalent at a time.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is 2-chloro-5-methylhex-1-ene. B is 2,2-dichloro-5-methylhexane.\nEach dose adds H to terminal C1 and Cl to C2; the second dose converts the alkene into a geminal dichloride.\nA has CH2 at one end of its double bond, so E/Z is not defined. Neither step changes the carbon skeleton.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-2",
+    "subject": "Organic Chemistry I",
+    "topic": "HBr equivalents versus vicinal addition",
+    "title": "HBr equivalents versus vicinal addition",
+    "prompt": "A sample of 4-methylhex-1-yne receives two equivalents of HBr without peroxides. Draw the final product. In your reasoning, name the product, explain geminal versus vicinal substitution, and say why the alkene is not the final product. Ignore stereochemistry at the pre-existing branch center.",
+    "reactant": "C#CCC(C)CC",
+    "reactantLabel": "Starting material: 4-methylhex-1-yne",
+    "products": [
+      {
+        "label": "Final product",
+        "smiles": "CC(Br)(Br)CC(C)CC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "HBr equivalents versus vicinal addition",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / HBr equivalents versus vicinal addition",
+    "units": "",
+    "objective": "HBr equivalents versus vicinal addition",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "An alkyne consumes two equivalents to become saturated.",
+    "setup": "Keep the seven-carbon skeleton and place each newly added bromine by the same regiochemical rule.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "The product is 2,2-dibromo-4-methylhexane.\nThe first equivalent forms a vinyl bromide; the second removes the remaining pi bond.\nBoth bromines are on C2 (geminal), not on adjacent carbons (vicinal). This is a haloalkane, not an unsubstituted alkane.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-3",
+    "subject": "Organic Chemistry I",
+    "topic": "One substrate, two hydration routes",
+    "title": "One substrate, two hydration routes",
+    "prompt": "Use separate samples of hex-1-yne. Route A uses HgSO4, H2SO4 and H2O. Route B uses 1) (Sia)2BH 2) H2O2, OH−. Draw each final carbonyl product, not the enol. Explain how regiochemistry and tautomerization determine the difference.",
+    "reactant": "C#CCCCC",
+    "reactantLabel": "Starting material: C#CCCCC",
+    "products": [
+      {
+        "label": "Route A",
+        "smiles": "CC(=O)CCCC",
+        "stereo": false
+      },
+      {
+        "label": "Route B",
+        "smiles": "O=CCCCCC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "One substrate, two hydration routes",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / One substrate, two hydration routes",
+    "units": "",
+    "objective": "One substrate, two hydration routes",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "The two methods put oxygen on different alkyne carbons.",
+    "setup": "Draw the enol for each route on paper, then move a proton and the double bond to obtain its carbonyl tautomer.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is hexan-2-one: Markovnikov hydration first gives the C2 enol, then a methyl ketone.\nB is hexanal: bulky-borane hydroboration–oxidation places oxygen at terminal C1, and tautomerization gives an aldehyde.\nTautomers differ in atom connectivity; they are not resonance contributors.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-4",
+    "subject": "Organic Chemistry I",
+    "topic": "Selective reduction: draw both geometries",
+    "title": "Selective reduction: draw both geometries",
+    "prompt": "Treat separate samples of hex-3-yne with A) H2, Lindlar catalyst and B) Na in liquid NH3. Draw both products with the correct alkene geometry. Explain why neither answer should be hexane. Stereochemistry IS checked.",
+    "reactant": "CCC#CCC",
+    "reactantLabel": "Starting material: CCC#CCC",
+    "products": [
+      {
+        "label": "Product A",
+        "smiles": "CC/C=C\\CC",
+        "stereo": true
+      },
+      {
+        "label": "Product B",
+        "smiles": "CC/C=C/CC",
+        "stereo": true
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "Selective reduction: draw both geometries",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / Selective reduction: draw both geometries",
+    "units": "",
+    "objective": "Selective reduction: draw both geometries",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Compare syn delivery on a catalyst with dissolving-metal reduction.",
+    "setup": "Keep C3=C4 in both products; assign the side of each ethyl substituent before drawing.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is (Z)-hex-3-ene from syn partial hydrogenation. B is (E)-hex-3-ene from dissolving-metal reduction.\nLindlar catalyst is poisoned to stop at the alkene; dissolving-metal conditions also yield an alkene.\nUnpoisoned Pd with excess H2 instead reduces all the way to hexane.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-5",
+    "subject": "Organic Chemistry I",
+    "topic": "Hydration: enol versus isolated ketone",
+    "title": "Hydration: enol versus isolated ketone",
+    "prompt": "Hydrate pent-1-yne using HgSO4, H2SO4 and water. Draw A, the enol after addition, and B, the major isolated carbonyl tautomer. Explain why converting A into B requires proton transfer rather than simply shifting electrons.",
+    "reactant": "C#CCCC",
+    "reactantLabel": "Starting material: C#CCCC",
+    "products": [
+      {
+        "label": "Enol A",
+        "smiles": "C=C(O)CCC",
+        "stereo": false
+      },
+      {
+        "label": "Carbonyl B",
+        "smiles": "CC(=O)CCC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "Hydration: enol versus isolated ketone",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / Hydration: enol versus isolated ketone",
+    "units": "",
+    "objective": "Hydration: enol versus isolated ketone",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "The carbon bearing OH in the enol becomes the carbonyl carbon.",
+    "setup": "Mark the C1=C2 bond in the enol, then identify which atom gains H as C2=O forms.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is pent-1-en-2-ol; B is pentan-2-one.\nA proton moves from oxygen to terminal carbon through acid/base-mediated steps while the pi bond moves onto oxygen.\nThe sigma bonding of hydrogen changes, so these are constitutional tautomers, not resonance structures.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-6",
+    "subject": "Organic Chemistry I",
+    "topic": "Alkyne chain extension followed by reduction",
+    "title": "Alkyne chain extension followed by reduction",
+    "prompt": "Starting with but-1-yne, use 1) NaNH2 2) CH3CH2Br. Draw the neutral carbon-chain extension product A. Then treat A with H2/Lindlar and draw B, including geometry. Explain why a primary alkyl bromide is suitable for the chain-extension step.",
+    "reactant": "C#CCC",
+    "reactantLabel": "Starting material: C#CCC",
+    "products": [
+      {
+        "label": "Extended alkyne A",
+        "smiles": "CCC#CCC",
+        "stereo": false
+      },
+      {
+        "label": "Reduced product B",
+        "smiles": "CC/C=C\\CC",
+        "stereo": true
+      }
+    ],
+    "kind": "molecule",
+    "hub": "alkynes",
+    "subtopic": "Alkyne chain extension followed by reduction",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "alkynes / Alkyne chain extension followed by reduction",
+    "units": "",
+    "objective": "Alkyne chain extension followed by reduction",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "A terminal acetylide can form a new carbon–carbon bond by SN2.",
+    "setup": "Remove only the terminal alkyne H, add the electrophile’s two carbons at that end, then apply partial reduction.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is hex-3-yne; B is (Z)-hex-3-ene.\nNaNH2 deprotonates the terminal alkyne. The acetylide displaces bromide from primary bromoethane by SN2, adding two carbons.\nLindlar reduction is syn. A tertiary alkyl halide would favor elimination instead of the desired SN2 alkylation.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-7",
+    "subject": "Organic Chemistry I",
+    "topic": "Alkene hydration: compare oxygen placement",
+    "title": "Alkene hydration: compare oxygen placement",
+    "prompt": "Use separate samples of 2-methylbut-1-ene. A) 1. Hg(OAc)2, H2O 2. NaBH4. B) 1. BH3·THF 2. H2O2, OH−. Draw the constitutional alcohol product for each route. Explain regioselectivity and whether route B creates a stereocenter. Connectivity only is graded.",
+    "reactant": "C=C(C)CC",
+    "reactantLabel": "Starting material: C=C(C)CC",
+    "products": [
+      {
+        "label": "Alcohol A",
+        "smiles": "CC(O)(C)CC",
+        "stereo": false
+      },
+      {
+        "label": "Alcohol B",
+        "smiles": "OCC(C)CC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "reactions",
+    "subtopic": "Alkene hydration: compare oxygen placement",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Alkene hydration: compare oxygen placement",
+    "units": "",
+    "objective": "Alkene hydration: compare oxygen placement",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "One route is Markovnikov without rearrangement; the other is anti-Markovnikov.",
+    "setup": "Label the two original alkene carbons and decide where OH belongs for each route.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is 2-methylbutan-2-ol. B is 2-methylbutan-1-ol.\nOxymercuration–demercuration places OH at the more substituted carbon without carbocation rearrangement. Hydroboration–oxidation places OH at the less substituted carbon.\nB has a stereocenter at C2 and is formed as a racemic pair from the achiral alkene/reagents. This task grades connectivity only.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-8",
+    "subject": "Organic Chemistry I",
+    "topic": "Peroxide effect: two HBr pathways",
+    "title": "Peroxide effect: two HBr pathways",
+    "prompt": "Use separate samples of pent-1-ene. Add HBr to A without peroxides and to B with radical-initiating peroxides. Draw the major constitutional product in each case, and explain why the peroxide rule should not be generalized to HCl. Do not specify enantiomers.",
+    "reactant": "C=CCCC",
+    "reactantLabel": "Starting material: C=CCCC",
+    "products": [
+      {
+        "label": "Ionic product A",
+        "smiles": "CC(Br)CCC",
+        "stereo": false
+      },
+      {
+        "label": "Radical product B",
+        "smiles": "BrCCCCC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "reactions",
+    "subtopic": "Peroxide effect: two HBr pathways",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Peroxide effect: two HBr pathways",
+    "units": "",
+    "objective": "Peroxide effect: two HBr pathways",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Compare carbocation stability with the radical chain pathway.",
+    "setup": "Track where Br goes under ionic versus radical conditions; keep the carbon skeleton fixed.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is 2-bromopentane; B is 1-bromopentane.\nIonic addition follows Markovnikov orientation. The peroxide-initiated radical chain of HBr favors anti-Markovnikov orientation.\nThe propagation energetics do not support applying this rule generally to HCl or HI. A is racemic, but stereochemistry is not graded here.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-9",
+    "subject": "Organic Chemistry I",
+    "topic": "SN2 substitution versus bulky-base elimination",
+    "title": "SN2 substitution versus bulky-base elimination",
+    "prompt": "Use separate samples of 2-bromobutane. A) NaCN in DMSO under substitution-favoring conditions. B) KOtBu in tert-butanol with heat. Draw the substitution product for A and the major Hofmann alkene for B. Explain the carbon count in A and why B favors the less substituted double bond. Connectivity only is graded.",
+    "reactant": "CC(Br)CC",
+    "reactantLabel": "Starting material: CC(Br)CC",
+    "products": [
+      {
+        "label": "Substitution A",
+        "smiles": "CC(C#N)CC",
+        "stereo": false
+      },
+      {
+        "label": "Elimination B",
+        "smiles": "C=CCC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "substitution",
+    "subtopic": "SN2 substitution versus bulky-base elimination",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "substitution / SN2 substitution versus bulky-base elimination",
+    "units": "",
+    "objective": "SN2 substitution versus bulky-base elimination",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Cyanide bonds through its carbon; a bulky base removes the more accessible beta H.",
+    "setup": "A replaces Br with C≡N. For B, compare beta-H sites on either side of the leaving group.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is 2-methylbutanenitrile: cyanide contributes one carbon, giving five carbons total. An enantiopure substrate would undergo inversion at the reacting center.\nB is predominantly but-1-ene under the stated bulky-base conditions.\nThe primary beta position is less hindered; E2 competes with substitution and can give minor but-2-enes.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-10",
+    "subject": "Organic Chemistry I",
+    "topic": "Diels–Alder: preserve the carbonyl",
+    "title": "Diels–Alder: preserve the carbonyl",
+    "prompt": "Heat buta-1,3-diene with methyl vinyl ketone, CH2=CH–C(=O)CH3. Draw the cycloaddition product. Explain which original diene bond becomes the product double bond, how many new sigma bonds form, and why the carbonyl is retained. This symmetric diene gives no competing constitutional regioisomer.",
+    "reactant": "C=CC=C.C=CC(=O)C",
+    "reactantLabel": "Starting material: C=CC=C.C=CC(=O)C",
+    "products": [
+      {
+        "label": "Cycloadduct",
+        "smiles": "CC(=O)C1CC=CCC1",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "reactions",
+    "subtopic": "Diels–Alder: preserve the carbonyl",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Diels–Alder: preserve the carbonyl",
+    "units": "",
+    "objective": "Diels–Alder: preserve the carbonyl",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "The diene and alkene make a six-membered ring in a concerted [4+2] process.",
+    "setup": "Connect the two ends of the diene to the two alkene carbons. Leave the carbonyl outside the new ring.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "The product is 1-(cyclohex-3-en-1-yl)ethan-1-one.\nTwo new carbon–carbon sigma bonds form. The diene’s original central single bond becomes the ring double bond.\nThe dienophile’s C=C is consumed; its C=O remains as an acetyl substituent. The unsymmetrical substituted ring center is formed racemically; this task grades connectivity.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-11",
+    "subject": "Organic Chemistry I",
+    "topic": "Oxidative cleavage: retain both fragments",
+    "title": "Oxidative cleavage: retain both fragments",
+    "prompt": "Treat 2-methylpent-2-ene with 1) O3 2) Zn/H2O. Draw the two carbonyl fragments separately: A from the alkene carbon with two methyl groups, B from the alkene carbon bearing H. Explain why B is not a carboxylic acid under this workup.",
+    "reactant": "CC(C)=CCC",
+    "reactantLabel": "Starting material: CC(C)=CCC",
+    "products": [
+      {
+        "label": "Fragment A",
+        "smiles": "CC(=O)C",
+        "stereo": false
+      },
+      {
+        "label": "Fragment B",
+        "smiles": "CCC=O",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "reactions",
+    "subtopic": "Oxidative cleavage: retain both fragments",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Oxidative cleavage: retain both fragments",
+    "units": "",
+    "objective": "Oxidative cleavage: retain both fragments",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Replace each end of the cleaved C=C with C=O.",
+    "setup": "Account for all six starting carbons across the two fragments.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is acetone (propan-2-one); B is propanal.\nEach original alkene carbon becomes a carbonyl carbon, retaining its other substituents. Three carbons appear in each fragment.\nThe reducing workup preserves the aldehyde; an oxidative workup can oxidize an aldehyde further.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-12",
+    "subject": "Organic Chemistry I",
+    "topic": "Synthesis checkpoint: alcohol to alkene to alkane",
+    "title": "Synthesis checkpoint: alcohol to alkene to alkane",
+    "prompt": "Heat 2-methylbutan-2-ol with acid and isolate the major alkene A. Hydrogenate A with excess H2/Pd to obtain B. Draw both products and explain why A is favored over the terminal alkene.",
+    "reactant": "CC(O)(C)CC",
+    "reactantLabel": "Starting material: CC(O)(C)CC",
+    "products": [
+      {
+        "label": "Major alkene A",
+        "smiles": "CC(C)=CC",
+        "stereo": false
+      },
+      {
+        "label": "Hydrogenation B",
+        "smiles": "CC(C)CC",
+        "stereo": false
+      }
+    ],
+    "kind": "molecule",
+    "hub": "reactions",
+    "subtopic": "Synthesis checkpoint: alcohol to alkene to alkane",
+    "difficulty": "Integration",
+    "type": "Structure drawing",
+    "minutes": 12,
+    "source": "Original authored challenge inspired by the topic breadth of supplied ACS practice and Organic Chemistry Q6; no exam questions reproduced. Concept reference: https://openstax.org/books/organic-chemistry/pages/9-summary-of-reactions",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Synthesis checkpoint: alcohol to alkene to alkane",
+    "units": "",
+    "objective": "Synthesis checkpoint: alcohol to alkene to alkane",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Draw each labeled product separately. Retain every carbon unless the stated reaction cleaves a bond. Use the reasoning field to explain selectivity. Structure checking grades molecular connectivity and only the explicitly specified stereochemistry.",
+    "hint": "Acid-catalyzed dehydration of a tertiary alcohol generally favors the more substituted alkene.",
+    "setup": "Locate beta hydrogens adjacent to the OH-bearing carbon; then remove the remaining pi bond in the second step.",
+    "calculate": "Count carbons, check ordinary valences and account for each reagent equivalent. Compare the requested intermediate with the final isolated product. Check your explanation separately from the drawing.",
+    "solution": "A is 2-methylbut-2-ene, the more substituted Zaitsev alkene. B is 2-methylbutane.\nProtonation turns OH into a better leaving group; water loss and beta deprotonation produce the alkene.\nHydrogenation adds H across C=C without moving the methyl branch. A has two identical methyl groups at one alkene carbon, so E/Z is not defined.",
+    "rubric": [
+      "Account for reagent equivalents and all carbon atoms.",
+      "Explain the regioselectivity or stereoselectivity using the stated conditions.",
+      "Distinguish the intermediate from the isolated product; check valence."
+    ]
+  },
+  {
+    "id": "v5-chem-13",
+    "subject": "Organic Chemistry I",
+    "topic": "Aromaticity after protonation",
+    "title": "Aromaticity after protonation",
+    "prompt": "Compare pyridine, pyridinium and pyrrole: state the aromatic pi-electron count for each. Identify which lone pair participates in aromaticity and explain why pyridine is more basic than pyrrole. Draw supporting structures in the scratch workspace.",
+    "kind": "rubric",
+    "hub": "resonance",
+    "subtopic": "Aromaticity after protonation",
+    "difficulty": "Integration",
+    "type": "Mechanism analysis",
+    "minutes": 12,
+    "source": "Original challenge informed by topics in supplied Q6 and ACS practice. General reference: OpenStax Organic Chemistry, conjugation, stereochemistry and substitution chapters.",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "resonance / Aromaticity after protonation",
+    "units": "",
+    "objective": "Aromaticity after protonation",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Give a connected explanation and supporting structures. This reasoning task uses an explicit self-assessment rubric; its prose is not automatically graded.",
+    "hint": "Distinguish an in-plane lone pair from a lone pair in a p orbital.",
+    "setup": "Identify the relevant orbitals or intermediate, then connect structure to the stated observation. Separate mechanism, stereochemistry and kinetics.",
+    "calculate": "Check electron counts, charges and carbon connectivity. Test your explanation against each part of the question.",
+    "solution": "Pyridine and pyridinium each retain six aromatic pi electrons. Pyridine’s in-plane nitrogen lone pair is outside the pi sextet, so its protonation does not remove aromaticity. Pyrrole has four pi electrons from two double bonds plus two from the nitrogen lone pair. Protonating that nitrogen disrupts its aromatic contribution, making pyrrole much less basic.",
+    "rubric": [
+      "Count ring pi electrons, not all lone pairs.",
+      "Distinguish the pyridine and pyrrole nitrogen orbitals.",
+      "Connect basicity to stabilization of the conjugate acid."
+    ]
+  },
+  {
+    "id": "v5-chem-14",
+    "subject": "Organic Chemistry I",
+    "topic": "Kinetic and thermodynamic diene products",
+    "title": "Kinetic and thermodynamic diene products",
+    "prompt": "HBr adds to buta-1,3-diene. Explain how an allylic intermediate permits 1,2 and 1,4 addition. Draw both constitutional products, label the kinetic and thermodynamic products in your written answer, and explain how temperature and reversibility affect their proportions. Ignore E/Z in the drawings.",
+    "kind": "rubric",
+    "hub": "reactions",
+    "subtopic": "Kinetic and thermodynamic diene products",
+    "difficulty": "Integration",
+    "type": "Mechanism analysis",
+    "minutes": 12,
+    "source": "Original challenge informed by topics in supplied Q6 and ACS practice. General reference: OpenStax Organic Chemistry, conjugation, stereochemistry and substitution chapters.",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "reactions / Kinetic and thermodynamic diene products",
+    "units": "",
+    "objective": "Kinetic and thermodynamic diene products",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Give a connected explanation and supporting structures. This reasoning task uses an explicit self-assessment rubric; its prose is not automatically graded.",
+    "hint": "The fastest path need not lead to the lowest-energy alkene.",
+    "setup": "Identify the relevant orbitals or intermediate, then connect structure to the stated observation. Separate mechanism, stereochemistry and kinetics.",
+    "calculate": "Check electron counts, charges and carbon connectivity. Test your explanation against each part of the question.",
+    "solution": "The 1,2 product is 3-bromobut-1-ene; the 1,4 product is 1-bromobut-2-ene. In the usual introductory model, low temperature favors faster 1,2 capture (kinetic control); higher temperature with reversible equilibration favors the more substituted 1,4 alkene (thermodynamic control). Exact proportions depend on conditions.",
+    "rubric": [
+      "Show resonance-delocalized allylic cation positions.",
+      "Identify both constitutional products correctly.",
+      "Separate activation barrier from product stability and mention reversibility."
+    ]
+  },
+  {
+    "id": "v5-chem-15",
+    "subject": "Organic Chemistry I",
+    "topic": "Bromination stereochemistry audit",
+    "title": "Bromination stereochemistry audit",
+    "prompt": "Compare Br2 addition to (E)-but-2-ene and (Z)-but-2-ene in an inert solvent. Predict whether each gives a meso compound or a racemic mixture, assign the product configurations, and justify the result using bromonium-ion opening. Use the scratch workspace for a representative structure.",
+    "kind": "rubric",
+    "hub": "stereo",
+    "subtopic": "Bromination stereochemistry audit",
+    "difficulty": "Integration",
+    "type": "Mechanism analysis",
+    "minutes": 12,
+    "source": "Original challenge informed by topics in supplied Q6 and ACS practice. General reference: OpenStax Organic Chemistry, conjugation, stereochemistry and substitution chapters.",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "stereo / Bromination stereochemistry audit",
+    "units": "",
+    "objective": "Bromination stereochemistry audit",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Give a connected explanation and supporting structures. This reasoning task uses an explicit self-assessment rubric; its prose is not automatically graded.",
+    "hint": "Both reactions are anti addition; the starting alkene geometry changes the product relationship.",
+    "setup": "Identify the relevant orbitals or intermediate, then connect structure to the stated observation. Separate mechanism, stereochemistry and kinetics.",
+    "calculate": "Check electron counts, charges and carbon connectivity. Test your explanation against each part of the question.",
+    "solution": "The E alkene gives meso (2R,3S)-2,3-dibromobutane (equivalently 2S,3R). The Z alkene gives a racemic pair, (2R,3R) and (2S,3S). Backside opening of a bridged bromonium ion makes the addition anti; examine symmetry after drawing the product, not merely whether it contains stereocenters.",
+    "rubric": [
+      "Use anti addition for both substrates.",
+      "Identify meso versus racemic outcomes.",
+      "Assign configurations and discuss the internal symmetry of the meso product."
+    ]
+  },
+  {
+    "id": "v5-chem-16",
+    "subject": "Organic Chemistry I",
+    "topic": "SN1 evidence and competing elimination",
+    "title": "SN1 evidence and competing elimination",
+    "prompt": "A tertiary alkyl bromide solvolyzes in aqueous ethanol. Doubling substrate concentration doubles the initial rate, but doubling solvent nucleophile concentration at fixed medium has negligible effect. Identify the rate-determining event, write a rate law, explain why SN2 is disfavored, and predict how heating affects competing E1 elimination.",
+    "kind": "rubric",
+    "hub": "substitution",
+    "subtopic": "SN1 evidence and competing elimination",
+    "difficulty": "Integration",
+    "type": "Mechanism analysis",
+    "minutes": 12,
+    "source": "Original challenge informed by topics in supplied Q6 and ACS practice. General reference: OpenStax Organic Chemistry, conjugation, stereochemistry and substitution chapters.",
+    "sourceTag": "Molecule Lab · original integration practice",
+    "topicScope": "substitution / SN1 evidence and competing elimination",
+    "units": "",
+    "objective": "SN1 evidence and competing elimination",
+    "diagram": "",
+    "answer": [],
+    "clarify": "Give a connected explanation and supporting structures. This reasoning task uses an explicit self-assessment rubric; its prose is not automatically graded.",
+    "hint": "Use the experimental rate dependence before naming a mechanism.",
+    "setup": "Identify the relevant orbitals or intermediate, then connect structure to the stated observation. Separate mechanism, stereochemistry and kinetics.",
+    "calculate": "Check electron counts, charges and carbon connectivity. Test your explanation against each part of the question.",
+    "solution": "Rate = k[tertiary alkyl bromide] is consistent with unimolecular ionization to a carbocation in the slow step. Water/ethanol then traps the cation. Steric hindrance strongly disfavors backside SN2 attack at a tertiary center. E1 shares the carbocation intermediate; heating generally increases the relative importance of elimination. These observations support the mechanism but are not a complete mechanistic proof.",
+    "rubric": [
+      "Infer first-order substrate dependence.",
+      "Identify ionization and carbocation trapping.",
+      "Explain steric suppression of SN2 and competition from E1."
+    ]
+  }
+]);
+
+/* Extend existing reasoning tasks without changing their accepted answers or IDs. */
+for (const p of bank) {
+  if (p.title === "Hydroboration product") { p.prompt += " Explain the regioselectivity, contrast it with acid-catalyzed hydration, and sketch the two alcohol connectivities in the molecule workspace. Enter only the requested major alcohol name in the answer field."; p.reactant="C=CC"; p.reactantLabel="Propene"; }
+  if (p.title === "Lindlar reduction") { p.prompt += " Draw the product in the workspace and explain syn addition, E/Z assignment and how an unpoisoned catalyst would change the outcome. Enter cis-but-2-ene or trans-but-2-ene in the answer field."; p.reactant="CC#CC"; p.reactantLabel="But-2-yne"; }
+  if (p.title === "Ozonolysis connectivity") { p.prompt += " Sketch the product, account for both fragments and explain why an oxidative workup would alter the result. Enter the carbonyl product name in the answer field."; p.reactant="CC=CC"; p.reactantLabel="But-2-ene (geometry does not affect this product)"; }
+}

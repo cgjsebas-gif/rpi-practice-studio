@@ -170,17 +170,31 @@ function bootStudio() {
     render();
     window.scrollTo(0, 0);
   }
-  function start(ids, mode = "Guided practice", minutes = 0) {
+  let pendingSessionStart = null;
+  function cancelSessionStart() {
+    pendingSessionStart = null;
+    render();
+  }
+  function confirmSessionStart() {
+    const pending = pendingSessionStart;
+    pendingSessionStart = null;
+    if (pending) start(...pending, true);
+  }
+  function start(
+    ids,
+    mode = "Guided practice",
+    minutes = 0,
+    confirmed = false,
+  ) {
     if (mode === "Practice exam" && !minutes) minutes = 30;
     if (!ids.length) return;
-    if (
-      state.session &&
-      !state.session.completed &&
-      !confirm(
-        "Replace the active session? All submitted attempts and drafts stay in your history.",
-      )
-    )
+    if (state.session && !state.session.completed && !confirmed) {
+      pendingSessionStart = [ids.slice(), mode, minutes];
+      render();
+      window.scrollTo(0, 0);
+      document.getElementById("session-replace-confirm")?.focus();
       return;
+    }
     if (isExam()) {
       const graded = E.finishExam(state.session, bank);
       state.attempts.push(...graded);
@@ -274,6 +288,17 @@ function bootStudio() {
     persist();
     render();
   }
+  function openMolecule(slot) {
+    if (
+      isExam() &&
+      state.session.responses[state.session.index]?.status === "submitted"
+    )
+      return;
+    window.MoleculeStudio?.open(current(), draft(), slot, (field, value) => {
+      setDraft(field, value);
+      render();
+    });
+  }
   function checkAnswer(e) {
     e.preventDefault();
     if (state.session?.completed) return;
@@ -287,6 +312,11 @@ function bootStudio() {
       const validForActivity =
         E.grade(question, entered.answer, entered.units ?? question.units)
           .status !== "invalid";
+      if (question.kind === "molecule" && !validForActivity) {
+        feedback = E.grade(question, entered.answer);
+        render();
+        return;
+      }
       if (E.submitExam(state.session, state.session.index, entered)) {
         if (validForActivity)
           window.StudyConsistency?.record(
@@ -495,7 +525,7 @@ function bootStudio() {
       ["orbitarium", "✦", "Orbitarium"],
     ];
     $("app").innerHTML =
-      `<a class="skip" href="#content">Skip to content</a><div class="shell"><aside class="sidebar"><a class="brand" href="#" onclick="go('home');return false"><span class="logo">∴</span><span>Practice Studio<small>RPI · LEARN WITH INTENTION</small></span></a><nav aria-label="Main navigation">${navs.map(([p, i, t]) => `<button class="nav-item ${active === p || (p === "learn" && active === "hub") ? "active" : ""}" ${active === p ? 'aria-current="page"' : ""} onclick="go('${p}')"><span aria-hidden="true">${i}</span>${t}${p === "mistakes" && missedIds().length ? `<b>${missedIds().length}</b>` : ""}</button>`).join("")}</nav><div class="side-note"><strong>Guidance first, always.</strong><p>Your answer comes before the model solution. Choose how much help to reveal.</p></div><label class="theme-label" for="theme">Appearance</label><select id="theme" onchange="theme(this.value)">${["system", "light", "dark"].map((t) => `<option value="${t}" ${state.theme === t ? "selected" : ""}>${t[0].toUpperCase() + t.slice(1)}</option>`).join("")}</select><button onclick="openBackup()">Backup & restore</button><small id="storage-status">${esc(storageMessage || StudioStorage.status() || "Local save · not synced")}</small></aside><main id="content"><div class="topbar">${window.StudyConsistency?.pill() || ""}<span>PRACTICE STUDIO · ORBITARIUM EDITION</span><form class="search" onsubmit="event.preventDefault();searchQuery=this.elements.search.value;go('search')"><label class="sr-only" for="global-search">Search topics, equations and problems</label><input id="global-search" name="search" type="search" placeholder="Search topics, equations, problems…" value="${esc(searchQuery)}"><button aria-label="Search">↗</button></form></div>${storageMessage ? `<div class="alert">${esc(storageMessage)}</div>` : ""}${r.page === "notfound" ? empty("This study link is unavailable.", "Choose a course or return to the dashboard.", "Dashboard", "go('home')") : r.page === "assignments" ? Orbitarium.assignmentsView() : r.page === "orbitarium" ? Orbitarium.view() : r.page === "home" ? home() : r.page === "learn" ? learn() : r.page === "hub" ? hubPage(r.id) : r.page === "library" ? library() : r.page === "practice" ? practice() : r.page === "builder" ? builder() : r.page === "summary" ? summary() : r.page === "mistakes" ? mistakePage() : r.page === "bookmarks" ? bookmarks() : r.page === "reference" ? reference() : ["progress", "settings"].includes(r.page) ? progress() : r.page === "coverage" ? coverage() : searchPage()}<footer><span>Independent learning aid · ${bank.length} original practice problems · ${hubs.length} hubs</span><span>Progress stored in this browser. Export a backup in Progress.</span></footer></main></div>`;
+      `<a class="skip" href="#content">Skip to content</a><div class="shell"><aside class="sidebar"><a class="brand" href="#" onclick="go('home');return false"><span class="logo">∴</span><span>Practice Studio<small>RPI · LEARN WITH INTENTION</small></span></a><nav aria-label="Main navigation">${navs.map(([p, i, t]) => `<button class="nav-item ${active === p || (p === "learn" && active === "hub") ? "active" : ""}" ${active === p ? 'aria-current="page"' : ""} onclick="go('${p}')"><span aria-hidden="true">${i}</span>${t}${p === "mistakes" && missedIds().length ? `<b>${missedIds().length}</b>` : ""}</button>`).join("")}</nav><div class="side-note"><strong>Guidance first, always.</strong><p>Your answer comes before the model solution. Choose how much help to reveal.</p></div><label class="theme-label" for="theme">Appearance</label><select id="theme" onchange="theme(this.value)">${["system", "light", "dark"].map((t) => `<option value="${t}" ${state.theme === t ? "selected" : ""}>${t[0].toUpperCase() + t.slice(1)}</option>`).join("")}</select><button onclick="openBackup()">Backup & restore</button><small id="storage-status">${esc(storageMessage || StudioStorage.status() || "Local save · not synced")}</small></aside><main id="content"><div class="topbar">${window.StudyConsistency?.pill() || ""}<span>PRACTICE STUDIO · ORBITARIUM EDITION</span><form class="search" onsubmit="event.preventDefault();searchQuery=this.elements.search.value;go('search')"><label class="sr-only" for="global-search">Search topics, equations and problems</label><input id="global-search" name="search" type="search" placeholder="Search topics, equations, problems…" value="${esc(searchQuery)}"><button aria-label="Search">↗</button></form></div>${pendingSessionStart ? `<section class="panel" role="region" aria-label="Replace active session"><h2>Replace the active session?</h2><p>Submitted attempts and saved drafts stay in your history. A running exam will be finished before starting the new session.</p><div class="actions"><button id="session-replace-confirm" onclick="confirmSessionStart()">Replace session</button><button onclick="cancelSessionStart()">Keep current session</button></div></section>` : ""}${storageMessage ? `<div class="alert">${esc(storageMessage)}</div>` : ""}${r.page === "notfound" ? empty("This study link is unavailable.", "Choose a course or return to the dashboard.", "Dashboard", "go('home')") : r.page === "assignments" ? Orbitarium.assignmentsView() : r.page === "orbitarium" ? Orbitarium.view() : r.page === "home" ? home() : r.page === "learn" ? learn() : r.page === "hub" ? hubPage(r.id) : r.page === "library" ? library() : r.page === "practice" ? practice() : r.page === "builder" ? builder() : r.page === "summary" ? summary() : r.page === "mistakes" ? mistakePage() : r.page === "bookmarks" ? bookmarks() : r.page === "reference" ? reference() : ["progress", "settings"].includes(r.page) ? progress() : r.page === "coverage" ? coverage() : searchPage()}<footer><span>Independent learning aid · ${bank.length} original practice problems · ${hubs.length} hubs</span><span>Progress stored in this browser. Export a backup in Progress.</span></footer></main></div>`;
     tick();
     if (r.page === "orbitarium") Orbitarium.mount();
     if (r.page === "assignments") Orbitarium.assignmentMount();
@@ -539,6 +569,8 @@ function bootStudio() {
     return `<article class="example"><span class="eyebrow">EXAMPLE ${i + 1} · ${esc(p.difficulty)}</span><h3>${esc(p.title)}</h3><p>${esc(p.prompt)}</p>${safeVisual(p)}<dl><dt>Given & required</dt><dd>The stated values and conditions above define the problem; solve only for the requested result.</dd><dt>Assumptions</dt><dd>${esc(hub(p.hub).assumptions)}</dd><dt>Principle & symbolic setup</dt><dd>${esc(p.setup)}</dd></dl><button onclick="revealedExamples.has('${p.id}')?revealedExamples.delete('${p.id}'):revealedExamples.add('${p.id}');render()">${revealedExamples.has(p.id) ? "Hide walkthrough" : "Reveal worked solution"}</button>${revealedExamples.has(p.id) ? `<div class="solution"><h4>Calculation / reasoning and result</h4><p class="preline">${esc(p.solution)}</p><h4>Check & interpret</h4><p>${p.kind === "number" ? `Requested units: ${esc(p.units || "dimensionless")}. Compare signs, dimensional consistency and physical bounds with the setup. ${esc(checkNote(p))}` : "Check the definition and its conditions against each part of the prompt; a correct label should be supported by reasoning."}</p><h4>Common mistake to avoid</h4><p>${esc(hub(p.hub).mistakes[0])}</p></div>` : ""}<button class="text-link" onclick="openProblem('${p.id}')">Try this problem yourself →</button></article>`;
   }
   function checkNote(p) {
+    if (p.subject === "Organic Chemistry I")
+      return "Check carbon count, formal charges, valence and the stated stereochemical requirements. Structure correctness and explanation quality are separate checks.";
     if (p.hub === "energy")
       return "Kinetic and Hookean spring energies must be nonnegative; work and potential differences can have either sign.";
     if (p.hub === "stereo")
@@ -621,7 +653,7 @@ function bootStudio() {
       h = hub(p.hub),
       attempted = state.attempts.some((a) => a.id === p.id),
       units = p.units;
-    return `<div class="breadcrumbs"><button onclick="go('library')">Practice library</button><span>/ ${esc(p.subject)} / ${esc(h.title)}</span></div><div class="session-strip"><span>${esc(s?.mode || "Guided practice")} · ${s ? `${s.index + 1} / ${s.ids.length}` : "1 / 1"}</span><span id="timer" role="timer" aria-label="Time remaining"></span><button onclick="openQuickReference()">Quick reference / scratchpad</button><button onclick="finish()">Finish & review</button><button onclick="go('library')">Save & leave <kbd>Esc</kbd></button></div><p class="shortcut-note">Outside text fields: <kbd>Enter</kbd> check / continue · <kbd>H</kbd> hint · <kbd>R</kbd> flag · <kbd>Esc</kbd> leave · 1–4 select choices when available</p><div class="practice-layout"><article class="panel question"><div class="question-top"><span class="badge">${esc(p.difficulty)} · ${esc(p.type)} · ~${p.minutes} min</span><button aria-pressed="${state.saved.includes(p.id)}" onclick="toggle('saved','${p.id}')">${state.saved.includes(p.id) ? "★ Saved" : "☆ Save"}</button></div><h1 id="main-heading" tabindex="-1">${esc(p.title)}</h1><p class="prompt">${esc(p.prompt)}</p>${safeVisual(p)}<details><summary>Learning objective, prerequisites & source</summary><p><strong>Objective:</strong> ${esc(p.objective)}</p><p><strong>Prerequisites:</strong> ${esc(h.prereqs.map((x) => hub(x)?.title).join(", ") || "Basic algebra or careful reading")}</p><p><strong>Subtopic:</strong> ${esc(p.subtopic)}</p><p class="small">${esc(p.source)}</p></details><form onsubmit="checkAnswer(event)"><fieldset class="answer-fields" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}><label for="work">${p.subject === "Physics I" ? "Organized working" : "Your reasoning / scratch work"}</label><textarea id="work" class="working" rows="4" placeholder="Given → assumptions → principle → symbolic setup → calculation → check" oninput="setDraft('work',this.value)">${esc(d.work)}</textarea>${p.subject === "Physics I" ? `<details class="workcheck"><summary>Physics organization check</summary>${["Define the system and given quantities with units", "Draw relevant forces / axes or a system boundary", "State the principle and symbolic equation", "Check dimensions, sign and physical reasonableness"].map((t, i) => `<label class="check"><input type="checkbox" ${workChecks[i] ? "checked" : ""} onchange="workChecks[${i}]=this.checked">${t}</label>`).join("")}<button type="button" onclick="checkWork()">Check organization</button><p id="work-message" role="status">${esc(workMessage)}</p><p class="small muted">A checklist checks your organization, not the correctness of your derivation.</p></details>` : ""}${
+    return `<div class="breadcrumbs"><button onclick="go('library')">Practice library</button><span>/ ${esc(p.subject)} / ${esc(h.title)}</span></div><div class="session-strip"><span>${esc(s?.mode || "Guided practice")} · ${s ? `${s.index + 1} / ${s.ids.length}` : "1 / 1"}</span><span id="timer" role="timer" aria-label="Time remaining"></span><button onclick="openQuickReference()">Quick reference / scratchpad</button><button onclick="finish()">Finish & review</button><button onclick="go('library')">Save & leave <kbd>Esc</kbd></button></div><p class="shortcut-note">Outside text fields: <kbd>Enter</kbd> check / continue · <kbd>H</kbd> hint · <kbd>R</kbd> flag · <kbd>Esc</kbd> leave · 1–4 select choices when available</p><div class="practice-layout"><article class="panel question"><div class="question-top"><span class="badge">${esc(p.difficulty)} · ${esc(p.type)} · ~${p.minutes} min</span><button aria-pressed="${state.saved.includes(p.id)}" onclick="toggle('saved','${p.id}')">${state.saved.includes(p.id) ? "★ Saved" : "☆ Save"}</button></div><h1 id="main-heading" tabindex="-1">${esc(p.title)}</h1><p class="prompt">${esc(p.prompt)}</p>${safeVisual(p)}<details><summary>Learning objective, prerequisites & source</summary><p><strong>Objective:</strong> ${esc(p.objective)}</p><p><strong>Prerequisites:</strong> ${esc(h.prereqs.map((x) => hub(x)?.title).join(", ") || "Basic algebra or careful reading")}</p><p><strong>Subtopic:</strong> ${esc(p.subtopic)}</p><p class="small">${esc(p.source)}</p></details>${window.MoleculeStudio?.section(p, d, isExam() && s.responses[s.index]?.status === "submitted") || ""}<form onsubmit="checkAnswer(event)"><fieldset class="answer-fields" ${isExam() && s.responses[s.index]?.status === "submitted" ? "disabled" : ""}><label for="work">${p.subject === "Physics I" ? "Organized working" : "Your reasoning / scratch work"}</label><textarea id="work" class="working" rows="4" placeholder="Given → assumptions → principle → symbolic setup → calculation → check" oninput="setDraft('work',this.value)">${esc(d.work)}</textarea>${p.subject === "Physics I" ? `<details class="workcheck"><summary>Physics organization check</summary>${["Define the system and given quantities with units", "Draw relevant forces / axes or a system boundary", "State the principle and symbolic equation", "Check dimensions, sign and physical reasonableness"].map((t, i) => `<label class="check"><input type="checkbox" ${workChecks[i] ? "checked" : ""} onchange="workChecks[${i}]=this.checked">${t}</label>`).join("")}<button type="button" onclick="checkWork()">Check organization</button><p id="work-message" role="status">${esc(workMessage)}</p><p class="small muted">A checklist checks your organization, not the correctness of your derivation.</p></details>` : ""}${
       Array.isArray(p.options)
         ? `<div class="choice-options" role="group" aria-label="Answer choices">${p.options
             .slice(0, 4)
@@ -631,7 +663,7 @@ function bootStudio() {
             )
             .join("")}</div>`
         : ""
-    }<div class="answer-grid"><div><label for="answer">${p.kind === "rubric" ? "Your explanation / recall" : "Your answer"}</label>${p.kind === "rubric" ? `<textarea id="answer" rows="4" required oninput="setDraft('answer',this.value)" placeholder="Retrieve or reason first. You will assess against a rubric.">${esc(d.answer)}</textarea>` : `<input id="answer" type="text" required value="${esc(d.answer)}" oninput="setDraft('answer',this.value)" placeholder="${p.kind === "number" ? "Number, 1/3, or 2.5e-3" : "Your response"}">`}</div>${
+    }<div class="answer-grid" ${p.kind === "molecule" ? "hidden" : ""}><div><label for="answer">${p.kind === "rubric" ? "Your explanation / recall" : "Your answer"}</label>${p.kind === "rubric" ? `<textarea id="answer" rows="4" required oninput="setDraft('answer',this.value)" placeholder="Retrieve or reason first. You will assess against a rubric.">${esc(d.answer)}</textarea>` : `<input id="answer" type="text" ${p.kind === "molecule" ? "" : "required"} value="${esc(d.answer)}" oninput="setDraft('answer',this.value)" placeholder="${p.kind === "number" ? "Number, 1/3, or 2.5e-3" : "Your response"}">`}</div>${
       p.kind === "number" && units
         ? `<div><label for="answer-units">Units</label><input id="answer-units" list="unit-list" value="${esc(d.units ?? units)}" oninput="setDraft('units',this.value)"><datalist id="unit-list">${Object.keys(
             E.units,
@@ -657,7 +689,7 @@ function bootStudio() {
       )
       .join(
         "",
-      )}${!attempted && !isExam() ? '<p class="small muted">Submit your own attempt to unlock the full solution.</p>' : ""}${help ? `<div class="help-content ${help === "solution" ? "solution" : ""}" role="status"><h3>${help === "solution" ? "Worked solution" : "Guidance"}</h3><p class="preline">${esc(p[help])}</p>${help === "solution" ? `<p class="small">${esc(checkNote(p))}</p>` : ""}</div>` : ""}</section><section class="panel"><h3>Useful reminders</h3><p>${isExam() ? "Submit your own reasoning. You can revisit locked responses, but cannot edit them." : esc(h.mistakes[0]) + " is a common pitfall in this topic."}</p><button class="list-link" ${isExam() ? "disabled" : ""} onclick="go('reference')">Equations & unit converter →</button><p class="small muted">Responses, drafts and session position save locally. Leaving this page does not reveal or discard an answer.</p></section></aside></div>`;
+      )}${!attempted && !isExam() ? '<p class="small muted">Submit your own attempt to unlock the full solution.</p>' : ""}${help ? `<div class="help-content ${help === "solution" ? "solution" : ""}" role="status"><h3>${help === "solution" ? "Worked solution" : "Guidance"}</h3><p class="preline">${esc(p[help])}</p>${help === "solution" ? window.MoleculeStudio?.solutions(p) || "" : ""}${help === "solution" ? `<p class="small">${esc(checkNote(p))}</p>` : ""}</div>` : ""}</section><section class="panel"><h3>Useful reminders</h3><p>${isExam() ? "Submit your own reasoning. You can revisit locked responses, but cannot edit them." : esc(h.mistakes[0]) + " is a common pitfall in this topic."}</p><button class="list-link" ${isExam() ? "disabled" : ""} onclick="go('reference')">Equations & unit converter →</button><p class="small muted">Responses, drafts and session position save locally. Leaving this page does not reveal or discard an answer.</p></section></aside></div>`;
   }
   function checkWork() {
     let n = Object.values(workChecks).filter(Boolean).length;
@@ -927,7 +959,7 @@ function bootStudio() {
         .reverse()
         .map(
           (a) =>
-            `<details><summary>${a.status === "self" ? "○ Pending self-check" : a.correct ? "✓ Correct" : "↺ Review"} · ${esc(problem(a.id).title)} · ${new Date(a.at).toLocaleDateString()}${a.selfAssessed ? " · self-assessed" : ""}</summary><p>Your answer: ${esc(a.answer)} ${esc(a.units || "")}</p><p class="preline">${esc(a.work)}</p><button onclick="openProblem('${a.id}')">Retry problem</button></details>`,
+            `<details><summary>${a.status === "self" ? "○ Pending self-check" : a.correct ? "✓ Correct" : "↺ Review"} · ${esc(problem(a.id).title)} · ${new Date(a.at).toLocaleDateString()}${a.selfAssessed ? " · self-assessed" : ""}</summary><p>Your answer: ${problem(a.id).kind === "molecule" ? window.MoleculeStudio?.savedAnswer(a.answer) || "Saved molecule drawing" : esc(a.answer)} ${esc(a.units || "")}</p><p class="preline">${esc(a.work)}</p><button onclick="openProblem('${a.id}')">Retry problem</button></details>`,
         )
         .join("") || "<p>Your first attempt will start the history.</p>"
     }</section>`;
@@ -977,7 +1009,7 @@ function bootStudio() {
       )
       .join(
         "",
-      )}<p>This public package contains authored practice and public references, without private course documents, private document links, or retired subject content. Legacy problem IDs preserve supported backup records.</p><h3>Technical care</h3><p>Friction reduces mechanical energy, not total energy. R/S labels do not determine optical-rotation signs. Reaction rate and equilibrium favorability are different questions. Online supplements are learning resources, not evidence of your upcoming exam content.</p></section><section class="panel"><h2>Feature boundaries</h2><p>Numeric grading supports fractions, scientific notation, declared compatible units and displayed tolerances. Short concept labels use accepted synonyms. Open-ended and symbolic work uses a rubric; no drawing recognition or general symbolic algebra is claimed. Study sessions sample a fixed authored library, not an unlimited question generator.</p><p>Self-assessed responses are marked as such. Data is local, with export/import. The app makes no mastery claim and does not forecast an actual exam.</p></section>`;
+      )}<p>This public package contains authored practice and public references, without private course documents, private document links, or retired subject content. Legacy problem IDs preserve supported backup records.</p><h3>Technical care</h3><p>Friction reduces mechanical energy, not total energy. R/S labels do not determine optical-rotation signs. Reaction rate and equilibrium favorability are different questions. Online supplements are learning resources, not evidence of your upcoming exam content.</p></section><section class="panel"><h2>Feature boundaries</h2><p>Numeric grading supports fractions, scientific notation, declared compatible units and displayed tolerances. Short concept labels use accepted synonyms. Open-ended and symbolic work uses a rubric; molecular drawing tasks compare chemical structures (including stereochemistry when marked), while explanations remain self-assessed. No general symbolic algebra is claimed. Study sessions sample a fixed authored library, not an unlimited question generator.</p><p>Self-assessed responses are marked as such. Data is local, with export/import. The app makes no mastery claim and does not forecast an actual exam.</p></section>`;
   }
   Object.assign(window, {
     practiceRedemption,
@@ -997,6 +1029,9 @@ function bootStudio() {
     normalizeScope,
     draft,
     setDraft,
+    openMolecule,
+    confirmSessionStart,
+    cancelSessionStart,
     choose,
     start,
     openProblem,
@@ -1123,7 +1158,9 @@ function bootStudio() {
       event.metaKey ||
       event.altKey ||
       document.querySelector("dialog[open]") ||
-      event.target.closest('input,textarea,select,[contenteditable="true"]')
+      event.target.closest(
+        'input,textarea,select,button,a,[contenteditable="true"]',
+      )
     )
       return;
     if (state.route.page !== "practice") return;

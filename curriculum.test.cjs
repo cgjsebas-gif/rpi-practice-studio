@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');const c={};vm.createContext(c);vm.runInContext(fs.readFileSync(__dirname+'/questions.js','utf8')+fs.readFileSync(__dirname+'/content.js','utf8')+';this.b=bank;this.h=hubs;',c);
 const q=id=>c.b.find(p=>p.id==='v3-'+id),near=(a,b)=>assert(Math.abs(a-b)<1e-7,`${a} != ${b}`);
-assert.equal(c.b.length,260);assert.equal(new Set(c.b.map(p=>p.id)).size,260);
+assert.equal(c.b.length,276);assert.equal(new Set(c.b.map(p=>p.id)).size,276);
 for(const subject of ['Physics I','Calculus I','Organic Chemistry I']) assert.equal(c.b.filter(p=>p.id.startsWith('v3-')&&p.subject===subject).length,12);
 for(let i=1;i<=36;i++){assert(q(i).solution.split('\n').length>=4);assert(c.h.find(h=>h.id===q(i).hub).problems.includes(q(i).id));}
 // Substitute recorded answers into independently arranged governing equations.

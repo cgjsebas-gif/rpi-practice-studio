@@ -115,6 +115,13 @@ const StudyEngine = (() => {
       .replace(/[.,;:]$/, "")
       .replace(/\s+/g, " ");
   function grade(p, raw, unit) {
+    if (p.kind === "molecule")
+      return typeof MoleculeStudio !== "undefined"
+        ? MoleculeStudio.grade(p, raw)
+        : {
+            status: "invalid",
+            message: "Molecule tools unavailable. Reload to retry.",
+          };
     if (!String(raw).trim())
       return { status: "invalid", message: "Enter your own response first." };
     if (p.kind === "rubric")
@@ -246,6 +253,7 @@ const StudyEngine = (() => {
           work: str(d.work),
           units: str(d.units, 30),
           scratchpad: str(d.scratchpad),
+          moleculeScratch: str(d.moleculeScratch, 18000),
         };
     for (const [id, n] of Object.entries(raw.notes || {}))
       if (hs.has(id)) s.notes[id] = str(n);
